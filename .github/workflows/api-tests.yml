@@ -1,0 +1,98 @@
+name: API Integration Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 23 * * *'   # 1:00 AM Israel time (UTC+2)
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  api-tests:
+    name: API Tests — QA1
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Create output directories
+      run: mkdir -p reports/allure-results reports/junit logs
+
+    - name: Run API integration tests
+      env:
+        USER_EMAIL: ${{ secrets.USER_EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        IDS_URL: ${{ secrets.IDS_URL }}
+        ENV_NAME: qa1
+        RUN_INTEGRATION_TESTS: 'true'
+        CI: 'true'
+      run: |
+        python -m pytest tests/integration/ tests/qa1/ \
+          --alluredir=reports/allure-results \
+          --junitxml=reports/junit/junit.xml \
+          --tb=short \
+          -v \
+          -ra \
+          -W ignore::DeprecationWarning \
+          -W ignore::urllib3.exceptions.InsecureRequestWarning \
+          -p no:html
+      # Exit 0 (pass/skip) = GREEN, Exit 1 (failures) = RED
+
+    - name: Publish JUnit results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: reports/junit/junit.xml
+        comment_title: 'API Test Results'
+        fail_on: 'test failures'   # SKIP = green, FAIL = red
+
+    - name: Get Allure history
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Generate Allure report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      with:
+        allure_results: reports/allure-results
+        allure_history: allure-history
+        keep_reports: 30
+
+    - name: Deploy Allure report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-history/
+
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: api-test-results-${{ github.run_id }}
+        path: |
+          reports/
+          logs/
+        retention-days: 30

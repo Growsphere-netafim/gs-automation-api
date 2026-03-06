@@ -1,0 +1,132 @@
+# Environment variables - NEVER commit!
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Reports
+reports/
+*.html
+*.xml
+allure-results/
+allure-report/
+
+# Logs
+logs/
+log/
+*.log
+*.log.*
+
+# Runtime generated files
+environment.properties
+swagger_specs/*.json
+
+scripts/harvest_qa1_data.py
+scripts/inspect_mobile.py
+utils/api_client.py
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Temp files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Local configuration
+local_settings.py
+settings_local.py
+
+# Secrets
+secrets.json
+credentials.json
+*.key
+*.pem
+*.p12
+
+# Test artifacts
+test_results/
+test_output/
+
+# Backup files
+*.bak
+*~
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Profiling
+*.prof
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Node (if using any JS tools)
+node_modules/
+package-lock.json
+
+# Misc
+.cache/
+*.pid
