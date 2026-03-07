@@ -6,7 +6,7 @@ schedules:
     displayName: Nightly 10:00 PM Israel
     branches:
       include:
-        - develop
+        - main
     always: true
 
 parameters:
