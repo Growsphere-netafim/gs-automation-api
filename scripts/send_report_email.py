@@ -154,20 +154,11 @@ def build_html(s: dict, env_name: str, test_info: str,
         <table style="width: 100%; font-size: 13px;">
           <tr>
             <td style="padding: 5px 0;">
-              <span style="color: #2ecc71; font-size: 10px;">&#9632;</span>
-              &nbsp;<strong style="color: #ecf0f1;">Integration Tests</strong>
+              <span style="color: #5dade2; font-size: 10px;">&#9632;</span>
+              &nbsp;<strong style="color: #ecf0f1;">QA1 API Tests</strong>
             </td>
             <td style="text-align: right; color: #7f8fa4;">
               CSAPI &middot; FieldIO &middot; DataAPI &middot; Irrigation &middot; CropService &middot; Weather
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 5px 0;">
-              <span style="color: #5dade2; font-size: 10px;">&#9632;</span>
-              &nbsp;<strong style="color: #ecf0f1;">QA1 Deep Tests</strong>
-            </td>
-            <td style="text-align: right; color: #7f8fa4;">
-              80+ endpoints across all microservices
             </td>
           </tr>
           <tr>
