@@ -3,7 +3,7 @@ import pytest
 import allure
 import requests
 
-from config.settings import get_settings, validate_auth_settings
+from config.settings import get_settings
 from core.token_manager import TokenManager
 from api.client.api_client import QAApiClient
 from core.test_data import TestData
@@ -23,9 +23,7 @@ def create_service_fixtures(config_class, api_customizer=None):
 
     @pytest.fixture(scope="session")
     def settings():
-        s = get_settings()
-        validate_auth_settings(s)
-        return s
+        return get_settings()
 
     @pytest.fixture(scope="session")
     def token_manager(settings):

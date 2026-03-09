@@ -135,22 +135,7 @@ stages:
               fi
             displayName: Restore Allure History
 
-          # ── 5. Validate auth environment variables ────────────────
-          - script: |
-              echo "USER_EMAIL        set: $([ -n "$USER_EMAIL"        ] && echo YES || echo NO)"
-              echo "PASSWORD          set: $([ -n "$PASSWORD"          ] && echo YES || echo NO)"
-              echo "IDS_URL           set: $([ -n "$IDS_URL"           ] && echo YES || echo NO)"
-              echo "OIDC_CLIENT_ID    set: $([ -n "$OIDC_CLIENT_ID"    ] && echo YES || echo NO)"
-              echo "OIDC_REDIRECT_URI set: $([ -n "$OIDC_REDIRECT_URI" ] && echo YES || echo NO)"
-            displayName: Validate Auth Environment Variables
-            env:
-              USER_EMAIL: $(USER_EMAIL)
-              PASSWORD: $(PASSWORD)
-              IDS_URL: $(IDS_URL)
-              OIDC_CLIENT_ID: 'growsphere-userportal'
-              OIDC_REDIRECT_URI: 'https://localhost:4200/authentication/login-callback'
-
-          # ── 6. Run pytest ─────────────────────────────────────────
+          # ── 5. Run pytest ─────────────────────────────────────────
           #   Exit 0 (pass/skip) => GREEN
           #   Exit 1 (failures)  => RED  (via PublishTestResults)
           - script: |

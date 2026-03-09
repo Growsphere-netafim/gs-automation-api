@@ -167,16 +167,6 @@ def get_settings() -> Settings:
     return _settings
 
 
-_REQUIRED_AUTH_VARS = ["USER_EMAIL", "PASSWORD", "IDS_URL", "OIDC_CLIENT_ID", "OIDC_REDIRECT_URI"]
-
-
-def validate_auth_settings(settings: Settings) -> None:
-    """Raise RuntimeError early if any critical auth variable is missing."""
-    missing = [v for v in _REQUIRED_AUTH_VARS if not getattr(settings, v, "")]
-    if missing:
-        raise RuntimeError(f"Missing required environment variables: {', '.join(missing)}")
-
-
 # Convenience function
 def reload_settings() -> Settings:
     """
