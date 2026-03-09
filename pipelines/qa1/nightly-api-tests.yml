@@ -19,12 +19,10 @@ parameters:
     type: string
 
   - name: test_suite
-    default: all
+    default: qa1
     displayName: Test Suite to Run
     type: string
     values:
-      - all
-      - integration
       - qa1
 
   - name: enable_reporting
@@ -146,9 +144,7 @@ stages:
               echo " Suite       : ${{ parameters.test_suite }}"
               echo "==================================================="
 
-              case "${{ parameters.test_suite }}" in
-                qa1 | all | *) TEST_PATHS="tests/qa1/" ;;
-              esac
+              TEST_PATHS="tests/qa1/"
 
               python -m pytest $TEST_PATHS \
                 --alluredir=reports/allure-results \
