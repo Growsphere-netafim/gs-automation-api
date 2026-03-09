@@ -242,10 +242,16 @@ def main():
     args = parse_args()
 
     smtp_server   = os.environ.get("SMTP_SERVER", "")
-    smtp_port     = int(os.environ.get("SMTP_PORT", "465"))
+    smtp_port_raw = os.environ.get("SMTP_PORT", "465")
     smtp_user     = os.environ.get("SMTP_USER", "")
     smtp_password = os.environ.get("SMTP_PASSWORD", "")
     sender        = os.environ.get("NOREPLY_EMAIL", "noreply@netafim.com")
+
+    try:
+        smtp_port = int(smtp_port_raw)
+    except (ValueError, TypeError):
+        print(f"[ERROR] SMTP_PORT is not a valid number: {smtp_port_raw!r}", file=sys.stderr)
+        sys.exit(1)
 
     if not all([smtp_server, smtp_user, smtp_password]):
         print("[ERROR] Missing SMTP environment variables. Email not sent.", file=sys.stderr)
