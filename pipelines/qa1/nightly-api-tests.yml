@@ -1,6 +1,8 @@
 trigger:
 - none
 
+pr: none
+
 schedules:
   - cron: "0 20 * * *"
     displayName: Nightly 10:00 PM Israel
