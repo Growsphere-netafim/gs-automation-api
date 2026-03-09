@@ -162,6 +162,9 @@ stages:
               USER_EMAIL: $(USER_EMAIL)
               PASSWORD: $(PASSWORD)
               IDS_URL: $(IDS_URL)
+              OIDC_CLIENT_ID: 'growsphere-userportal'
+              OIDC_REDIRECT_URI: 'https://localhost:4200/authentication/login-callback'
+              SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
               ENV_NAME: ${{ parameters.app_env }}
               CI: 'true'
             continueOnError: true
