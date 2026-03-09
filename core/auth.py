@@ -2,6 +2,7 @@
 OAuth2 + PKCE Authentication Handler
 Based on your existing auth.py with improvements
 """
+import logging
 import string
 import base64
 import hashlib
@@ -13,6 +14,18 @@ import requests
 from requests import Session
 
 from config.settings import Settings
+
+logger = logging.getLogger(__name__)
+
+_BROWSER_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 
 class OAuth2Client:
@@ -87,7 +100,8 @@ class OAuth2Client:
         Returns: (csrf_token, base_uri, query_string)
         """
         response = self.session.get(
-            self.authorization_url, 
+            self.authorization_url,
+            headers=_BROWSER_HEADERS,
             timeout=45,
             allow_redirects=True
         )
@@ -132,11 +146,18 @@ class OAuth2Client:
         response = self.session.post(
             login_url,
             json=login_payload,
-            headers={'Content-Type': 'application/json'},
+            headers={**_BROWSER_HEADERS, 'Content-Type': 'application/json'},
             verify=False,
             timeout=40
         )
-        
+
+        if response.status_code != 200:
+            logger.warning(
+                "Auth0 login returned %s. Body: %s",
+                response.status_code,
+                response.text[:500],
+            )
+
         return response
 
     def _follow_redirects(self, login_response: requests.Response) -> Optional[str]:
@@ -149,6 +170,12 @@ class OAuth2Client:
         form = soup.find('form', {'name': 'hiddenform'})
         
         if not form:
+            logger.error(
+                "No hidden form found in Auth0 login response. "
+                "Status: %s. Body preview: %s",
+                login_response.status_code,
+                html_content[:1000],
+            )
             raise ValueError("No hidden form found in login response")
 
         action_url = form['action']
@@ -229,30 +256,66 @@ class OAuth2Client:
         
         return access_token
 
-    def authenticate(self) -> str:
+    def _try_ropc(self) -> Optional[str]:
         """
-        Execute complete OAuth2 + PKCE authentication flow
+        Try ROPC (Resource Owner Password Credentials) grant.
+        Sends username+password directly to IDS — no HTML scraping, works from any IP.
+        Returns: Access token or None if not supported.
+        """
+        payload = {
+            "grant_type": "password",
+            "client_id": self.oidc_client_id,
+            "username": self.user_email,
+            "password": self.user_password,
+            "scope": self.scopes.replace("%20", " "),
+        }
+        try:
+            response = self.session.post(
+                self.token_url,
+                data=payload,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+                verify=False,
+                timeout=30,
+            )
+            if response.status_code == 200:
+                return response.json().get("access_token")
+        except Exception:
+            pass
+        return None
+
+    def _authenticate_pkce(self) -> str:
+        """
+        Execute complete OAuth2 + PKCE authentication flow (browser simulation).
         Returns: JWT access token
         """
         # Clear any existing cookies
         self.session.cookies.clear()
-        
+
         # Step 1: Get CSRF token
         csrf_token, base_uri, query_string = self._get_csrf_token()
-        
+
         # Step 2: Submit login credentials
         login_response = self._perform_login(csrf_token, base_uri, query_string)
-        
+
         # Step 3: Follow redirects to get authorization code
         final_redirect_uri = self._follow_redirects(login_response)
-        
+
         if not final_redirect_uri:
             raise ValueError("Failed to get final redirect URI with authorization code")
-        
+
         # Step 4: Exchange code for access token
-        access_token = self._exchange_code_for_token(final_redirect_uri)
-        
-        return access_token
+        return self._exchange_code_for_token(final_redirect_uri)
+
+    def authenticate(self) -> str:
+        """
+        Authenticate and return a JWT access token.
+        Tries ROPC first (works from any IP including CI).
+        Falls back to PKCE + Auth0 browser flow if ROPC is not supported.
+        """
+        token = self._try_ropc()
+        if token:
+            return token
+        return self._authenticate_pkce()
 
 
 class TokenRefresher:
