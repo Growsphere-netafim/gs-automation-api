@@ -9,11 +9,26 @@ class CommandsManagerService:
         self._client = client
         self._data = data
 
+    def _resolve_reference_id(self) -> str:
+        if '_reference_id' not in self.__dict__:
+            resp = self._client.get(
+                CommandsManagerEndpoints.odata_commands_global(), params={"$top": 10}
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                items = data.get('value', []) if isinstance(data, dict) else data
+                for item in (items if isinstance(items, list) else []):
+                    ref_id = item.get('referenceId')
+                    if ref_id:
+                        self._reference_id = ref_id
+                        return ref_id
+            pytest.skip("No command referenceId found via OData")
+        return self._reference_id
+
     def get_command_status(self) -> ApiResponse:
-        if not self._data.reference_id:
-            pytest.skip("referenceId not configured")
+        reference_id = self._data.reference_id or self._resolve_reference_id()
         return self._client.get(
-            CommandsManagerEndpoints.command_status(self._data.reference_id)
+            CommandsManagerEndpoints.command_status(reference_id)
         )
 
     def get_latest_statuses_farm(self) -> ApiResponse:

@@ -9,7 +9,7 @@ class SettingsAPIConfig(CSAPIConfig):
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
         "farmId": "qa1-nb10047",
-        "deviceUuid": "b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa",
+        "deviceUuid": None,
     })
 
 

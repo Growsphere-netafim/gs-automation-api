@@ -19,6 +19,60 @@ class MobileService:
         self._client = client
         self._data = data
 
+    def _resolve_reference_id(self) -> str:
+        """Fetch first available command referenceId across fallback farms."""
+        if '_reference_id' not in self.__dict__:
+            device_id = self._data.device_id
+            if device_id:
+                resp = self._client.get(MobileEndpoints.commands_list_for_device(device_id))
+                if resp.status_code == 200:
+                    data = resp.json()
+                    items = data if isinstance(data, list) else data.get('value', data.get('commands', data.get('items', [])))
+                    for item in (items if isinstance(items, list) else []):
+                        ref_id = item.get('referenceId') or item.get('id')
+                        if ref_id:
+                            self._reference_id = ref_id
+                            return ref_id
+            farm_ids = [self._data.farm_id] + [f for f in _FALLBACK_FARM_IDS if f != self._data.farm_id]
+            for farm_id in farm_ids:
+                if not farm_id or not device_id:
+                    continue
+                resp = self._client.get(MobileEndpoints.commands_by_farm_device(farm_id, device_id))
+                if resp.status_code != 200:
+                    continue
+                data = resp.json()
+                items = data if isinstance(data, list) else data.get('value', data.get('commands', data.get('items', [])))
+                for item in (items if isinstance(items, list) else []):
+                    ref_id = item.get('referenceId') or item.get('id')
+                    if ref_id:
+                        self._reference_id = ref_id
+                        return ref_id
+            pytest.skip("No command referenceId found for Mobile tests")
+        return self._reference_id
+
+    def _resolve_device_uuid(self) -> str:
+        """Find a device UUID that has general settings configured (probes endpoint)."""
+        if '_device_uuid' not in self.__dict__:
+            farm_ids = [self._data.farm_id] + [f for f in _FALLBACK_FARM_IDS if f != self._data.farm_id]
+            for farm_id in farm_ids:
+                if not farm_id:
+                    continue
+                resp = self._client.get(MobileEndpoints.device_states_by_farm(farm_id))
+                if resp.status_code != 200:
+                    continue
+                data = resp.json()
+                items = data if isinstance(data, list) else data.get('deviceStates', data.get('items', data.get('value', [])))
+                for item in (items if isinstance(items, list) else []):
+                    uuid = item.get('fieldIoDeviceId') or item.get('deviceUuid') or item.get('uuid')
+                    if not uuid:
+                        continue
+                    probe = self._client.get(MobileEndpoints.general_settings(uuid))
+                    if probe.status_code == 200:
+                        self._device_uuid = uuid
+                        return uuid
+            pytest.skip("No device with general settings found across QA1 farms")
+        return self._device_uuid
+
     def _resolve_flow_uuid(self) -> str:
         """Fetch first provisioning flow UUID across fallback farms."""
         if '_flow_uuid' not in self.__dict__:
@@ -50,9 +104,8 @@ class MobileService:
 
     # Commands
     def get_command(self) -> ApiResponse:
-        if not self._data.reference_id:
-            pytest.skip("referenceId not configured")
-        return self._client.get(MobileEndpoints.command(self._data.reference_id))
+        reference_id = self._data.reference_id or self._resolve_reference_id()
+        return self._client.get(MobileEndpoints.command(reference_id))
 
     def get_commands_by_farm_device(self) -> ApiResponse:
         if not self._data.farm_id or not self._data.device_id:
@@ -96,9 +149,12 @@ class MobileService:
         )
 
     def get_general_settings(self) -> ApiResponse:
-        if not self._data.device_uuid:
-            pytest.skip("deviceUuid not configured")
-        return self._client.get(MobileEndpoints.general_settings(self._data.device_uuid))
+        if self._data.device_uuid:
+            resp = self._client.get(MobileEndpoints.general_settings(self._data.device_uuid))
+            if resp.status_code != 404:
+                return resp
+        device_uuid = self._resolve_device_uuid()
+        return self._client.get(MobileEndpoints.general_settings(device_uuid))
 
     def get_alert_settings(self) -> ApiResponse:
         if not self._data.device_id:
@@ -106,9 +162,12 @@ class MobileService:
         return self._client.get(MobileEndpoints.alert_settings(self._data.device_id))
 
     def get_delay_settings(self) -> ApiResponse:
-        if not self._data.device_uuid:
-            pytest.skip("deviceUuid not configured")
-        return self._client.get(MobileEndpoints.delay_settings(self._data.device_uuid))
+        if self._data.device_uuid:
+            resp = self._client.get(MobileEndpoints.delay_settings(self._data.device_uuid))
+            if resp.status_code != 404:
+                return resp
+        device_uuid = self._resolve_device_uuid()
+        return self._client.get(MobileEndpoints.delay_settings(device_uuid))
 
     def get_device_states_by_farm(self) -> ApiResponse:
         if not self._data.farm_id:

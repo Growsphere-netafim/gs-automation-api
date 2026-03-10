@@ -102,7 +102,7 @@ class FieldIOConfig(CSAPIConfig):
         "baseId": 'fa573ba6-47f2-42eb-93f1-08870733af79',
         "remoteId": 'b5910bd5-914a-42ce-9547-021b8575385a',
         "repeaterId": None,
-        "ioId": 'cf7c976e-91dd-4315-8476-08de6201a60e',
+        "ioId": None,
         "channelId": '1-1-1-0',
         "ioGroupId": "2301e020-45d3-41d7-dab8-08db381d925b",
         "thresholdId": None,
@@ -131,7 +131,7 @@ class MobileConfig(CSAPIConfig):
         "farmId": "qa1-nb10047",
         "deviceId": "E7-00-5D-80",
         "deviceUuid": 'b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa',
-        "referenceId": "bcad7c0b-2285-4741-8cca-69dfea4c475f",
+        "referenceId": None,
         "flowUuid": None,
         "programUuid": '286a92ab-b988-42b4-8886-d770518c21d3-PID1',
         "irrigationProgramUuid": '286a92ab-b988-42b4-8886-d770518c21d3-PID1',
@@ -172,7 +172,7 @@ class IrrigationConfig(CSAPIConfig):
         "deviceProgramId": 1,
         "mainlineId": 1,
         "recipeId": None,
-        "ioId": "cf7c976e-91dd-4315-8476-08de6201a60e",
+        "ioId": None,
         "startDate": "2024-01-01",
         "endDate": "2024-01-31",
         "date": "2024-01-01",
@@ -204,7 +204,7 @@ class CommandsManagerConfig(CSAPIConfig):
     TEST_DATA.update({
         "farmId": "qa1-nb10047",
         "deviceId": "E7-00-5D-80",
-        "referenceId": "bcad7c0b-2285-4741-8cca-69dfea4c475f",
+        "referenceId": None,
         "unitSystem": "Metric",
         "farmTimezone": "Israel Standard Time"
     })
@@ -217,7 +217,7 @@ class DeviceStateManagerConfig(CSAPIConfig):
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
         "deviceId": "E7-00-5D-80",
-        "deviceUuid": 'b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa',
+        "deviceUuid": None,
         "farmId": "qa1-nb10047",
         "systemType": 1,
         "fromDateTimeUtc": "2024-01-01T00:00:00Z",

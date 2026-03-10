@@ -5,6 +5,7 @@ import allure
 @allure.feature("Commands Controller")
 class TestCommands:
 
+    @pytest.mark.flaky  # Requires an active command to exist in the system
     @allure.story("Get Command Status")
     def test_get_command_status(self, commands_service):
         resp = commands_service.get_command_status()

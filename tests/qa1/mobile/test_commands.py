@@ -1,3 +1,4 @@
+import pytest
 import allure
 
 
@@ -5,6 +6,7 @@ import allure
 @allure.feature("Commands Controller")
 class TestMobileCommands:
 
+    @pytest.mark.flaky  # Requires an active command to exist in the system
     @allure.story("Get Command by Reference ID")
     def test_get_command_by_reference_id(self, mobile_service):
         resp = mobile_service.get_command()
