@@ -62,10 +62,28 @@ class FieldIOService:
         return self._client.get(FieldIOEndpoints.icons())
 
     # IO
+    def _resolve_io_id(self) -> str:
+        if '_io_id' not in self.__dict__:
+            tried = []
+            for farm_id in self._FALLBACK_FARM_IDS:
+                resp = self._client.get(FieldIOEndpoints.ios(), params={"farmId": farm_id})
+                if resp.status_code != 200:
+                    tried.append(farm_id)
+                    continue
+                data = resp.json()
+                items = data if isinstance(data, list) else data.get('ios', data.get('items', []))
+                for item in (items if isinstance(items, list) else []):
+                    uuid = item.get('channelUuid') or item.get('id')
+                    if uuid:
+                        self._io_id = uuid
+                        return self._io_id
+                tried.append(farm_id)
+            pytest.skip(f"No IO items found in any farm (tried: {tried})")
+        return self._io_id
+
     def get_io(self) -> ApiResponse:
-        if not self._data.io_id:
-            pytest.skip("ioId not configured")
-        return self._client.get(FieldIOEndpoints.io(self._data.io_id))
+        io_id = self._data.io_id or self._resolve_io_id()
+        return self._client.get(FieldIOEndpoints.io(io_id))
 
     def get_ios(self) -> ApiResponse:
         params = {"farmId": self._data.farm_id} if self._data.farm_id else None
