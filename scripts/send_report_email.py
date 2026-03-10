@@ -158,7 +158,7 @@ def build_html(s: dict, env_name: str, test_info: str,
               &nbsp;<strong style="color: #ecf0f1;">QA1 API Tests</strong>
             </td>
             <td style="text-align: right; color: #7f8fa4;">
-              CSAPI &middot; FieldIO &middot; DataAPI &middot; Irrigation &middot; CropService &middot; Weather
+              CSAPI &middot; FieldIO &middot; DataAPI &middot; Irrigation &middot; IrrigationManager &middot; CropService &middot; CommandsManager &middot; DeviceStateManager &middot; Mobile &middot; LookupService &middot; ReportAPI &middot; SettingsAPI &middot; AccountManagement &middot; Weather
             </td>
           </tr>
           <tr>
