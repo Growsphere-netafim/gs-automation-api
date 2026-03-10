@@ -2,6 +2,7 @@
 Token Manager - Smart token caching and management
 Prevents unnecessary authentication requests
 """
+import logging
 import time
 import jwt
 from typing import Optional, Dict
@@ -52,22 +53,38 @@ class TokenManager:
     
     def _authenticate_and_cache(self) -> str:
         """
-        Authenticate and cache the new token
+        Authenticate and cache the new token.
+        Tries USER_EMAIL first, then each user in USER_EMAIL_POOL if auth fails.
         Returns: New access token
         """
-        access_token = self.oauth_client.authenticate()
-        
-        # Decode token to get expiration time
-        expires_at = self._get_token_expiration(access_token)
-        
-        # Cache the token
-        self._token_cache[self.user_email] = {
-            'token': access_token,
-            'expires_at': expires_at,
-            'cached_at': time.time()
-        }
-        
-        return access_token
+        pool_str = self.settings.USER_EMAIL_POOL
+        candidates = [self.user_email]
+        if pool_str:
+            extras = [u.strip() for u in pool_str.split(",") if u.strip() and u.strip() != self.user_email]
+            candidates.extend(extras)
+
+        last_error = None
+        for email in candidates:
+            try:
+                client = OAuth2Client(self.session, email, self.settings)
+                access_token = client.authenticate()
+                expires_at = self._get_token_expiration(access_token)
+                self._token_cache[self.user_email] = {
+                    'token': access_token,
+                    'expires_at': expires_at,
+                    'cached_at': time.time()
+                }
+                if email != self.user_email:
+                    logging.getLogger(__name__).warning(
+                        "Primary user %s failed — authenticated as fallback user %s",
+                        self.user_email, email,
+                    )
+                return access_token
+            except Exception as e:
+                last_error = e
+                continue
+
+        raise RuntimeError(f"All {len(candidates)} users failed to authenticate. Last error: {last_error}")
     
     @staticmethod
     def _is_token_valid(token: str, expires_at: float) -> bool:
