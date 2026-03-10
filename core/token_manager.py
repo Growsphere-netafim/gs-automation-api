@@ -2,6 +2,7 @@
 Token Manager - Smart token caching and management
 Prevents unnecessary authentication requests
 """
+import logging
 import time
 import jwt
 from typing import Optional, Dict
@@ -65,7 +66,6 @@ class TokenManager:
         last_error = None
         for email in candidates:
             try:
-                from core.auth import OAuth2Client
                 client = OAuth2Client(self.session, email, self.settings)
                 access_token = client.authenticate()
                 expires_at = self._get_token_expiration(access_token)
@@ -75,7 +75,6 @@ class TokenManager:
                     'cached_at': time.time()
                 }
                 if email != self.user_email:
-                    import logging
                     logging.getLogger(__name__).warning(
                         "Primary user %s failed — authenticated as fallback user %s",
                         self.user_email, email,
