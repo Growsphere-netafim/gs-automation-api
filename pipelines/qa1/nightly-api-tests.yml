@@ -168,6 +168,7 @@ stages:
               OIDC_REDIRECT_URI: 'https://localhost:4200/authentication/login-callback'
               SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
               USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
               ENV_NAME: ${{ parameters.app_env }}
               CI: 'true'
             continueOnError: true

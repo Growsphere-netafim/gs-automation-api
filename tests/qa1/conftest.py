@@ -1,4 +1,5 @@
 import os
+import logging
 import pytest
 import allure
 import requests
@@ -7,6 +8,8 @@ from config.settings import get_settings
 from core.token_manager import TokenManager
 from api.client.api_client import QAApiClient
 from core.test_data import TestData
+
+log = logging.getLogger(__name__)
 
 
 def create_service_fixtures(config_class, api_customizer=None):
@@ -33,6 +36,10 @@ def create_service_fixtures(config_class, api_customizer=None):
 
     @pytest.fixture(scope="session")
     def auth_token(token_manager):
+        pre_token = os.getenv("AUTH_TOKEN")
+        if pre_token:
+            log.info("Using pre-stored AUTH_TOKEN from environment (skipping login)")
+            return pre_token
         try:
             return token_manager.get_or_fetch_token()
         except Exception as e:
