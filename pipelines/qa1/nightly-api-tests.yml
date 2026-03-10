@@ -146,6 +146,13 @@ stages:
               echo " Environment : ${{ parameters.app_env }}"
               echo " Suite       : ${{ parameters.test_suite }}"
               echo "==================================================="
+              echo "--- ENV VAR LENGTHS (secrets not exposed) ---"
+              echo "USER_EMAIL      : $USER_EMAIL"
+              echo "PASSWORD length : ${#PASSWORD}"
+              echo "IDS_URL         : $IDS_URL"
+              echo "AUTH_TOKEN len  : ${#AUTH_TOKEN}"
+              echo "USER_EMAIL_POOL : $USER_EMAIL_POOL"
+              echo "---------------------------------------------"
 
               TEST_PATHS="tests/qa1/"
 
@@ -155,6 +162,7 @@ stages:
                 --tb=short \
                 -v \
                 -ra \
+                -s \
                 -m "not flaky" \
                 -W ignore::DeprecationWarning \
                 -W ignore::urllib3.exceptions.InsecureRequestWarning \
