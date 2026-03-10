@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     # ============= Authentication =============
     USER_EMAIL: str = Field(default="test@example.com")
     PASSWORD: str = Field(default="")
+    # Comma-separated fallback users for CI (tried in order if primary fails)
+    USER_EMAIL_POOL: str = Field(default="")
     
     # OAuth2 Configuration
     OIDC_CLIENT_ID: str = Field(default="")
