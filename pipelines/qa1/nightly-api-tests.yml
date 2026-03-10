@@ -36,9 +36,9 @@ parameters:
     type: string
 
 variables:
-  - group: gs-automation-api
   - group: pipelines-access-config
   - group: nonprod-netbeatvx-services-vg
+  - group: gs-automation-api
 
 name: gs-automation-api-${{ parameters.app_env }}-${{ parameters.test_info }}
 
