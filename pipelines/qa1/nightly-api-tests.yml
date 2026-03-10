@@ -32,7 +32,7 @@ parameters:
     type: string
 
   - name: recipient_email
-    default: 'yakir.moshe@netafim.com, ron.ovadia@netafim.com, amit.parizian@netafim.com, yalowe.gibte@netafim.com, yara.aburuken@netafim.com'
+    default: 'yakir.moshe@netafim.com'
     type: string
 
 variables:

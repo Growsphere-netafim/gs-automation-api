@@ -87,6 +87,19 @@ class TokenManager:
         raise RuntimeError(f"All {len(candidates)} users failed to authenticate. Last error: {last_error}")
     
     @staticmethod
+    def is_token_valid(token: str) -> bool:
+        """
+        Check if a JWT token is non-expired (with 60s buffer).
+        Safe to call on any string — returns False on malformed input.
+        """
+        try:
+            decoded = jwt.decode(token, options={"verify_signature": False})
+            exp = decoded.get("exp", 0)
+            return time.time() < (exp - 60)
+        except Exception:
+            return False
+
+    @staticmethod
     def _is_token_valid(token: str, expires_at: float) -> bool:
         """
         Check if token is still valid

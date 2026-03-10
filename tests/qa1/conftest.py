@@ -37,17 +37,20 @@ def create_service_fixtures(config_class, api_customizer=None):
     @pytest.fixture(scope="session")
     def auth_token(token_manager):
         pre_token = os.getenv("AUTH_TOKEN")
-        if pre_token:
+        if pre_token and TokenManager.is_token_valid(pre_token):
             log.info("Using pre-stored AUTH_TOKEN from environment (skipping login)")
             return pre_token
+        if pre_token:
+            log.warning("AUTH_TOKEN from environment is expired or invalid — falling back to OAuth2 login")
         try:
             return token_manager.get_or_fetch_token()
         except Exception as e:
-            print(f"Failed to get token: {e}")
-            return None
+            pytest.skip(f"Authentication failed — skipping all tests: {e}")
 
     @pytest.fixture(scope="session")
     def api(auth_token, data):
+        if not auth_token:
+            pytest.skip("No auth token available")
         client = QAApiClient(base_url=config_class.BASE_URL, token=auth_token)
         if api_customizer:
             api_customizer(client, data)
