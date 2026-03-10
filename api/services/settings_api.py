@@ -23,7 +23,7 @@ class SettingsAPIService:
         self._data = data
 
     def _resolve_device_uuid(self) -> str:
-        """Query DeviceStateManager to find a valid device UUID across fallback farms."""
+        """Find a device UUID that has alert settings configured (probes endpoint per candidate)."""
         if '_device_uuid' not in self.__dict__:
             auth_header = self._client.headers.get("Authorization", "")
             headers = {"Authorization": auth_header, "Accept": "application/json"}
@@ -41,18 +41,29 @@ class SettingsAPIService:
                     items = resp.json()
                     for item in (items if isinstance(items, list) else []):
                         uuid = item.get('fieldIoDeviceId')
-                        if uuid:
+                        if not uuid:
+                            continue
+                        probe = self._client.get(
+                            SettingsAPIEndpoints.alert_settings(farm_id, uuid)
+                        )
+                        if probe.status_code == 200:
                             self._device_uuid = uuid
                             return uuid
                 except Exception:
                     continue
-            pytest.skip("No device UUID found for SettingsAPI tests")
+            pytest.skip("No device UUID with alert settings found across QA1 farms")
         return self._device_uuid
 
     def get_alert_settings(self) -> ApiResponse:
         if not self._data.farm_id:
             pytest.skip("farmId not configured")
-        device_uuid = self._data.device_uuid or self._resolve_device_uuid()
+        if self._data.device_uuid:
+            resp = self._client.get(
+                SettingsAPIEndpoints.alert_settings(self._data.farm_id, self._data.device_uuid)
+            )
+            if resp.status_code != 404:
+                return resp
+        device_uuid = self._resolve_device_uuid()
         return self._client.get(
             SettingsAPIEndpoints.alert_settings(self._data.farm_id, device_uuid)
         )

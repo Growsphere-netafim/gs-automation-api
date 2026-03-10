@@ -51,7 +51,7 @@ class MobileService:
         return self._reference_id
 
     def _resolve_device_uuid(self) -> str:
-        """Fetch first available device UUID across fallback farms."""
+        """Find a device UUID that has general settings configured (probes endpoint)."""
         if '_device_uuid' not in self.__dict__:
             farm_ids = [self._data.farm_id] + [f for f in _FALLBACK_FARM_IDS if f != self._data.farm_id]
             for farm_id in farm_ids:
@@ -63,11 +63,14 @@ class MobileService:
                 data = resp.json()
                 items = data if isinstance(data, list) else data.get('deviceStates', data.get('items', data.get('value', [])))
                 for item in (items if isinstance(items, list) else []):
-                    uuid = item.get('deviceUuid') or item.get('uuid') or item.get('fieldIoDeviceId') or item.get('id')
-                    if uuid:
+                    uuid = item.get('fieldIoDeviceId') or item.get('deviceUuid') or item.get('uuid')
+                    if not uuid:
+                        continue
+                    probe = self._client.get(MobileEndpoints.general_settings(uuid))
+                    if probe.status_code == 200:
                         self._device_uuid = uuid
                         return uuid
-            pytest.skip("No device UUID found across QA1 farms for Mobile tests")
+            pytest.skip("No device with general settings found across QA1 farms")
         return self._device_uuid
 
     def _resolve_flow_uuid(self) -> str:
@@ -146,7 +149,11 @@ class MobileService:
         )
 
     def get_general_settings(self) -> ApiResponse:
-        device_uuid = self._data.device_uuid or self._resolve_device_uuid()
+        if self._data.device_uuid:
+            resp = self._client.get(MobileEndpoints.general_settings(self._data.device_uuid))
+            if resp.status_code != 404:
+                return resp
+        device_uuid = self._resolve_device_uuid()
         return self._client.get(MobileEndpoints.general_settings(device_uuid))
 
     def get_alert_settings(self) -> ApiResponse:
@@ -155,7 +162,11 @@ class MobileService:
         return self._client.get(MobileEndpoints.alert_settings(self._data.device_id))
 
     def get_delay_settings(self) -> ApiResponse:
-        device_uuid = self._data.device_uuid or self._resolve_device_uuid()
+        if self._data.device_uuid:
+            resp = self._client.get(MobileEndpoints.delay_settings(self._data.device_uuid))
+            if resp.status_code != 404:
+                return resp
+        device_uuid = self._resolve_device_uuid()
         return self._client.get(MobileEndpoints.delay_settings(device_uuid))
 
     def get_device_states_by_farm(self) -> ApiResponse:

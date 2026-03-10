@@ -130,7 +130,7 @@ class MobileConfig(CSAPIConfig):
     TEST_DATA.update({
         "farmId": "qa1-nb10047",
         "deviceId": "E7-00-5D-80",
-        "deviceUuid": None,
+        "deviceUuid": 'b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa',
         "referenceId": None,
         "flowUuid": None,
         "programUuid": '286a92ab-b988-42b4-8886-d770518c21d3-PID1',
