@@ -150,28 +150,30 @@ def build_html(s: dict, env_name: str, test_info: str,
 
       <!-- API Coverage section -->
       <div style="margin-top: 24px; padding: 16px 18px; background: #253545; border-radius: 8px; border-left: 4px solid #5dade2;">
-        <p style="margin: 0 0 12px 0; font-size: 11px; color: #5dade2; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">API Test Coverage</p>
-        <table style="width: 100%; font-size: 13px;">
+        <p style="margin: 0 0 12px 0; font-size: 11px; color: #5dade2; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">API Test Coverage — 14 Services</p>
+        <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
           <tr>
-            <td style="padding: 5px 0;">
-              <span style="color: #5dade2; font-size: 10px;">&#9632;</span>
-              &nbsp;<strong style="color: #ecf0f1;">QA1 API Tests</strong>
-            </td>
-            <td style="text-align: right; color: #7f8fa4;">
-              CSAPI &middot; FieldIO &middot; DataAPI &middot; Irrigation &middot; CropService &middot; Weather
-            </td>
+            <td style="padding: 4px 0; color: #85929e; width: 90px;">Core</td>
+            <td style="padding: 4px 0; color: #ecf0f1;">CSAPI &middot; DataAPI &middot; AccountManagement &middot; LookupService &middot; ReportAPI</td>
           </tr>
           <tr>
-            <td style="padding: 5px 0;">
-              <span style="color: #5d6d7e; font-size: 10px;">&#9632;</span>
-              &nbsp;<span style="color: #7f8fa4;">Skipped</span>
-            </td>
-            <td style="text-align: right; color: #5d6d7e;">
-              {skipped} tests &mdash; missing context (deviceId, cropUnitId, seasonId&hellip;)
-            </td>
+            <td style="padding: 4px 0; color: #85929e;">Field</td>
+            <td style="padding: 4px 0; color: #ecf0f1;">FieldIO &middot; DeviceStateManager &middot; CommandsManager &middot; SettingsAPI</td>
+          </tr>
+          <tr>
+            <td style="padding: 4px 0; color: #85929e;">Irrigation</td>
+            <td style="padding: 4px 0; color: #ecf0f1;">Irrigation &middot; IrrigationManager &middot; CropService &middot; Mobile</td>
+          </tr>
+          <tr>
+            <td style="padding: 4px 0; color: #85929e;">Other</td>
+            <td style="padding: 4px 0; color: #ecf0f1;">WeatherForecast</td>
+          </tr>
+          <tr style="border-top: 1px solid #3d5166;">
+            <td style="padding: 8px 0 4px 0; color: #5d6d7e;">Skipped</td>
+            <td style="padding: 8px 0 4px 0; color: #5d6d7e;">{skipped} tests &mdash; missing runtime context (deviceId, cropUnitId, seasonId&hellip;)</td>
           </tr>
         </table>
-        <p style="margin: 12px 0 0 0; font-size: 11px; color: #7f8fa4;">
+        <p style="margin: 10px 0 0 0; font-size: 11px; color: #7f8fa4;">
           Skipped tests are <strong style="color: #ecf0f1;">not failures</strong> &mdash; the pipeline stays
           <span style="color: #2ecc71; font-weight: bold;">GREEN</span> for skipped tests.
         </p>
@@ -255,7 +257,7 @@ def main():
     )
 
     subject = (
-        f"Nightly Report: {args.env_name} - "
+        f"API Nightly Report: {args.env_name} - "
         f"{summary['pass_pct']}% Passed (Build {args.build_id})"
     )
 

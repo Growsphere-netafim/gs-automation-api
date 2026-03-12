@@ -148,7 +148,7 @@ class WeatherForecastConfig(CSAPIConfig):
     BASE_URL = "https://weatherforecast-qa1.k8s.growsphere.netafim.com"
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
-        "farmId": "qa1-nb10000",
+        "farmId": "qa1-nb10047",
         "startDate": "2024-01-01",
         "endDate": "2024-01-31",
         "avarageYears": 3
