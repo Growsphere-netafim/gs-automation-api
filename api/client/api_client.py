@@ -22,6 +22,7 @@ class QAApiClient:
 
         retry = Retry(
             total=_RETRIES,
+            read=0,  # don't retry on read timeouts — fail fast
             backoff_factor=1,
             status_forcelist=_RETRY_STATUSES,
             allowed_methods=["GET"],

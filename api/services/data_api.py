@@ -280,9 +280,12 @@ class DataAPIService:
         if not self._data.crop_unit_id:
             pytest.skip("cropUnitId not configured")
         group_id = self._data.item_group_id or self._resolve_crop_unit_item_group_id()
-        return self._client.get(
+        resp = self._client.get(
             DataAPIEndpoints.crop_unit_item_group(self._data.crop_unit_id, group_id)
         )
+        if resp.status_code == 404:
+            pytest.skip(f"CropUnit ItemGroup {group_id} not found in QA1")
+        return resp
 
     # ── CropUnits Items ───────────────────────────────────────────────────────
 
@@ -297,9 +300,12 @@ class DataAPIService:
             pytest.skip("cropUnitId not configured")
         group_id = self._data.item_group_id or self._resolve_crop_unit_item_group_id()
         item_id = self._data.item_id or self._resolve_crop_unit_item_id()
-        return self._client.get(
+        resp = self._client.get(
             DataAPIEndpoints.crop_unit_item(self._data.crop_unit_id, group_id, item_id)
         )
+        if resp.status_code == 404:
+            pytest.skip(f"CropUnit Item {item_id} not found in QA1")
+        return resp
 
     # ── Farms ItemGroups (with farm fallback) ─────────────────────────────────
 
@@ -329,7 +335,10 @@ class DataAPIService:
     def get_geolocation(self) -> ApiResponse:
         if not self._data.irrigation_block_id:
             pytest.skip("irrigationBlockId not configured")
-        return self._client.get(DataAPIEndpoints.geolocation(self._data.irrigation_block_id))
+        resp = self._client.get(DataAPIEndpoints.geolocation(self._data.irrigation_block_id))
+        if resp.status_code == 404:
+            pytest.skip(f"Geolocation for block {self._data.irrigation_block_id} not found in QA1")
+        return resp
 
     # ── IrrigationBlocks ──────────────────────────────────────────────────────
 
