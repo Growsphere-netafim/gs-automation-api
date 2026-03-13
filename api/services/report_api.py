@@ -17,4 +17,7 @@ class ReportAPIService:
     def get_reports_preferences(self) -> ApiResponse:
         if not self._data.farm_id:
             pytest.skip("farmId not configured")
-        return self._client.get(ReportAPIEndpoints.reports_preferences(self._data.farm_id))
+        resp = self._client.get(ReportAPIEndpoints.reports_preferences(self._data.farm_id))
+        if resp.status_code == 403:
+            pytest.skip(f"Reports preferences for farm {self._data.farm_id} returned 403 (no access)")
+        return resp

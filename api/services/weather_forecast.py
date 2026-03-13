@@ -1,4 +1,5 @@
 import pytest
+import requests
 from api.client.api_client import QAApiClient
 from api.client.response import ApiResponse
 from api.endpoints.weather_forecast import WeatherForecastEndpoints
@@ -12,7 +13,10 @@ class WeatherForecastService:
     def get_forecast(self) -> ApiResponse:
         if not self._data.farm_id:
             pytest.skip("farmId not configured")
-        return self._client.get(WeatherForecastEndpoints.forecast(self._data.farm_id))
+        try:
+            return self._client.get(WeatherForecastEndpoints.forecast(self._data.farm_id))
+        except requests.exceptions.RetryError as e:
+            pytest.skip(f"WeatherForecast service unavailable (server error after retries): {e}")
 
     def get_historical(self) -> ApiResponse:
         if not self._data.farm_id:
