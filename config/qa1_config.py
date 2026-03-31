@@ -155,7 +155,7 @@ class WeatherForecastConfig(CSAPIConfig):
     })
 
 class ReportAPIConfig(CSAPIConfig):
-    BASE_URL = "https://qa1-netbeatvx-reportapi-app-weu.azurewebsites.net"
+    BASE_URL = "https://reportapi-qa1.k8s.growsphere.netafim.com"
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
         "farmId": "qa1-nb14911",
