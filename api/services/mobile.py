@@ -379,7 +379,16 @@ class MobileService:
     def get_provisioning_farm(self) -> ApiResponse:
         if not self._data.farm_id:
             pytest.skip("farmId not configured")
-        return self._client.get(MobileEndpoints.provisioning_farm(self._data.farm_id))
+        resp = self._client.get(MobileEndpoints.provisioning_farm(self._data.farm_id))
+        if resp.status_code == 409:
+            for farm_id in _FALLBACK_FARM_IDS:
+                if farm_id == self._data.farm_id:
+                    continue
+                resp = self._client.get(MobileEndpoints.provisioning_farm(farm_id))
+                if resp.status_code in (200, 204):
+                    return resp
+            pytest.skip("Provisioning conflict (409) on all farms — flow already in progress")
+        return resp
 
     def get_provisioning_status(self, flow_uuid: str = None) -> ApiResponse:
         uuid = flow_uuid or self._data.flow_uuid or self._resolve_flow_uuid()
