@@ -152,3 +152,11 @@ class ProdReportAPIConfig(CSAPIConfig):
 class ProdSettingsAPIConfig(CSAPIConfig):
     BASE_URL = "https://settingsapi.k8s.growsphere.netafim.com"
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
+    TEST_DATA.update({
+        "deviceUuid": None,
+    })
+
+
+class ProdAccountManagementConfig(CSAPIConfig):
+    BASE_URL = "https://accountmanagement.k8s.growsphere.netafim.com"
+    TEST_DATA = CSAPIConfig.TEST_DATA.copy()

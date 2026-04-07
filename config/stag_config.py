@@ -192,3 +192,12 @@ class StagReportAPIConfig(CSAPIConfig):
 class StagSettingsAPIConfig(CSAPIConfig):
     BASE_URL = "https://settingsapi-stag.k8s.growsphere.netafim.com"
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
+    TEST_DATA.update({
+        "farmId": "qa1-nb10047",
+        "deviceUuid": None,
+    })
+
+
+class StagAccountManagementConfig(CSAPIConfig):
+    BASE_URL = "https://accountmanagement-stag.k8s.growsphere.netafim.com"
+    TEST_DATA = CSAPIConfig.TEST_DATA.copy()
