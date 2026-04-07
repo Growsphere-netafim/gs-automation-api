@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     """
     
     # ============= Environment =============
-    ENV_NAME: Literal["prod", "test", "local", "qa1"] = Field(default="test")
+    ENV_NAME: Literal["prod", "test", "local", "qa1", "stag"] = Field(default="test")
     
     # ============= Authentication =============
     USER_EMAIL: str = Field(default="test@example.com")

@@ -17,16 +17,35 @@ def create_service_fixtures(config_class, api_customizer=None):
 
     Args:
         config_class: The service config class (must have BASE_URL and TEST_DATA).
+                      May optionally define IDS_URL, OIDC_CLIENT_ID, OIDC_REDIRECT_URI,
+                      and ENV_NAME to override auth settings per environment (stag/prod).
         api_customizer: Optional callable(client, data) to customize the API client
                         (e.g. adding custom headers).
 
     Returns:
         Dict of fixture functions keyed by name.
     """
+    # Read per-environment auth overrides from the config class (optional)
+    _ids_url = getattr(config_class, 'IDS_URL', None)
+    _client_id = getattr(config_class, 'OIDC_CLIENT_ID', None)
+    _redirect_uri = getattr(config_class, 'OIDC_REDIRECT_URI', None)
+    _env_name = getattr(config_class, 'ENV_NAME', None)
 
     @pytest.fixture(scope="session")
     def settings():
-        return get_settings()
+        base = get_settings()
+        overrides = {}
+        if _ids_url:
+            overrides["IDS_URL"] = _ids_url
+        if _client_id:
+            overrides["OIDC_CLIENT_ID"] = _client_id
+        if _redirect_uri:
+            overrides["OIDC_REDIRECT_URI"] = _redirect_uri
+        if _env_name:
+            overrides["ENV_NAME"] = _env_name
+        if overrides:
+            return base.model_copy(update=overrides)
+        return base
 
     @pytest.fixture(scope="session")
     def token_manager(settings):
