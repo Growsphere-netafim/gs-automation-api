@@ -29,6 +29,9 @@ class TokenManager:
         self.user_email = user_email
         self.settings = settings
         self.oauth_client = OAuth2Client(session, user_email, settings)
+        # Cache key includes IDS URL so different environments don't share tokens
+        ids_host = settings.IDS_URL.rstrip("/").split("/")[-1] if settings.IDS_URL else "default"
+        self._cache_key = f"{user_email}::{ids_host}"
     
     def get_token(self) -> str:
         """
@@ -37,12 +40,12 @@ class TokenManager:
         """
         with self._cache_lock:
             # Check if token exists and is still valid
-            if self.user_email in self._token_cache:
-                cached_data = self._token_cache[self.user_email]
-                
+            if self._cache_key in self._token_cache:
+                cached_data = self._token_cache[self._cache_key]
+
                 if self._is_token_valid(cached_data['token'], cached_data['expires_at']):
                     return cached_data['token']
-            
+
             # Token doesn't exist or expired - get new one
             new_token = self._authenticate_and_cache()
             return new_token
@@ -69,7 +72,7 @@ class TokenManager:
                 client = OAuth2Client(self.session, email, self.settings)
                 access_token = client.authenticate()
                 expires_at = self._get_token_expiration(access_token)
-                self._token_cache[self.user_email] = {
+                self._token_cache[self._cache_key] = {
                     'token': access_token,
                     'expires_at': expires_at,
                     'cached_at': time.time()
@@ -135,9 +138,9 @@ class TokenManager:
         If user_email is None, invalidate current user's token
         """
         with self._cache_lock:
-            email = user_email or self.user_email
-            if email in self._token_cache:
-                del self._token_cache[email]
+            key = self._cache_key if user_email is None else user_email
+            if key in self._token_cache:
+                del self._token_cache[key]
     
     @classmethod
     def clear_all_tokens(cls):

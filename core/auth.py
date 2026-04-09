@@ -137,7 +137,11 @@ class OAuth2Client:
         query_params = parse_qs(query_string)
 
         # Determine tenant based on environment
-        tenant = "netafim-qa" if self.env_name != "prod" else "netafim"
+        _tenant_map = {
+            "prod": "netafim",
+            "stag": "netafim-test",
+        }
+        tenant = _tenant_map.get(self.env_name, "netafim-qa")
 
         login_payload = {
             "client_id": query_params.get('client', [None])[0],
