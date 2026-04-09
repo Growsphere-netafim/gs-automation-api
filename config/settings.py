@@ -122,7 +122,7 @@ class Settings(BaseSettings):
                 "ids_url": self.IDS_URL,
                 "account_management": self.ACCOUNT_MANAGEMENT_URL,
             }
-        else:  # local
+        elif self.ENV_NAME == "local":
             return {
                 "user_portal": self.LOCAL_URL,
                 "csapi_url": self.LOCAL_URL,
@@ -131,6 +131,9 @@ class Settings(BaseSettings):
                 "ids_url": self.IDS_URL,
                 "account_management": self.ACCOUNT_MANAGEMENT_URL,
             }
+        else:
+            # qa1, stag — service configs use BASE_URL directly, not settings.base_urls
+            return {}
     
     @property
     def swagger_source(self) -> str:
