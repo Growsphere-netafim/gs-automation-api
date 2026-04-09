@@ -4,8 +4,8 @@ trigger:
 pr: none
 
 schedules:
-  - cron: "0 20 * * *"
-    displayName: Nightly 10:00 PM Israel
+  - cron: "0 19 * * *"
+    displayName: Nightly 9:00 PM Israel
     branches:
       include:
         - main
@@ -13,7 +13,7 @@ schedules:
 
 parameters:
   - name: app_env
-    default: qa1
+    default: stag
     type: string
 
   - name: test_info
@@ -21,11 +21,11 @@ parameters:
     type: string
 
   - name: test_suite
-    default: qa1
+    default: stag
     displayName: Test Suite to Run
     type: string
     values:
-      - qa1
+      - stag
 
   - name: enable_reporting
     default: 'true'
@@ -38,14 +38,15 @@ parameters:
 variables:
   - group: pipelines-access-config
   - group: nonprod-netbeatvx-services-vg
-  - group: gs-automation-api
+  # Staging-specific credentials: USER_EMAIL, PASSWORD, IDS_URL, USER_EMAIL_POOL, AUTH_TOKEN
+  - group: gs-automation-api-stag
 
 name: gs-automation-api-${{ parameters.app_env }}-${{ parameters.test_info }}
 
 stages:
 
   # ────────────────────────────────────────────────────────────────
-  # Run all API integration tests
+  # Run all API integration tests against the STAG environment
   # ────────────────────────────────────────────────────────────────
   - stage: RunAPITests
     displayName: API Integration Tests
@@ -137,7 +138,7 @@ stages:
               fi
             displayName: Restore Allure History
 
-          # ── 5. Run pytest ─────────────────────────────────────────
+          # ── 5. Run pytest against tests/stag/ ────────────────────
           #   Exit 0 (pass/skip) => GREEN
           #   Exit 1 (failures)  => RED  (via PublishTestResults)
           - script: |
@@ -146,7 +147,7 @@ stages:
               echo " Environment : ${{ parameters.app_env }}"
               echo " Suite       : ${{ parameters.test_suite }}"
               echo "==================================================="
-              TEST_PATHS="tests/qa1/"
+              TEST_PATHS="tests/stag/"
 
               python -m pytest $TEST_PATHS \
                 --alluredir=reports/allure-results \
@@ -163,8 +164,9 @@ stages:
               USER_EMAIL: $(USER_EMAIL)
               PASSWORD: $(PASSWORD)
               IDS_URL: $(IDS_URL)
-              OIDC_CLIENT_ID: 'growsphere-userportal'
-              OIDC_REDIRECT_URI: 'https://localhost:4200/authentication/login-callback'
+              # STAG uses the admin portal client (not userportal)
+              OIDC_CLIENT_ID: 'growsphere-adminportal'
+              OIDC_REDIRECT_URI: 'https://stagnetbeatvxadminst.z6.web.core.windows.net/login-callback'
               SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
               USER_EMAIL_POOL: $(USER_EMAIL_POOL)
               AUTH_TOKEN: $(AUTH_TOKEN)
