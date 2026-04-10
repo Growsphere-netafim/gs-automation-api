@@ -18,6 +18,7 @@ class TestMobileDevices:
     def test_get_general_settings(self, mobile_service):
         mobile_service.get_general_settings().assert_ok()
 
+    @pytest.mark.flaky  # alert settings not configured for deviceId E7-00-53-C2 in STAG — need a device with alert-settings data in the mobile BFF
     @allure.story("Get Alert Settings")
     def test_get_alert_settings(self, mobile_service):
         mobile_service.get_alert_settings().assert_ok()
