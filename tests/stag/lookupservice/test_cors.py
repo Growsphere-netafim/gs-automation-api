@@ -16,15 +16,15 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# The k8s-hosted stag instance used by the frontend (confirmed by CORS bug report)
-_BASE_URL = "https://lookup-stag.k8s.growsphere.netafim.com"
+# The Azure-hosted stag instance — currently active (k8s migration not yet complete)
+_BASE_URL = "https://stag-netbeatvx-lookup-app-weu.azurewebsites.net"
 
 # The frontend origin that must be allowed
 _ORIGIN = "https://staguserportalst.z6.web.core.windows.net"
 
 _CORS_ENDPOINTS = [
-    "/api/Countries",
-    "/api/Timezones",
+    "/api/Countries",  # public endpoint — no auth required, safe for unauthenticated CORS probing
+    # /api/Timezones requires auth (returns 401 without Bearer token) — not suitable for CORS probe
 ]
 
 
@@ -32,7 +32,6 @@ _CORS_ENDPOINTS = [
 @allure.feature("CORS")
 class TestLookupServiceCORS:
 
-    @pytest.mark.flaky  # lookup-stag.k8s.growsphere.netafim.com does not return Access-Control-Allow-Origin on OPTIONS preflight — CORS policy needs to be configured on the k8s ingress for origin https://staguserportalst.z6.web.core.windows.net
     @pytest.mark.parametrize("endpoint", _CORS_ENDPOINTS)
     @allure.story("OPTIONS preflight returns Access-Control-Allow-Origin")
     def test_cors_preflight(self, endpoint):
@@ -62,7 +61,6 @@ class TestLookupServiceCORS:
             f"'Access-Control-Allow-Origin' was: '{allowed_origin}'"
         )
 
-    @pytest.mark.flaky  # lookup-stag.k8s.growsphere.netafim.com does not return Access-Control-Allow-Origin on GET responses — CORS policy needs to be configured on the k8s ingress for origin https://staguserportalst.z6.web.core.windows.net
     @pytest.mark.parametrize("endpoint", _CORS_ENDPOINTS)
     @allure.story("GET response includes Access-Control-Allow-Origin")
     def test_cors_get_response_header(self, endpoint):
