@@ -10,12 +10,13 @@ class _ProdBase(CSAPIConfig):
       client_id:    growsphere-adminportal
       redirect_uri: https://prodnetbeatvxadminst.z6.web.core.windows.net/login-callback
 
-    User identity decoded from prod JWT (yalowe.gibte@netafim.com):
-      userId:       7efe92c5-a42f-4920-917e-e91220e22c45
-      enterpriseId: 3120
-      distributorId: 852a1699-71af-4653-9c6e-1e4be9ccb044
-      farms: prod-nb10023, prod-nb10525, prod-nb11220, prod-nb12854,
-             prod-nb12859, prod-nb12860, prod-nb12867, prod-nb12888
+    User identity for yakir.moshe@netafim.com in PROD:
+      userId:       fc0d5d86-f765-48cc-8741-548cdb7d38c1
+      enterpriseId: 3497  (name: "Qqq")
+      distributorId: d662300e-01ef-476d-8437-19ebb80d6e33  (IL)
+      dealerId:     88ea3d84-57dd-4d5d-9d1b-1c21c97cb2c8  (Israel)
+      farms (enterprise 3497): prod-nb10525, prod-nb10704, prod-nb10705, ...
+      farmId used for FieldIO/DataAPI/Mobile/Irrigation: prod-nb10704  (eYehudit — has FieldIO devices)
     """
     ENV_NAME = "prod"
     IDS_URL = "https://prod-netbeatvx-ids-app-weu.azurewebsites.net/"
@@ -24,10 +25,11 @@ class _ProdBase(CSAPIConfig):
 
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
-        "enterpriseId": 3120,
-        "farmId": "prod-nb10023",
-        "userId": "7efe92c5-a42f-4920-917e-e91220e22c45",
-        "distributorId": "852a1699-71af-4653-9c6e-1e4be9ccb044",
+        "enterpriseId": 3497,
+        "farmId": "prod-nb10525",   # enterprise 3497 farm — used by CSAPI tests
+        "userId": "fc0d5d86-f765-48cc-8741-548cdb7d38c1",
+        "distributorId": "d662300e-01ef-476d-8437-19ebb80d6e33",
+        "dealerId": "88ea3d84-57dd-4d5d-9d1b-1c21c97cb2c8",
     })
 
 
@@ -49,7 +51,7 @@ class ProdCropServiceConfig(_ProdBase):
         "soilTypeId": 1,
         "varietyId": 1,
         "protocolId": 1,
-        "irrigationBlockId": "a217e28d-7aa1-43dc-9ae9-1996d1037395",
+        "irrigationBlockId": None,   # no IrrigationBlocks in PROD for this user
     })
 
 
@@ -57,8 +59,17 @@ class ProdDataAPIConfig(_ProdBase):
     BASE_URL = "https://dataapi.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
+        # prod-nb10704 is the farm with FieldIO devices
+        "farmId": "prod-nb10704",
         "cropProtocolId": 10,
-        "cropUnitId": "0a1e91a7-4223-4e9d-ba84-19d410de1753",
+        "cropUnitId": None,          # no CropUnits exist in PROD for this user
+        "deviceId": "18766562-e4c3-4a2d-b302-0ac3bb6775c3",   # A0PM5052-R-ETHL2200000248
+        "deviceUuid": "18766562-e4c3-4a2d-b302-0ac3bb6775c3",
+        "irrigationBlockId": None,   # no IrrigationBlocks in PROD for this user
+        "itemGroupId": None,         # no ItemGroups in PROD for this user
+        "itemId": None,              # no Items in PROD for this user
+        "shapeId": None,             # no Shapes in PROD for this user
+        "seasonId": None,
         "parameterId": 1,
         "date": "2024-01-01",
         "year": 2024,
@@ -85,12 +96,25 @@ class ProdFieldIOConfig(_ProdBase):
     BASE_URL = "https://fieldio.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
+        # prod-nb10704 is the farm with actual FieldIO devices/bases
+        "farmId": "prod-nb10704",
+        "deviceReferenceId": "A0PM5052-R-ETHL2200000248",
+        "baseId": "8fdf46b2-2733-41c4-8201-0716cc837812",    # E7-00-53-C5 base
+        "remoteId": "4783a3e1-fbaf-4747-861c-ffbf85f125fe",
+        "repeaterId": None,
+        "ioId": "744c1bd6-1fb7-44c4-2ae6-08da5aa6f94f",
+        "channelId": "1-1-1-0",
+        "ioGroupId": "a01bd4a6-820d-490b-a077-08da5aa6f94c",
+        "thresholdId": None,
         "ioDeviceTypeId": 1,
         "ioTypeId": 4,
         "systemTypeId": 1,
+        "iconId": None,
         "includeDeleted": False,
         "includeInactive": False,
         "onlyActiveDevices": True,
+        "from": "2024-01-01",
+        "to": "2024-12-31",
         "page": 1,
         "pageSize": 10,
         "unitSystem": "Metric",
@@ -102,12 +126,17 @@ class ProdMobileConfig(_ProdBase):
     BASE_URL = "https://mobilebff.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceId": "E7-00-5D-80",
-        "deviceUuid": "b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa",
-        "programUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "irrigationProgramUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "deviceProgramId": 1,
-        "baseUuid": "fa573ba6-47f2-42eb-93f1-08870733af79",
+        # prod-nb10704 is the farm with mobile devices
+        "farmId": "prod-nb10704",
+        "deviceId": "E7-00-53-C5",
+        "deviceUuid": "8fdf46b2-2733-41c4-8201-0716cc837812",
+        "referenceId": None,
+        "flowUuid": None,
+        "programUuid": None,              # no irrigation programs in PROD for this user/farm
+        "irrigationProgramUuid": None,    # no irrigation programs in PROD for this user/farm
+        "deviceProgramId": None,
+        "baseUuid": "8fdf46b2-2733-41c4-8201-0716cc837812",   # E7-00-53-C5
+        "userDeviceGraphId": None,
         "commandType": 1,
         "systemType": 1,
         "unitSystem": "Metric",
@@ -119,15 +148,21 @@ class ProdIrrigationConfig(_ProdBase):
     BASE_URL = "https://irrigation.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceUuid": "b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa",
-        "programUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "deviceProgramId": 1,
-        "mainlineId": 1,
+        # prod-nb10704 + A0PM5052-R-ETHL2200000248 device
+        "farmId": "prod-nb10704",
+        "deviceUuid": "18766562-e4c3-4a2d-b302-0ac3bb6775c3",  # A0PM5052-R-ETHL2200000248
+        "programUuid": None,           # no program schemes in PROD for this user/farm
+        "deviceProgramId": None,
+        "mainlineId": None,            # no mainlines in PROD for this user/farm
+        "recipeId": None,
+        "ioId": None,
         "startDate": "2024-01-01",
         "endDate": "2024-01-31",
         "date": "2024-01-01",
         "daysBack": 7,
         "systemType": "Flex",
+        "updatedDateUtc": "2024-01-01T00:00:00Z",
+        "timestamp": "2024-01-01T00:00:00Z",
     })
 
 
@@ -144,7 +179,9 @@ class ProdCommandsManagerConfig(_ProdBase):
     BASE_URL = "https://commandsmanager.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceId": "E7-00-5D-80",
+        "farmId": "prod-nb10704",
+        "deviceId": "E7-00-53-C5",
+        "referenceId": None,
         "unitSystem": "Metric",
         "farmTimezone": "Israel Standard Time",
     })
@@ -154,7 +191,9 @@ class ProdDeviceStateManagerConfig(_ProdBase):
     BASE_URL = "https://devicestatemanager.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceId": "E7-00-5D-80",
+        "farmId": "prod-nb10704",
+        "deviceId": "E7-00-53-C5",
+        "deviceUuid": "8fdf46b2-2733-41c4-8201-0716cc837812",
         "systemType": 1,
         "fromDateTimeUtc": "2024-01-01T00:00:00Z",
         "toDateTimeUtc": "2024-01-31T23:59:59Z",
@@ -172,10 +211,12 @@ class ProdWeatherForecastConfig(_ProdBase):
 
 
 class ProdReportAPIConfig(_ProdBase):
+    # NOTE: reportapi.k8s.growsphere.netafim.com does not resolve in DNS —
+    # this service may not yet be deployed in the PROD k8s cluster.
     BASE_URL = "https://reportapi.k8s.growsphere.netafim.com"
     TEST_DATA = _ProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "userId": "48f37eda-233e-45cd-bee7-ae204fe94d60",
+        "userId": "fc0d5d86-f765-48cc-8741-548cdb7d38c1",   # yakir.moshe@netafim.com prod userId
     })
 
 
