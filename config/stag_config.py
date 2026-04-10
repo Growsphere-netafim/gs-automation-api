@@ -10,15 +10,13 @@ class _StagBase(CSAPIConfig):
       client_id:    growsphere-adminportal
       redirect_uri: https://stagnetbeatvxadminst.z6.web.core.windows.net/login-callback
 
-    User identity decoded from stag JWT (yalowe.gibte@netafim.com):
-      userId:       46e97dab-0f0e-4c2a-b641-ff1c0b76e8e6
-      enterpriseId: 3205
-      distributorId: 37e468af-28ec-4c4f-89b3-2eea54257afe
-      farms: stag-nb10574, stag-nb10789, stag-nb10878, stag-nb10884,
-             stag-nb10898, stag-nb10944, stag-nb10945, stag-nb10988,
-             stag-nb10991, stag-nb10998, stag-nb11003, stag-nb11012,
-             stag-nb11017, stag-nb11027, stag-nb11045, stag-nb11049,
-             stag-nb11070
+    User identity for yakir.moshe@netafim.com in STAG:
+      userId:       5438128e-20d2-4464-b9c6-2f12b4a69fa1
+      enterpriseId: 3131  (name: "Dvir")
+      distributorId: 09b8ee97-416f-43b9-864e-316dc31e32ce  (Global default distributor)
+      dealerId:     37e468af-28ec-4c4f-89b3-2eea54257afe  (Global default dealer)
+      farms (enterprise 3131): stag-nb10324, stag-nb10361, stag-nb10573, stag-nb10775, stag-nb10893
+      farmId used for FieldIO/DataAPI data: stag-nb10574  (overridden per service below)
     """
     ENV_NAME = "stag"
     IDS_URL = "https://stag-netbeatvx-ids-app-weu.azurewebsites.net/"
@@ -27,10 +25,11 @@ class _StagBase(CSAPIConfig):
 
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
-        "enterpriseId": 3205,
-        "farmId": "stag-nb10574",
-        "userId": "46e97dab-0f0e-4c2a-b641-ff1c0b76e8e6",
-        "distributorId": "37e468af-28ec-4c4f-89b3-2eea54257afe",
+        "enterpriseId": 3131,
+        "farmId": "stag-nb10324",   # enterprise 3131 farm — used by CSAPI tests
+        "userId": "5438128e-20d2-4464-b9c6-2f12b4a69fa1",
+        "distributorId": "09b8ee97-416f-43b9-864e-316dc31e32ce",
+        "dealerId": "37e468af-28ec-4c4f-89b3-2eea54257afe",
     })
 
 
@@ -60,16 +59,18 @@ class StagDataAPIConfig(_StagBase):
     BASE_URL = "https://dataapi-stag.k8s.growsphere.netafim.com"
     TEST_DATA = _StagBase.TEST_DATA.copy()
     TEST_DATA.update({
+        # stag-nb10574 is the farm with actual CropUnits and IrrigationBlocks data
+        "farmId": "stag-nb10574",
         "cropProtocolId": 10,
-        "cropUnitId": "0a1e91a7-4223-4e9d-ba84-19d410de1753",
-        "deviceId": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
-        "deviceUuid": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
-        "itemGroupId": "96947182-5e88-4f27-30cc-08ddb17af458",
-        "itemId": "4c005c8a-ecde-4cc8-35be-08ddb17af481",
-        "irrigationBlockId": "f95c0b5d-a470-40fc-9ed1-0f2c2f329950",
+        "cropUnitId": "10af6b5f-8d8f-4ba3-a844-01d5d8d3a5c5",
+        "deviceId": "7527bfef-22bc-4ff6-b1b7-3ee8d007c0e5",
+        "deviceUuid": "7527bfef-22bc-4ff6-b1b7-3ee8d007c0e5",
+        "itemGroupId": None,             # no ItemGroups exist in stag-nb10574
+        "itemId": None,                  # no Items exist in stag-nb10574
+        "irrigationBlockId": "70929175-d2a6-420e-b5ab-069d76ab05a3",
         "seasonId": None,
         "parameterId": 1,
-        "shapeId": "db8b64cf-a288-4c6c-34c2-08db13e6f959",
+        "shapeId": None,                 # no Shapes exist in STAG for this user
         "date": "2024-01-01",
         "year": 2024,
         "month": 1,
@@ -99,13 +100,15 @@ class StagFieldIOConfig(_StagBase):
     BASE_URL = "https://fieldio-stag.k8s.growsphere.netafim.com"
     TEST_DATA = _StagBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceReferenceId": "A0PM5052-R-ETHL2200000211",
-        "baseId": "fa573ba6-47f2-42eb-93f1-08870733af79",
-        "remoteId": "b5910bd5-914a-42ce-9547-021b8575385a",
+        # stag-nb10574 is the farm that has actual FieldIO devices/bases
+        "farmId": "stag-nb10574",
+        "deviceReferenceId": "A0PM5052-R-ETHL2200000242",
+        "baseId": "f4e12747-ae0f-455e-9d69-359c9f630e74",    # E7-00-53-C2 base
+        "remoteId": "854426a1-bd36-446a-8e6b-093b72e9589c",
         "repeaterId": None,
         "ioId": None,
         "channelId": "1-1-1-0",
-        "ioGroupId": "2301e020-45d3-41d7-dab8-08db381d925b",
+        "ioGroupId": "15f5781f-94cd-43a2-cecf-08da6b0df4dc",
         "thresholdId": None,
         "ioDeviceTypeId": 1,
         "ioTypeId": 4,
@@ -127,14 +130,16 @@ class StagMobileConfig(_StagBase):
     BASE_URL = "https://mobilebff-stag.k8s.growsphere.netafim.com"
     TEST_DATA = _StagBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceId": "E7-00-5D-80",
-        "deviceUuid": "b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa",
+        # stag-nb10574 is the farm with mobile devices
+        "farmId": "stag-nb10574",
+        "deviceId": "E7-00-53-C2",
+        "deviceUuid": "f4e12747-ae0f-455e-9d69-359c9f630e74",
         "referenceId": None,
         "flowUuid": None,
-        "programUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "irrigationProgramUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "deviceProgramId": 1,
-        "baseUuid": "fa573ba6-47f2-42eb-93f1-08870733af79",
+        "programUuid": None,             # no irrigation programs in STAG for this user/farm
+        "irrigationProgramUuid": None,   # no irrigation programs in STAG for this user/farm
+        "deviceProgramId": None,
+        "baseUuid": "f4e12747-ae0f-455e-9d69-359c9f630e74",  # E7-00-53-C2
         "userDeviceGraphId": None,
         "commandType": 1,
         "systemType": 1,
@@ -147,9 +152,11 @@ class StagIrrigationConfig(_StagBase):
     BASE_URL = "https://irrigation-stag.k8s.growsphere.netafim.com"
     TEST_DATA = _StagBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "deviceUuid": "b7b68f8e-a536-4e8c-a08e-4fe5a000f9aa",
-        "programUuid": "286a92ab-b988-42b4-8886-d770518c21d3-PID1",
-        "deviceProgramId": 1,
+        # stag-nb10574 + A0PM5052-R-ETHL2200000242 device has mainlines
+        "farmId": "stag-nb10574",
+        "deviceUuid": "7527bfef-22bc-4ff6-b1b7-3ee8d007c0e5",  # A0PM5052-R-ETHL2200000242
+        "programUuid": None,             # no program schemes in STAG for this user/farm
+        "deviceProgramId": None,
         "mainlineId": 1,
         "recipeId": None,
         "ioId": None,
