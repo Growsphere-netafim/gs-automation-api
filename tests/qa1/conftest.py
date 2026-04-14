@@ -30,6 +30,7 @@ def create_service_fixtures(config_class, api_customizer=None):
     _client_id = getattr(config_class, 'OIDC_CLIENT_ID', None)
     _redirect_uri = getattr(config_class, 'OIDC_REDIRECT_URI', None)
     _env_name = getattr(config_class, 'ENV_NAME', None)
+    _user_email = getattr(config_class, 'USER_EMAIL', None)
 
     @pytest.fixture(scope="session")
     def settings():
@@ -43,6 +44,8 @@ def create_service_fixtures(config_class, api_customizer=None):
             overrides["OIDC_REDIRECT_URI"] = _redirect_uri
         if _env_name:
             overrides["ENV_NAME"] = _env_name
+        if _user_email:
+            overrides["USER_EMAIL"] = _user_email
         if overrides:
             return base.model_copy(update=overrides)
         return base

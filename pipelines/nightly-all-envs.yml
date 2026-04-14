@@ -1,0 +1,734 @@
+trigger: none
+
+pr: none
+
+schedules:
+  - cron: "0 20 * * *"
+    displayName: Nightly 10:00 PM Israel (all environments)
+    branches:
+      include:
+        - main
+    always: true
+
+parameters:
+  - name: test_info
+    default: nightly
+    type: string
+
+  - name: recipient_email
+    default: >-
+      yakir.moshe@netafim.com, ron.ovadia@netafim.com,
+      yehudit.schwarz@netafim.com, rawan.abureesh@netafim.com,
+      yael.wainer@netafim.com, amit.parizian@netafim.com,
+      prakash.warake@netafim.com, suratna.nikam@netafim.com,
+      ravikant.beedkar@netafim.com, sumit.kabade@netafim.com,
+      michael.gouskov@netafim.com, yalowe.gibte@netafim.com,
+      yara.aburuken@netafim.com
+    type: string
+
+name: gs-automation-api-all-envs-${{ parameters.test_info }}-$(Date:yyyyMMdd).$(Rev:r)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VARIABLE ISOLATION STRATEGY
+#
+# Each environment runs in its own job so variable groups with overlapping
+# names (USER_EMAIL, PASSWORD, IDS_URL, AUTH_TOKEN) never collide.
+# Pipeline-level variables are kept to the minimum shared across all jobs.
+# ─────────────────────────────────────────────────────────────────────────────
+
+variables:
+  allureVersion: '2.34.1'
+
+stages:
+  - stage: NightlyAllEnvs
+    displayName: Nightly - All Environments
+    jobs:
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 1 - QA1
+      # Variable group: gs-automation-api
+      #   Provides: USER_EMAIL, PASSWORD, IDS_URL, USER_EMAIL_POOL, AUTH_TOKEN
+      # ──────────────────────────────────────────────────────────────
+      - job: TestQA1
+        displayName: "1 - QA1 Tests"
+        timeoutInMinutes: 120
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: gs-automation-api
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          - script: |
+              mkdir -p reports/allure-results reports/junit logs
+            displayName: Create Directories
+
+          - script: |
+              echo "=================================================="
+              echo " QA1 - API Integration Tests"
+              echo "=================================================="
+              python -m pytest tests/qa1/ \
+                --alluredir=reports/allure-results \
+                --junitxml=reports/junit/qa1.xml \
+                --tb=short \
+                -v -ra \
+                -m "not flaky" \
+                -W ignore::DeprecationWarning \
+                -W ignore::urllib3.exceptions.InsecureRequestWarning \
+                -p no:html
+            displayName: Run QA1 Tests
+            continueOnError: true
+            env:
+              USER_EMAIL: $(USER_EMAIL)
+              PASSWORD: $(PASSWORD)
+              IDS_URL: $(IDS_URL)
+              OIDC_CLIENT_ID: 'growsphere-userportal'
+              OIDC_REDIRECT_URI: 'https://localhost:4200/authentication/login-callback'
+              SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
+              USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
+              ENV_NAME: 'qa1'
+              CI: 'true'
+
+          - task: PublishTestResults@2
+            displayName: Publish QA1 JUnit Results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: reports/junit/qa1.xml
+              testRunTitle: "QA1 - ${{ parameters.test_info }}"
+              failTaskOnFailedTests: true
+              failTaskOnMissingResultsFile: false
+            condition: always()
+
+          - script: |
+              python3 scripts/compute_env_stats.py \
+                --junit-xml  reports/junit/qa1.xml \
+                --env-name   qa1 \
+                --output     reports/qa1-stats.json
+            displayName: Compute QA1 Stats
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish QA1 Allure Results
+            inputs:
+              targetPath: reports/allure-results
+              artifact: allure-results-qa1
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish QA1 Stats JSON
+            inputs:
+              targetPath: reports/qa1-stats.json
+              artifact: env-stats-qa1
+            condition: always()
+            continueOnError: true
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 2 - STAG
+      # Variable group: gs-automation-api-stag
+      #   Provides: USER_EMAIL, PASSWORD, IDS_URL, USER_EMAIL_POOL, AUTH_TOKEN
+      # ──────────────────────────────────────────────────────────────
+      - job: TestStag
+        displayName: "2 - STAG Tests"
+        dependsOn: TestQA1
+        condition: always()
+        timeoutInMinutes: 120
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: gs-automation-api-stag
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          - script: |
+              mkdir -p reports/allure-results reports/junit logs
+            displayName: Create Directories
+
+          - script: |
+              echo "=================================================="
+              echo " STAG - API Integration Tests"
+              echo "=================================================="
+              python -m pytest tests/stag/ \
+                --alluredir=reports/allure-results \
+                --junitxml=reports/junit/stag.xml \
+                --tb=short \
+                -v -ra \
+                -m "not flaky" \
+                -W ignore::DeprecationWarning \
+                -W ignore::urllib3.exceptions.InsecureRequestWarning \
+                -p no:html
+            displayName: Run STAG Tests
+            continueOnError: true
+            env:
+              USER_EMAIL: $(USER_EMAIL)
+              PASSWORD: $(PASSWORD)
+              IDS_URL: $(IDS_URL)
+              OIDC_CLIENT_ID: 'growsphere-adminportal'
+              OIDC_REDIRECT_URI: 'https://stagnetbeatvxadminst.z6.web.core.windows.net/login-callback'
+              SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
+              USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
+              ENV_NAME: 'stag'
+              CI: 'true'
+
+          - task: PublishTestResults@2
+            displayName: Publish STAG JUnit Results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: reports/junit/stag.xml
+              testRunTitle: "STAG - ${{ parameters.test_info }}"
+              failTaskOnFailedTests: true
+              failTaskOnMissingResultsFile: false
+            condition: always()
+
+          - script: |
+              python3 scripts/compute_env_stats.py \
+                --junit-xml  reports/junit/stag.xml \
+                --env-name   stag \
+                --output     reports/stag-stats.json
+            displayName: Compute STAG Stats
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish STAG Allure Results
+            inputs:
+              targetPath: reports/allure-results
+              artifact: allure-results-stag
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish STAG Stats JSON
+            inputs:
+              targetPath: reports/stag-stats.json
+              artifact: env-stats-stag
+            condition: always()
+            continueOnError: true
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 3 - PROD
+      # Variable group: gs-automation-api-prod
+      #   Provides: USER_EMAIL, PASSWORD, IDS_URL, USER_EMAIL_POOL, AUTH_TOKEN
+      # ──────────────────────────────────────────────────────────────
+      - job: TestProd
+        displayName: "3 - PROD Tests"
+        dependsOn: TestStag
+        condition: always()
+        timeoutInMinutes: 120
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: gs-automation-api-prod
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          - script: |
+              mkdir -p reports/allure-results reports/junit logs
+            displayName: Create Directories
+
+          - script: |
+              echo "=================================================="
+              echo " PROD - API Integration Tests"
+              echo "=================================================="
+              python -m pytest tests/prod/ \
+                --alluredir=reports/allure-results \
+                --junitxml=reports/junit/prod.xml \
+                --tb=short \
+                -v -ra \
+                -m "not flaky" \
+                -W ignore::DeprecationWarning \
+                -W ignore::urllib3.exceptions.InsecureRequestWarning \
+                -p no:html
+            displayName: Run PROD Tests
+            continueOnError: true
+            env:
+              USER_EMAIL: $(USER_EMAIL)
+              PASSWORD: $(PASSWORD)
+              IDS_URL: $(IDS_URL)
+              OIDC_CLIENT_ID: 'growsphere-adminportal'
+              OIDC_REDIRECT_URI: 'https://prodnetbeatvxadminst.z6.web.core.windows.net/login-callback'
+              SCOPES_VAL: 'openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access'
+              USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
+              ENV_NAME: 'prod'
+              CI: 'true'
+
+          - task: PublishTestResults@2
+            displayName: Publish PROD JUnit Results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: reports/junit/prod.xml
+              testRunTitle: "PROD - ${{ parameters.test_info }}"
+              failTaskOnFailedTests: true
+              failTaskOnMissingResultsFile: false
+            condition: always()
+
+          - script: |
+              python3 scripts/compute_env_stats.py \
+                --junit-xml  reports/junit/prod.xml \
+                --env-name   prod \
+                --output     reports/prod-stats.json
+            displayName: Compute PROD Stats
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish PROD Allure Results
+            inputs:
+              targetPath: reports/allure-results
+              artifact: allure-results-prod
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish PROD Stats JSON
+            inputs:
+              targetPath: reports/prod-stats.json
+              artifact: env-stats-prod
+            condition: always()
+            continueOnError: true
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 4 - CHINA PROD
+      # Variable group: gs-automation-api-china-prod
+      #
+      # PREREQUISITE - Create this variable group in Azure DevOps with:
+      #   PASSWORD        = <china prod account password>
+      #   USER_EMAIL_POOL = (leave empty or set to yalowe.gibte@netafim.com)
+      #   AUTH_TOKEN      = (leave empty - auth is handled by config class)
+      #
+      # Note: USER_EMAIL and IDS_URL are overridden by _ChinaProdBase config
+      # so they are optional in this group. PASSWORD must be present.
+      # ──────────────────────────────────────────────────────────────
+      - job: TestChinaProd
+        displayName: "4 - CHINA PROD Tests"
+        dependsOn: TestProd
+        condition: always()
+        timeoutInMinutes: 120
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: gs-automation-api-china-prod
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          - script: |
+              mkdir -p reports/allure-results reports/junit logs
+            displayName: Create Directories
+
+          - script: |
+              echo "=================================================="
+              echo " CHINA PROD - API Integration Tests"
+              echo "=================================================="
+              python -m pytest tests/china_prod/ \
+                --alluredir=reports/allure-results \
+                --junitxml=reports/junit/china_prod.xml \
+                --tb=short \
+                -v -ra \
+                -m "not flaky" \
+                -W ignore::DeprecationWarning \
+                -W ignore::urllib3.exceptions.InsecureRequestWarning \
+                -p no:html
+            displayName: Run CHINA PROD Tests
+            continueOnError: true
+            env:
+              # USER_EMAIL is overridden by _ChinaProdBase.USER_EMAIL in config class
+              # PASSWORD must come from variable group gs-automation-api-china-prod
+              PASSWORD: $(PASSWORD)
+              USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
+              ENV_NAME: 'china_prod'
+              CI: 'true'
+
+          - task: PublishTestResults@2
+            displayName: Publish CHINA PROD JUnit Results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: reports/junit/china_prod.xml
+              testRunTitle: "CHINA PROD - ${{ parameters.test_info }}"
+              failTaskOnFailedTests: true
+              failTaskOnMissingResultsFile: false
+            condition: always()
+
+          - script: |
+              python3 scripts/compute_env_stats.py \
+                --junit-xml  reports/junit/china_prod.xml \
+                --env-name   china_prod \
+                --output     reports/china_prod-stats.json
+            displayName: Compute CHINA PROD Stats
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish CHINA PROD Allure Results
+            inputs:
+              targetPath: reports/allure-results
+              artifact: allure-results-china_prod
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish CHINA PROD Stats JSON
+            inputs:
+              targetPath: reports/china_prod-stats.json
+              artifact: env-stats-china_prod
+            condition: always()
+            continueOnError: true
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 5 - MERGE, REPORT, EMAIL
+      # Runs after all 4 test jobs regardless of their results.
+      # Variable groups:
+      #   pipelines-access-config  - ADO access token for history restore
+      #   nonprod-netbeatvx-services-vg - SMTP credentials for email
+      # ──────────────────────────────────────────────────────────────
+      - job: MergeAndReport
+        displayName: "5 - Merge Report and Send Email"
+        dependsOn:
+          - TestQA1
+          - TestStag
+          - TestProd
+          - TestChinaProd
+        condition: always()
+        timeoutInMinutes: 30
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: pipelines-access-config
+          - group: nonprod-netbeatvx-services-vg
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          # ── Restore Allure history from the previous unified build ──
+          - task: PowerShell@2
+            displayName: Find Previous Unified Build with History
+            inputs:
+              targetType: inline
+              script: |
+                $headers      = @{ Authorization = "Bearer $(System.AccessToken)"; 'Content-Type' = 'application/json' }
+                $fullBranch   = "$(Build.SourceBranch)"
+                $shortBranch  = "$(Build.SourceBranchName)"
+                $artifactName = "allure-history-api-all-envs-$shortBranch"
+                Write-Host "##vso[task.setvariable variable=shortBranchName]$shortBranch"
+                try {
+                  $uri    = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_apis/build/builds?api-version=6.0&definitions=$(System.DefinitionId)&statusFilter=completed&resultFilter=succeeded,partiallySucceeded,failed&branchName=$fullBranch&`$top=50&queryOrder=queueTimeDescending"
+                  $builds = Invoke-RestMethod -Uri $uri -Headers $headers
+                  foreach ($build in $builds.value) {
+                    if ($build.id -eq $(Build.BuildId)) { continue }
+                    $artUri    = "$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_apis/build/builds/$($build.id)/artifacts?api-version=6.0"
+                    try {
+                      $artifacts = Invoke-RestMethod -Uri $artUri -Headers $headers
+                      foreach ($artifact in $artifacts.value) {
+                        if ($artifact.name -eq $artifactName) {
+                          Write-Host "Found history in build $($build.id)"
+                          Write-Host "##vso[task.setvariable variable=foundHistoryBuildId]$($build.id)"
+                          exit 0
+                        }
+                      }
+                    } catch {}
+                  }
+                  Write-Host "No previous unified history found - starting fresh."
+                } catch {}
+            continueOnError: true
+
+          - task: DownloadBuildArtifacts@0
+            displayName: Download Previous History
+            inputs:
+              buildType: specific
+              project: $(System.TeamProject)
+              pipeline: $(System.DefinitionId)
+              buildVersionToDownload: specific
+              buildId: $(foundHistoryBuildId)
+              artifactName: allure-history-api-all-envs-$(Build.SourceBranchName)
+              downloadPath: $(Build.SourcesDirectory)/history-download
+            continueOnError: true
+            condition: and(always(), ne(variables['foundHistoryBuildId'], ''))
+
+          # ── Create merged results directory with history ────────────
+          - script: |
+              mkdir -p reports/allure-results-merged/history
+              BRANCH="$(Build.SourceBranchName)"
+              HIST="$(Build.SourcesDirectory)/history-download/allure-history-api-all-envs-$BRANCH"
+              if [ -d "$HIST" ] && [ -n "$(ls -A "$HIST" 2>/dev/null)" ]; then
+                cp -r "$HIST"/* reports/allure-results-merged/history/
+                echo "History restored from previous unified build."
+              else
+                echo '{"total":0}' > reports/allure-results-merged/history/history.json
+                echo "No previous history found - starting fresh."
+              fi
+              mkdir -p reports/allure-results-merged/env-results
+              mkdir -p reports/env-stats
+              mkdir -p logs
+            displayName: Prepare Merged Results Directory
+
+          # ── Download all four sets of Allure raw results ───────────
+          - task: DownloadPipelineArtifact@2
+            displayName: Download QA1 Allure Results
+            inputs:
+              buildType: current
+              artifactName: allure-results-qa1
+              targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/qa1
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download STAG Allure Results
+            inputs:
+              buildType: current
+              artifactName: allure-results-stag
+              targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/stag
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download PROD Allure Results
+            inputs:
+              buildType: current
+              artifactName: allure-results-prod
+              targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/prod
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download CHINA PROD Allure Results
+            inputs:
+              buildType: current
+              artifactName: allure-results-china_prod
+              targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/china_prod
+            continueOnError: true
+
+          # ── Merge raw results into one flat directory ───────────────
+          # Allure requires all *.json and *.xml result files in one flat folder.
+          # We copy from each env sub-directory, preserving existing history dir.
+          - script: |
+              set -e
+              MERGED="reports/allure-results-merged"
+              for env in qa1 stag prod china_prod; do
+                ENV_DIR="$MERGED/env-results/$env"
+                if [ -d "$ENV_DIR" ]; then
+                  FILE_COUNT=$(find "$ENV_DIR" -maxdepth 1 -name "*.json" -o -name "*.xml" | wc -l)
+                  echo "Merging $env: $FILE_COUNT result files"
+                  # Copy result files (not sub-directories) to the merged root
+                  find "$ENV_DIR" -maxdepth 1 \( -name "*.json" -o -name "*.xml" \) \
+                    ! -name "categories.json" \
+                    -exec cp {} "$MERGED/" \;
+                  # Copy categories.json if present (last write wins - acceptable)
+                  if [ -f "$ENV_DIR/categories.json" ]; then
+                    cp "$ENV_DIR/categories.json" "$MERGED/"
+                  fi
+                else
+                  echo "[WARN] No results found for $env - skipping."
+                fi
+              done
+              TOTAL=$(find "$MERGED" -maxdepth 1 \( -name "*.json" -o -name "*.xml" \) | wc -l)
+              echo "Total result files in merged set: $TOTAL"
+            displayName: Merge Allure Raw Results
+            condition: always()
+
+          # ── Generate Allure environment.properties for report metadata
+          - script: |
+              cat > reports/allure-results-merged/environment.properties << 'EOF'
+              Environments=qa1, stag, prod, china_prod
+              Execution.Order=qa1 -> stag -> prod -> china_prod
+              Pipeline=Nightly All Environments
+              Build.Number=$(Build.BuildNumber)
+              Build.Id=$(Build.BuildId)
+              EOF
+              echo "environment.properties written."
+            displayName: Write Allure Environment Properties
+            condition: always()
+
+          # ── Install Allure CLI and generate combined report ─────────
+          - script: |
+              curl -o allure.tgz -Ls "https://github.com/allure-framework/allure2/releases/download/$(allureVersion)/allure-$(allureVersion).tgz"
+              tar -zxf allure.tgz
+              echo "##vso[task.prependpath]$PWD/allure-$(allureVersion)/bin"
+              export PATH="$PWD/allure-$(allureVersion)/bin:$PATH"
+
+              allure generate \
+                --clean \
+                --output allure-report-combined \
+                reports/allure-results-merged
+
+              # Save new history for next run
+              mkdir -p allure-history-new
+              if [ -d "allure-report-combined/history" ]; then
+                cp -r allure-report-combined/history/* allure-history-new/
+                echo "History snapshot saved."
+              else
+                echo '{"total":0}' > allure-history-new/history.json
+              fi
+            displayName: Generate Combined Allure Report
+            condition: always()
+
+          # ── Download env stats JSONs ────────────────────────────────
+          - task: DownloadPipelineArtifact@2
+            displayName: Download QA1 Stats
+            inputs:
+              buildType: current
+              artifactName: env-stats-qa1
+              targetPath: $(Build.SourcesDirectory)/reports/env-stats/qa1
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download STAG Stats
+            inputs:
+              buildType: current
+              artifactName: env-stats-stag
+              targetPath: $(Build.SourcesDirectory)/reports/env-stats/stag
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download PROD Stats
+            inputs:
+              buildType: current
+              artifactName: env-stats-prod
+              targetPath: $(Build.SourcesDirectory)/reports/env-stats/prod
+            continueOnError: true
+
+          - task: DownloadPipelineArtifact@2
+            displayName: Download CHINA PROD Stats
+            inputs:
+              buildType: current
+              artifactName: env-stats-china_prod
+              targetPath: $(Build.SourcesDirectory)/reports/env-stats/china_prod
+            continueOnError: true
+
+          # ── Consolidate stats JSONs for the email script ────────────
+          - script: |
+              set -e
+              STATS_DIR="reports/env-stats"
+              STATS_FILES=""
+              for env in qa1 stag prod china_prod; do
+                JSON_PATH="$STATS_DIR/$env/$env-stats.json"
+                if [ -f "$JSON_PATH" ]; then
+                  STATS_FILES="$STATS_FILES $JSON_PATH"
+                else
+                  echo "[WARN] Stats file missing for $env - will show zero counts in email."
+                fi
+              done
+              echo "##vso[task.setvariable variable=statsFiles]$STATS_FILES"
+              echo "Stats files found: $STATS_FILES"
+            displayName: Locate Stats Files
+            condition: always()
+
+          # ── Publish combined allure results artifact ────────────────
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Combined Allure Results
+            inputs:
+              pathToPublish: reports/allure-results-merged
+              artifactName: allure-results-api-all-envs
+            condition: always()
+
+          # ── Publish new history for next nightly run ────────────────
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Unified History
+            inputs:
+              pathToPublish: allure-history-new
+              artifactName: allure-history-api-all-envs-$(Build.SourceBranchName)
+            condition: always()
+
+          # ── Publish Allure tab (reads from combined results dir) ────
+          - task: PublishAllureReport@1
+            displayName: Publish Combined Allure Report Tab
+            inputs:
+              testResultsDir: reports/allure-results-merged
+              reportName: "API Nightly - All Environments - ${{ parameters.test_info }}"
+            condition: always()
+            continueOnError: true
+
+          # ── Send one consolidated email ─────────────────────────────
+          - script: |
+              REPORT_URL="$(System.TeamFoundationCollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)&view=qameta.allure-azure-pipelines.build-allure-tab"
+
+              # Collect all available stats files
+              STATS_FILES=""
+              for env in qa1 stag prod china_prod; do
+                JSON_PATH="reports/env-stats/$env/$env-stats.json"
+                if [ -f "$JSON_PATH" ]; then
+                  STATS_FILES="$STATS_FILES $JSON_PATH"
+                fi
+              done
+
+              if [ -z "$STATS_FILES" ]; then
+                echo "[WARN] No stats files found. Email will show zero counts."
+                # Create a minimal placeholder so the script does not crash
+                echo '{"env":"unknown","total":0,"passed":0,"failed":0,"skipped":0,"pass_pct":0.0,"had_failures":false}' \
+                  > /tmp/placeholder-stats.json
+                STATS_FILES="/tmp/placeholder-stats.json"
+              fi
+
+              python3 scripts/send_combined_report_email.py \
+                --env-stats   $STATS_FILES \
+                --build-id    "$(Build.BuildId)" \
+                --build-number "$(Build.BuildNumber)" \
+                --report-url  "$REPORT_URL" \
+                --recipients  "${{ parameters.recipient_email }}"
+            displayName: Send Consolidated Email
+            env:
+              SMTP_SERVER:   $(sendGridSmtpServer)
+              SMTP_PORT:     $(sendGridSmtpPort)
+              SMTP_USER:     $(sendGridSmtpPortUser)
+              SMTP_PASSWORD: $(sendGridSmtppassword)
+              NOREPLY_EMAIL: $(noreply)
+            condition: always()
