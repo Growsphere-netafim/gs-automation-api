@@ -11,25 +11,32 @@ class _ChinaProdBase(CSAPIConfig):
       client_id:    growsphere-adminportal
       redirect_uri: https://stadminappprod.z5.web.core.chinacloudapi.cn/login-callback
 
-    User identity for yalowe.gibte@netafim.com in China PROD (decoded from JWT):
-      userId:       8c1f27fd-21a2-43e8-9663-107887ffedc1
-      enterpriseId: 3001
+    User identity for takego5188@huizk.com (role: SuperAdmin) in China PROD:
+      userId (sub):  b189f8d5-d110-46ba-8fb3-b6c419a62e09
+      enterpriseId: 3001 (Global default distributor)
       distributorId: c4704cf7-ff5e-44a9-ae2e-0af2a47c519d
-      farms: prod-nb10006, prod-nb10025, prod-nb10041, prod-nb10043
+      dealerId:      bfa2a998-f6b4-45f3-854f-0ba83f513d7b
+      farmId:        prod-nb10006 (Alon_Test_Magal)
+
+    SuperAdmin role has full visibility across all China PROD services
+    (CSAPI, DataAPI, Mobile BFF, Irrigation, etc.).
+
+    Pipeline variable group: gs-automation-api-china-prod
+      PASSWORD must be set to the password for takego5188@huizk.com.
     """
     ENV_NAME = "china_prod"
     IDS_URL = "https://app-ids.k8s.growsphere.netafim.cn"
     OIDC_CLIENT_ID = "growsphere-adminportal"
     OIDC_REDIRECT_URI = "https://stadminappprod.z5.web.core.chinacloudapi.cn/login-callback"
-    USER_EMAIL = "yalowe.gibte@netafim.com"
+    USER_EMAIL = "takego5188@huizk.com"
 
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
         "enterpriseId": 3001,
         "farmId": "prod-nb10006",
-        "userId": "8c1f27fd-21a2-43e8-9663-107887ffedc1",
+        "userId": "b189f8d5-d110-46ba-8fb3-b6c419a62e09",
         "distributorId": "c4704cf7-ff5e-44a9-ae2e-0af2a47c519d",
-        "dealerId": None,
+        "dealerId": "bfa2a998-f6b4-45f3-854f-0ba83f513d7b",
     })
 
 
@@ -212,7 +219,7 @@ class ChinaProdReportAPIConfig(_ChinaProdBase):
     BASE_URL = "https://app-reportapi-prod-china.chinacloudsites.cn"
     TEST_DATA = _ChinaProdBase.TEST_DATA.copy()
     TEST_DATA.update({
-        "userId": "8c1f27fd-21a2-43e8-9663-107887ffedc1",
+        "userId": "b189f8d5-d110-46ba-8fb3-b6c419a62e09",
     })
 
 
