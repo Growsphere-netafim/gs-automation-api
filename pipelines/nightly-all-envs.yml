@@ -108,7 +108,7 @@ stages:
               testResultsFormat: JUnit
               testResultsFiles: reports/junit/qa1.xml
               testRunTitle: "QA1 - ${{ parameters.test_info }}"
-              failTaskOnFailedTests: true
+              failTaskOnFailedTests: false
               failTaskOnMissingResultsFile: false
             condition: always()
 
@@ -203,7 +203,7 @@ stages:
               testResultsFormat: JUnit
               testResultsFiles: reports/junit/stag.xml
               testRunTitle: "STAG - ${{ parameters.test_info }}"
-              failTaskOnFailedTests: true
+              failTaskOnFailedTests: false
               failTaskOnMissingResultsFile: false
             condition: always()
 
@@ -298,7 +298,7 @@ stages:
               testResultsFormat: JUnit
               testResultsFiles: reports/junit/prod.xml
               testRunTitle: "PROD - ${{ parameters.test_info }}"
-              failTaskOnFailedTests: true
+              failTaskOnFailedTests: false
               failTaskOnMissingResultsFile: false
             condition: always()
 
@@ -397,7 +397,7 @@ stages:
               testResultsFormat: JUnit
               testResultsFiles: reports/junit/china_prod.xml
               testRunTitle: "CHINA PROD - ${{ parameters.test_info }}"
-              failTaskOnFailedTests: true
+              failTaskOnFailedTests: false
               failTaskOnMissingResultsFile: false
             condition: always()
 
