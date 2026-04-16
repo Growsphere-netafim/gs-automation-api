@@ -62,8 +62,8 @@ class DataAPIConfig(CSAPIConfig):
         "cropUnitId": "4711a0cb-e950-4348-8b02-0dcb9b8c999c",
         "deviceId": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
         "deviceUuid": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
-        "itemGroupId": "96947182-5e88-4f27-30cc-08ddb17af458",
-        "itemId": "4c005c8a-ecde-4cc8-35be-08ddb17af481",
+        "itemGroupId": None,             # no ItemGroups exist for current cropUnit
+        "itemId": None,                  # no Items exist for current cropUnit
         "irrigationBlockId": "f95c0b5d-a470-40fc-9ed1-0f2c2f329950",
         "seasonId": None,
         "parameterId": 1,
