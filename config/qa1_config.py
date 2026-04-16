@@ -59,7 +59,7 @@ class DataAPIConfig(CSAPIConfig):
     TEST_DATA.update({
         "farmId": "qa1-nb14911",
         "cropProtocolId": 10,
-        "cropUnitId": "0a1e91a7-4223-4e9d-ba84-19d410de1753",
+        "cropUnitId": "4711a0cb-e950-4348-8b02-0dcb9b8c999c",
         "deviceId": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
         "deviceUuid": "48d0ee51-fa56-479f-8e77-3266d9a3ba59",
         "itemGroupId": "96947182-5e88-4f27-30cc-08ddb17af458",
