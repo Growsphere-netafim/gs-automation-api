@@ -29,6 +29,7 @@ def create_service_fixtures(config_class, api_customizer=None):
     _ids_url = getattr(config_class, 'IDS_URL', None)
     _client_id = getattr(config_class, 'OIDC_CLIENT_ID', None)
     _redirect_uri = getattr(config_class, 'OIDC_REDIRECT_URI', None)
+    _scopes_val = getattr(config_class, 'SCOPES_VAL', None)
     _env_name = getattr(config_class, 'ENV_NAME', None)
     _user_email = getattr(config_class, 'USER_EMAIL', None)
 
@@ -42,6 +43,8 @@ def create_service_fixtures(config_class, api_customizer=None):
             overrides["OIDC_CLIENT_ID"] = _client_id
         if _redirect_uri:
             overrides["OIDC_REDIRECT_URI"] = _redirect_uri
+        if _scopes_val:
+            overrides["SCOPES_VAL"] = _scopes_val
         if _env_name:
             overrides["ENV_NAME"] = _env_name
         if _user_email:

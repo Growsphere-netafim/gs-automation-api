@@ -28,6 +28,7 @@ class _ChinaProdBase(CSAPIConfig):
     IDS_URL = "https://app-ids.k8s.growsphere.netafim.cn"
     OIDC_CLIENT_ID = "growsphere-adminportal"
     OIDC_REDIRECT_URI = "https://stadminappprod.z5.web.core.chinacloudapi.cn/login-callback"
+    SCOPES_VAL = "openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access"
     USER_EMAIL = "takego5188@huizk.com"
 
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()

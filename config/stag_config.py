@@ -22,6 +22,7 @@ class _StagBase(CSAPIConfig):
     IDS_URL = "https://stag-netbeatvx-ids-app-weu.azurewebsites.net/"
     OIDC_CLIENT_ID = "growsphere-adminportal"
     OIDC_REDIRECT_URI = "https://stagnetbeatvxadminst.z6.web.core.windows.net/login-callback"
+    SCOPES_VAL = "openid%20profile%20NbPortal%20NbPortal.w%20farms%20offline_access"
 
     TEST_DATA = CSAPIConfig.TEST_DATA.copy()
     TEST_DATA.update({
