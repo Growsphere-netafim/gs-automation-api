@@ -27,9 +27,11 @@ import asyncio
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+from urllib.parse import urlparse
 
 import aiohttp
 
@@ -64,21 +66,99 @@ async def _fetch_one(session: aiohttp.ClientSession, sem: asyncio.Semaphore,
             return url, None, f"{type(exc).__name__}: {exc}"
 
 
-async def fetch_all_live() -> Dict[str, dict]:
-    """Return {host_filename -> spec_dict} for every URL that responded 200."""
+async def fetch_all_live() -> Tuple[Dict[str, dict], List[Tuple[str, str]]]:
+    """Fetch every URL in URLS.
+    Return:
+      (live_specs, failed_urls)
+      live_specs   = {host_filename -> spec_dict} for 200 responses
+      failed_urls  = [(url, reason), ...] for everything that did not respond 200
+    """
     timeout = aiohttp.ClientTimeout(total=TIMEOUT_SECONDS)
     sem = asyncio.Semaphore(CONCURRENCY)
     headers = {"Accept": "application/json"}
-    result: Dict[str, dict] = {}
+    live: Dict[str, dict] = {}
+    failed: List[Tuple[str, str]] = []
 
     async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
         tasks = [_fetch_one(session, sem, url) for url in URLS]
         for url, spec, err in await asyncio.gather(*tasks):
             if err is not None:
                 print(f"[WARN] Cannot fetch {url}: {err}", file=sys.stderr)
+                failed.append((url, err))
                 continue
-            result[safe_filename_from_url(url)] = spec
-    return result
+            live[safe_filename_from_url(url)] = spec
+    return live, failed
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Migration candidate discovery
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# When a configured URL stops responding, try to find where the service moved
+# by probing a small set of candidate hostnames that follow the patterns
+# observed in this org's Azure -> Kubernetes migrations.
+#
+# Patterns observed:
+#   qa1-netbeatvx-<svc>-app-weu.azurewebsites.net  ->  <svc>-qa1.k8s.growsphere.netafim.com
+#   app-netbeatvx-<svc>-qa1.azurewebsites.net       ->  <svc>-qa1.k8s.growsphere.netafim.com
+#
+# Swagger path sometimes flips from /swagger/v1/swagger.json to /swagger/v2/swagger.json
+# (TimeSeries was the precedent), so we try both when guessing a new URL.
+
+
+_K8S_TEMPLATE   = "https://{svc}-qa1.k8s.growsphere.netafim.com{path}"
+_SWAGGER_PATHS  = ("/swagger/v1/swagger.json", "/swagger/v2/swagger.json")
+
+_OLD_PATTERNS = (
+    # Azure Web App pattern A: qa1-netbeatvx-<svc>-app-weu.azurewebsites.net
+    re.compile(r"^qa1-netbeatvx-(?P<svc>[a-z0-9-]+?)-app-weu\.azurewebsites\.net$"),
+    # Azure Web App pattern B: app-netbeatvx-<svc>-qa1.azurewebsites.net
+    re.compile(r"^app-netbeatvx-(?P<svc>[a-z0-9-]+?)-qa1\.azurewebsites\.net$"),
+)
+
+
+def _candidate_urls_for_old_host(host: str) -> List[str]:
+    for rx in _OLD_PATTERNS:
+        m = rx.match(host)
+        if not m:
+            continue
+        svc = m.group("svc")
+        return [_K8S_TEMPLATE.format(svc=svc, path=p) for p in _SWAGGER_PATHS]
+    return []
+
+
+async def _probe(session: aiohttp.ClientSession, url: str) -> Tuple[str, int]:
+    try:
+        async with session.get(url, ssl=False) as resp:
+            return url, resp.status
+    except Exception:
+        return url, 0
+
+
+async def find_migration_candidates(failed_urls: List[Tuple[str, str]]) -> List[dict]:
+    """For each failed URL, probe likely new hostnames; return suggestions."""
+    if not failed_urls:
+        return []
+
+    suggestions: List[dict] = []
+    timeout = aiohttp.ClientTimeout(total=TIMEOUT_SECONDS)
+
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        for url, err in failed_urls:
+            host = urlparse(url).netloc
+            candidates = _candidate_urls_for_old_host(host)
+            if not candidates:
+                continue
+            # Probe each candidate
+            results = await asyncio.gather(*(_probe(session, c) for c in candidates))
+            hit = next((c for c, status in results if status == 200), None)
+            if hit:
+                suggestions.append({
+                    "old_host":      host,
+                    "old_reason":    err,
+                    "new_candidate": hit,
+                })
+    return suggestions
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -182,7 +262,8 @@ def main() -> None:
         }, indent=2))
         return
 
-    live = asyncio.run(fetch_all_live())
+    live, failed_urls = asyncio.run(fetch_all_live())
+    migration_suggestions = asyncio.run(find_migration_candidates(failed_urls))
 
     report_services: List[dict] = []
     total_added = total_removed = total_changed = 0
@@ -224,15 +305,17 @@ def main() -> None:
 
     from datetime import datetime, timezone
     report = {
-        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "services":     report_services,
-        "offline":      offline_services,
+        "generated_at":          datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "services":              report_services,
+        "offline":               offline_services,
+        "migration_suggestions": migration_suggestions,
         "summary": {
-            "added":               total_added,
-            "removed":             total_removed,
-            "changed":             total_changed,
-            "services_with_drift": len(report_services),
-            "services_offline":    len(offline_services),
+            "added":                 total_added,
+            "removed":               total_removed,
+            "changed":               total_changed,
+            "services_with_drift":   len(report_services),
+            "services_offline":      len(offline_services),
+            "migration_suggestions": len(migration_suggestions),
         },
     }
 
@@ -243,7 +326,8 @@ def main() -> None:
     print(
         f"[OK] Schema drift: {s['added']} added / {s['removed']} removed / "
         f"{s['changed']} changed across {s['services_with_drift']} services. "
-        f"{s['services_offline']} services unreachable."
+        f"{s['services_offline']} services unreachable. "
+        f"{s['migration_suggestions']} migration suggestion(s)."
     )
 
 
