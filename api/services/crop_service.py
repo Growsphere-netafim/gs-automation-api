@@ -121,4 +121,4 @@ class CropServiceService:
         try:
             return self._client.get(CropServiceEndpoints.system_crop_protocols())
         except requests.exceptions.RetryError:
-            pytest.skip("SystemCropProtocols endpoint returned 500 (server error)")
+            pytest.xfail("Backend bug: SystemCropProtocols returns 500 after retries")

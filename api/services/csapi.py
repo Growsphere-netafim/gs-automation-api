@@ -202,7 +202,7 @@ class CSAPIService:
     def search_distributors(self) -> ApiResponse:
         resp = self._client.get(CSAPIEndpoints.search_distributors(), json={})
         if resp.status_code in (409, 500):
-            pytest.skip("Distributor search endpoint unavailable (server error)")
+            pytest.xfail("Backend bug: Distributor search endpoint unavailable (server error)")
         return resp
 
     def search_dealers_in_distributor(self) -> ApiResponse:
@@ -212,13 +212,13 @@ class CSAPIService:
             CSAPIEndpoints.search_dealers_in_distributor(self._data.distributor_id), json={}
         )
         if resp.status_code in (409, 500):
-            pytest.skip("Dealer search endpoint unavailable (server error)")
+            pytest.xfail("Backend bug: Dealer search endpoint unavailable (server error)")
         return resp
 
     def search_all_dealers(self) -> ApiResponse:
         resp = self._client.get(CSAPIEndpoints.search_all_dealers(), json={})
         if resp.status_code in (409, 500):
-            pytest.skip("All dealers search endpoint unavailable (server error)")
+            pytest.xfail("Backend bug: All dealers search endpoint unavailable (server error)")
         return resp
 
     # Enterprises

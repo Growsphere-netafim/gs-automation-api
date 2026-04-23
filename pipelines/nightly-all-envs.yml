@@ -427,19 +427,120 @@ stages:
             continueOnError: true
 
       # ──────────────────────────────────────────────────────────────
-      # JOB 5 - MERGE, REPORT, EMAIL
-      # Runs after all 4 test jobs regardless of their results.
+      # JOB 5 - CHINA STAG
+      # Variable group: gs-automation-api-china-stag
+      #
+      # PREREQUISITE - Create this variable group in Azure DevOps with:
+      #   PASSWORD        = <china stag account password>
+      #   USER_EMAIL_POOL = (leave empty)
+      #   AUTH_TOKEN      = (leave empty - auth is handled by config class)
+      #
+      # Note: USER_EMAIL, IDS_URL, OIDC_*, SCOPES_VAL are overridden by
+      # _ChinaStagBase config so they are optional in this group.
+      # PASSWORD must be present.
+      # ──────────────────────────────────────────────────────────────
+      - job: TestChinaStag
+        displayName: "5 - CHINA STAG Tests"
+        dependsOn: TestChinaProd
+        condition: always()
+        timeoutInMinutes: 120
+        pool:
+          vmImage: ubuntu-latest
+        variables:
+          - group: gs-automation-api-china-stag
+
+        steps:
+          - checkout: self
+
+          - task: UsePythonVersion@0
+            displayName: Use Python 3.13
+            inputs:
+              versionSpec: '3.13'
+              addToPath: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+            displayName: Install Dependencies
+
+          - script: |
+              mkdir -p reports/allure-results reports/junit logs
+            displayName: Create Directories
+
+          - script: |
+              echo "=================================================="
+              echo " CHINA STAG - API Integration Tests"
+              echo "=================================================="
+              python -m pytest tests/china_stag/ \
+                --alluredir=reports/allure-results \
+                --junitxml=reports/junit/china_stag.xml \
+                --tb=short \
+                -v -ra \
+                -m "not flaky" \
+                -W ignore::DeprecationWarning \
+                -W ignore::urllib3.exceptions.InsecureRequestWarning \
+                -p no:html
+            displayName: Run CHINA STAG Tests
+            continueOnError: true
+            env:
+              # USER_EMAIL is overridden by _ChinaStagBase.USER_EMAIL in config class
+              # PASSWORD must come from variable group gs-automation-api-china-stag
+              PASSWORD: $(PASSWORD)
+              USER_EMAIL_POOL: $(USER_EMAIL_POOL)
+              AUTH_TOKEN: $(AUTH_TOKEN)
+              ENV_NAME: 'china_stag'
+              CI: 'true'
+
+          - task: PublishTestResults@2
+            displayName: Publish CHINA STAG JUnit Results
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: reports/junit/china_stag.xml
+              testRunTitle: "CHINA STAG - ${{ parameters.test_info }}"
+              failTaskOnFailedTests: false
+              failTaskOnMissingResultsFile: false
+            condition: always()
+
+          - script: |
+              python3 scripts/compute_env_stats.py \
+                --junit-xml  reports/junit/china_stag.xml \
+                --env-name   china_stag \
+                --output     reports/china_stag-stats.json
+            displayName: Compute CHINA STAG Stats
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish CHINA STAG Allure Results
+            inputs:
+              targetPath: reports/allure-results
+              artifact: allure-results-china_stag
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish CHINA STAG Stats JSON
+            inputs:
+              targetPath: reports/china_stag-stats.json
+              artifact: env-stats-china_stag
+            condition: always()
+            continueOnError: true
+
+      # ──────────────────────────────────────────────────────────────
+      # JOB 6 - MERGE, REPORT, EMAIL
+      # Runs after all 5 test jobs regardless of their results.
       # Variable groups:
       #   pipelines-access-config  - ADO access token for history restore
       #   nonprod-netbeatvx-services-vg - SMTP credentials for email
       # ──────────────────────────────────────────────────────────────
       - job: MergeAndReport
-        displayName: "5 - Merge Report and Send Email"
+        displayName: "6 - Merge Report and Send Email"
         dependsOn:
           - TestQA1
           - TestStag
           - TestProd
           - TestChinaProd
+          - TestChinaStag
         condition: always()
         timeoutInMinutes: 30
         pool:
@@ -557,13 +658,21 @@ stages:
               targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/china_prod
             continueOnError: true
 
+          - task: DownloadPipelineArtifact@2
+            displayName: Download CHINA STAG Allure Results
+            inputs:
+              buildType: current
+              artifactName: allure-results-china_stag
+              targetPath: $(Build.SourcesDirectory)/reports/allure-results-merged/env-results/china_stag
+            continueOnError: true
+
           # ── Merge raw results into one flat directory ───────────────
           # Allure requires all *.json and *.xml result files in one flat folder.
           # We copy from each env sub-directory, preserving existing history dir.
           - script: |
               set -e
               MERGED="reports/allure-results-merged"
-              for env in qa1 stag prod china_prod; do
+              for env in qa1 stag prod china_prod china_stag; do
                 ENV_DIR="$MERGED/env-results/$env"
                 if [ -d "$ENV_DIR" ]; then
                   FILE_COUNT=$(find "$ENV_DIR" -maxdepth 1 -name "*.json" -o -name "*.xml" | wc -l)
@@ -588,8 +697,8 @@ stages:
           # ── Generate Allure environment.properties for report metadata
           - script: |
               cat > reports/allure-results-merged/environment.properties << 'EOF'
-              Environments=qa1, stag, prod, china_prod
-              Execution.Order=qa1 -> stag -> prod -> china_prod
+              Environments=qa1, stag, prod, china_prod, china_stag
+              Execution.Order=qa1 -> stag -> prod -> china_prod -> china_stag
               Pipeline=Nightly All Environments
               Build.Number=$(Build.BuildNumber)
               Build.Id=$(Build.BuildId)
@@ -654,12 +763,20 @@ stages:
               targetPath: $(Build.SourcesDirectory)/reports/env-stats/china_prod
             continueOnError: true
 
+          - task: DownloadPipelineArtifact@2
+            displayName: Download CHINA STAG Stats
+            inputs:
+              buildType: current
+              artifactName: env-stats-china_stag
+              targetPath: $(Build.SourcesDirectory)/reports/env-stats/china_stag
+            continueOnError: true
+
           # ── Consolidate stats JSONs for the email script ────────────
           - script: |
               set -e
               STATS_DIR="reports/env-stats"
               STATS_FILES=""
-              for env in qa1 stag prod china_prod; do
+              for env in qa1 stag prod china_prod china_stag; do
                 JSON_PATH="$STATS_DIR/$env/$env-stats.json"
                 if [ -f "$JSON_PATH" ]; then
                   STATS_FILES="$STATS_FILES $JSON_PATH"
@@ -703,7 +820,7 @@ stages:
 
               # Collect all available stats files
               STATS_FILES=""
-              for env in qa1 stag prod china_prod; do
+              for env in qa1 stag prod china_prod china_stag; do
                 JSON_PATH="reports/env-stats/$env/$env-stats.json"
                 if [ -f "$JSON_PATH" ]; then
                   STATS_FILES="$STATS_FILES $JSON_PATH"

@@ -11,6 +11,7 @@ Usage:
                       reports/stag-stats.json \
                       reports/prod-stats.json \
                       reports/china_prod-stats.json \
+                      reports/china_stag-stats.json \
         --build-id    "$(Build.BuildId)" \
         --build-number "$(Build.BuildNumber)" \
         --report-url  "https://..." \
@@ -52,7 +53,7 @@ def parse_args() -> argparse.Namespace:
 
 _EMPTY_STATS = {
     "env": "unknown", "total": 0, "passed": 0,
-    "failed": 0, "skipped": 0, "pass_pct": 0.0, "had_failures": False,
+    "failed": 0, "skipped": 0, "xfailed": 0, "pass_pct": 0.0, "had_failures": False,
 }
 
 
@@ -62,6 +63,8 @@ def load_env_stats(paths: list[str]) -> list[dict]:
         try:
             with open(path, encoding="utf-8") as fh:
                 data = json.load(fh)
+            # Backfill xfailed for older stats files
+            data.setdefault("xfailed", 0)
             results.append(data)
         except Exception as exc:
             print(f"[WARN] Cannot read stats file {path!r}: {exc}", file=sys.stderr)
@@ -74,18 +77,25 @@ def aggregate(envs: list[dict]) -> dict:
     passed  = sum(e["passed"]  for e in envs)
     failed  = sum(e["failed"]  for e in envs)
     skipped = sum(e["skipped"] for e in envs)
-    pass_pct = round(passed / total * 100, 1) if total > 0 else 0.0
+    xfailed = sum(e.get("xfailed", 0) for e in envs)
 
-    pass_width = int(round(passed / total * 100)) if total > 0 else 0
-    fail_width = int(round(failed / total * 100)) if total > 0 else 0
-    # guarantee at least 1px width when non-zero
+    # Pass % — executed-only basis (skipped / xfailed excluded from the
+    # denominator). When failed == 0 this reads as 100%, which is what
+    # operators expect: no real failure means full success.
+    executed = passed + failed
+    pass_pct = round(passed / executed * 100, 1) if executed > 0 else 100.0
+
+    # Progress bar widths follow the same executed-only basis.
+    pass_width = int(round(passed / executed * 100)) if executed > 0 else 100
+    fail_width = int(round(failed / executed * 100)) if executed > 0 else 0
+    # Guarantee at least 1px width when non-zero
     if passed > 0 and pass_width == 0:
         pass_width = 1
     if failed > 0 and fail_width == 0:
         fail_width = 1
 
     return dict(
-        total=total, passed=passed, failed=failed, skipped=skipped,
+        total=total, passed=passed, failed=failed, skipped=skipped, xfailed=xfailed,
         pass_pct=pass_pct, pass_width=pass_width, fail_width=fail_width,
         any_failure=any(e["had_failures"] for e in envs),
     )
@@ -95,13 +105,14 @@ def aggregate(envs: list[dict]) -> dict:
 # HTML generation
 # ─────────────────────────────────────────────────────────────────────────────
 
-_ENV_ORDER = ["qa1", "stag", "prod", "china_prod"]
+_ENV_ORDER = ["qa1", "stag", "prod", "china_prod", "china_stag"]
 
 _ENV_LABEL = {
     "qa1":        "QA1",
     "stag":       "STAG",
     "prod":       "PROD",
     "china_prod": "CHINA PROD",
+    "china_stag": "CHINA STAG",
 }
 
 _ENV_COLOR = {
@@ -109,6 +120,7 @@ _ENV_COLOR = {
     "stag":       "#af7ac5",   # violet
     "prod":       "#2ecc71",   # emerald
     "china_prod": "#e67e22",   # amber
+    "china_stag": "#d35400",   # dark orange
 }
 
 
@@ -141,6 +153,7 @@ def _env_rows(envs: list[dict]) -> str:
         passed    = e["passed"]
         failed    = e["failed"]
         skipped   = e["skipped"]
+        xfailed   = e.get("xfailed", 0)
 
         rows.append(f"""
           <tr>
@@ -152,6 +165,7 @@ def _env_rows(envs: list[dict]) -> str:
             <td style="padding:10px 12px; border-bottom:1px solid #2c3e50; text-align:center; color:#2ecc71; font-weight:600;">{passed}</td>
             <td style="padding:10px 12px; border-bottom:1px solid #2c3e50; text-align:center; color:#e74c3c; font-weight:600;">{failed}</td>
             <td style="padding:10px 12px; border-bottom:1px solid #2c3e50; text-align:center; color:#85929e;">{skipped}</td>
+            <td style="padding:10px 12px; border-bottom:1px solid #2c3e50; text-align:center; color:#f39c12; font-weight:600;">{xfailed}</td>
             <td style="padding:10px 12px; border-bottom:1px solid #2c3e50; text-align:center; color:#ecf0f1;">{pass_pct}%</td>
           </tr>""")
 
@@ -169,6 +183,7 @@ def build_html(
     passed     = agg["passed"]
     failed     = agg["failed"]
     skipped    = agg["skipped"]
+    xfailed    = agg.get("xfailed", 0)
     pass_pct   = agg["pass_pct"]
     pass_width = agg["pass_width"]
     fail_width = agg["fail_width"]
@@ -185,7 +200,7 @@ def build_html(
     <div style="background:linear-gradient(135deg,#1b2a3b 0%,#2c3e50 100%);padding:24px 20px;text-align:center;">
       <p style="color:#5dade2;margin:0 0 6px 0;font-size:11px;text-transform:uppercase;letter-spacing:3px;">API Automation - All Environments</p>
       <h2 style="color:#ffffff;margin:0;font-weight:600;font-size:22px;letter-spacing:0.5px;">Nightly Test Report</h2>
-      <p style="color:#85929e;margin:8px 0 0 0;font-size:13px;">qa1 &rarr; stag &rarr; prod &rarr; china prod</p>
+      <p style="color:#85929e;margin:8px 0 0 0;font-size:13px;">qa1 &rarr; stag &rarr; prod &rarr; china prod &rarr; china stag</p>
       <div style="margin-top:10px;">
         <span style="background:{overall_color};color:#fff;padding:3px 12px;border-radius:12px;font-size:12px;font-weight:700;letter-spacing:1px;">{overall_label}</span>
       </div>
@@ -224,6 +239,10 @@ def build_html(
             <div style="font-size:24px;font-weight:700;color:#85929e;">{skipped}</div>
             <div style="font-size:11px;color:#7f8fa4;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Skipped</div>
           </td>
+          <td style="background:#3a2d14;padding:14px 10px;border-radius:8px;text-align:center;border-bottom:3px solid #f39c12;">
+            <div style="font-size:24px;font-weight:700;color:#f39c12;" title="Known backend bugs — if this drops, a bug was fixed">{xfailed}</div>
+            <div style="font-size:11px;color:#f39c12;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">Known Bugs</div>
+          </td>
         </tr>
       </table>
 
@@ -241,6 +260,7 @@ def build_html(
               <th style="padding:8px 12px;text-align:center;color:#7f8fa4;font-weight:400;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Passed</th>
               <th style="padding:8px 12px;text-align:center;color:#7f8fa4;font-weight:400;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Failed</th>
               <th style="padding:8px 12px;text-align:center;color:#7f8fa4;font-weight:400;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Skipped</th>
+              <th style="padding:8px 12px;text-align:center;color:#7f8fa4;font-weight:400;font-size:11px;text-transform:uppercase;letter-spacing:1px;" title="Backend bugs (pytest.xfail) — if this drops, a bug was fixed">Known Bugs</th>
               <th style="padding:8px 12px;text-align:center;color:#7f8fa4;font-weight:400;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Pass %</th>
             </tr>
           </thead>
@@ -253,9 +273,13 @@ def build_html(
       <!-- Note about execution order -->
       <div style="padding:12px 16px;background:#253545;border-radius:8px;border-left:4px solid #5dade2;margin-bottom:28px;">
         <p style="margin:0;font-size:12px;color:#85929e;">
-          Environments ran <strong style="color:#ecf0f1;">sequentially</strong>: qa1 &rarr; stag &rarr; prod &rarr; china prod.
+          Environments ran <strong style="color:#ecf0f1;">sequentially</strong>: qa1 &rarr; stag &rarr; prod &rarr; china prod &rarr; china stag.
           Each environment continued regardless of the previous one's result.
           A failure in any environment marks the pipeline as <span style="color:#e74c3c;font-weight:600;">FAILED</span>.
+          <br/><strong>Pass %</strong> is the executed-test success rate (Passed &divide; (Passed + Failed)) &mdash;
+          <strong>Skipped</strong> and <strong>Known Bugs</strong> are excluded so they don't dilute the score.
+          <br/><strong style="color:#f39c12;">Known Bugs</strong> are tests guarded by <code>pytest.xfail</code> against known backend bugs &mdash;
+          if one suddenly passes, Allure will mark it <strong>XPASS</strong> so you know the bug is fixed and the guard can be removed.
         </p>
       </div>
 

@@ -16,7 +16,7 @@ class WeatherForecastService:
         try:
             return self._client.get(WeatherForecastEndpoints.forecast(self._data.farm_id))
         except requests.exceptions.RetryError as e:
-            pytest.skip(f"WeatherForecast service unavailable (server error after retries): {e}")
+            pytest.xfail(f"Backend bug: WeatherForecast service 5xx after retries: {e}")
 
     def get_historical(self) -> ApiResponse:
         if not self._data.farm_id:

@@ -141,6 +141,7 @@ class OAuth2Client:
             "prod": "netafim",
             "stag": "netafim-test",
             "china_prod": "china-prod",
+            "china_stag": "china-staging",
         }
         tenant = _tenant_map.get(self.env_name, "netafim-qa")
 

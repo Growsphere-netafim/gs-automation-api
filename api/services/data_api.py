@@ -197,7 +197,7 @@ class DataAPIService:
         try:
             return self._client.get(DataAPIEndpoints.crop_advisor(self._data.farm_id))
         except requests.exceptions.RetryError:
-            pytest.skip("CropAdvisor endpoint returned 500 (server error)")
+            pytest.xfail("Backend bug: CropAdvisor endpoint returns 500 (server error)")
 
     # ── CropModel ─────────────────────────────────────────────────────────────
 
@@ -227,7 +227,7 @@ class DataAPIService:
         params = {"farmId": self._data.farm_id} if self._data.farm_id else None
         resp = self._client.get(DataAPIEndpoints.crop_protocols(), params=params)
         if resp.status_code == 500:
-            pytest.skip("Backend mapping error on crop protocols (HTTP 500)")
+            pytest.xfail("Backend bug: crop protocols mapping error (HTTP 500)")
         return resp
 
     def get_crop_protocols_deleted(self) -> ApiResponse:
