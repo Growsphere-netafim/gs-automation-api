@@ -790,11 +790,14 @@ stages:
             condition: always()
 
           # ── Publish combined allure results artifact ────────────────
-          - task: PublishBuildArtifacts@1
+          # PublishPipelineArtifact is ~10x faster than PublishBuildArtifacts
+          # for many-small-files (the merged set has 4900+ per-test JSONs).
+          - task: PublishPipelineArtifact@1
             displayName: Publish Combined Allure Results
             inputs:
-              pathToPublish: reports/allure-results-merged
-              artifactName: allure-results-api-all-envs
+              targetPath: reports/allure-results-merged
+              artifact: allure-results-api-all-envs
+              publishLocation: pipeline
             condition: always()
 
           # ── Publish new history for next nightly run ────────────────
