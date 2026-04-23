@@ -8,24 +8,29 @@ from typing import Optional, List, Tuple
 import aiohttp
 
 
+# All 19 QA1 services (healthy per platform status page). Each URL points
+# directly at the service's swagger.json so per-service path versions can be
+# pinned (e.g. TimeSeries API is v2, everything else v1).
 URLS = [
     "https://cropservice-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
-    "https://qa1-netbeatvx-lookup-app-weu.azurewebsites.net/swagger/v1/swagger.json",
+    "https://lookup-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://dataapi-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://fieldio-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://weatherforecast-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://csapi-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
-    "https://qa1-netbeatvx-reportapi-app-weu.azurewebsites.net/swagger/v1/swagger.json",
+    "https://reportapi-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://irrigation-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://settingsapi-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://app-netbeatvx-signalr-qa1.azurewebsites.net/swagger/v1/swagger.json",
     "https://commandsmanager-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://devicestatemanager-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://irrigationmanager-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
-    "https://timeseriesapi-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
+    "https://timeseriesapi-qa1.k8s.growsphere.netafim.com/swagger/v2/swagger.json",
     "https://qa1-netbeatvx-graphapi-app-weu.azurewebsites.net/swagger/v1/swagger.json",
     "https://mobilebff-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
     "https://accountmanagement-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
+    "https://apigateway-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
+    "https://remotesensing-qa1.k8s.growsphere.netafim.com/swagger/v1/swagger.json",
 ]
 
 

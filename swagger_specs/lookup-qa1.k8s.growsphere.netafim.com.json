@@ -1,0 +1,1046 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NetBeat VX API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Countries": {
+      "get": {
+        "tags": [
+          "Countries"
+        ],
+        "summary": "Get list of all countries",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Country"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/IrrigationMethods": {
+      "get": {
+        "tags": [
+          "IrrigationMethods"
+        ],
+        "summary": "Queries the irrigation methods list",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "Whether the retrieved list should include in-active entries. Required role: SuperAdmin, otherwise ignored",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationMethod"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationMethod"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationMethod"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "IrrigationMethods"
+        ],
+        "summary": "Creates a new irrigation method",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/IrrigationMethods/{irrigationMethodId}": {
+      "get": {
+        "tags": [
+          "IrrigationMethods"
+        ],
+        "summary": "Gets a specific irrigation method by ID",
+        "parameters": [
+          {
+            "name": "irrigationMethodId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationMethod"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "IrrigationMethods"
+        ],
+        "summary": "Updates a irrigation method by ID",
+        "parameters": [
+          {
+            "name": "irrigationMethodId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationMethodUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/MeasureUnits": {
+      "get": {
+        "tags": [
+          "MeasureUnits"
+        ],
+        "summary": "Queries the measure units list",
+        "parameters": [
+          {
+            "name": "unitSystem",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "$ref": "#/components/schemas/UnitSystem"
+            }
+          },
+          {
+            "name": "field",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeasureUnit"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeasureUnit"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MeasureUnit"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MeasureUnits"
+        ],
+        "summary": "Creates a new measure unit",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MeasureUnits/{uomId}": {
+      "get": {
+        "tags": [
+          "MeasureUnits"
+        ],
+        "summary": "Gets a specific measure unit by ID",
+        "parameters": [
+          {
+            "name": "uomId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeasureUnit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/MeasureUnits/{measureUnitId}": {
+      "put": {
+        "tags": [
+          "MeasureUnits"
+        ],
+        "summary": "Updates a measure unit by ID",
+        "parameters": [
+          {
+            "name": "measureUnitId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasureUnitUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/States/{countryIsoSymbol}": {
+      "get": {
+        "tags": [
+          "States"
+        ],
+        "summary": "Get a list of all the states of a selected country",
+        "parameters": [
+          {
+            "name": "countryIsoSymbol",
+            "in": "path",
+            "description": "2-letter iso country code (3166-1 alpha-2)",
+            "required": true,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/State"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/State"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/State"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Timezones": {
+      "get": {
+        "tags": [
+          "Timezones"
+        ],
+        "summary": "Get Windows and IANA formatted timezones",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedTimeZoneResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedTimeZoneResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedTimeZoneResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Timezones/windows": {
+      "get": {
+        "tags": [
+          "Timezones"
+        ],
+        "summary": "Get Windows-formatted timezones",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeZoneInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeZoneInfo"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeZoneInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Timezones/iana": {
+      "get": {
+        "tags": [
+          "Timezones"
+        ],
+        "summary": "Get IANA-formatted timezones",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TzdbZoneLocation"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TzdbZoneLocation"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TzdbZoneLocation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Country": {
+        "type": "object",
+        "properties": {
+          "isoSymbol": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "areaPhoneCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationMethod": {
+        "required": [
+          "irrigationMethodName"
+        ],
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "irrigationMethodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "irrigationMethodName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationMethodRequest": {
+        "required": [
+          "irrigationMethodName"
+        ],
+        "type": "object",
+        "properties": {
+          "irrigationMethodName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of the irrigation method"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Method of irrigation"
+      },
+      "IrrigationMethodUpdateRequest": {
+        "required": [
+          "irrigationMethodName"
+        ],
+        "type": "object",
+        "properties": {
+          "irrigationMethodName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of the irrigation method"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Method of irrigation"
+      },
+      "MeasureUnit": {
+        "required": [
+          "fieldDesc",
+          "unitSymbol"
+        ],
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "uomId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldDesc": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "unitSymbol": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeasureUnitRequest": {
+        "required": [
+          "fieldDesc",
+          "unitSymbol"
+        ],
+        "type": "object",
+        "properties": {
+          "fieldDesc": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of the field that will have a unit of measure"
+          },
+          "unitSymbol": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string",
+            "description": "Symbol that will be presented in the app, next to the measured value"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Meaure unit"
+      },
+      "MeasureUnitUpdateRequest": {
+        "required": [
+          "fieldDesc",
+          "unitSymbol"
+        ],
+        "type": "object",
+        "properties": {
+          "fieldDesc": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string",
+            "description": "Name of the field that will have a unit of measure"
+          },
+          "unitSymbol": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string",
+            "description": "Symbol that will be presented in the app, next to the measured value"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Meaure unit"
+      },
+      "MergedTimeZoneResponse": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "Gets the general display name that represents the time zone.\r\nReturns: The time zone's general display name.",
+            "nullable": true
+          },
+          "windowsId": {
+            "type": "string",
+            "description": "Gets the Windows time zone identifier.\r\nReturns: The Windows time zone identifier.",
+            "nullable": true
+          },
+          "ianaId": {
+            "type": "string",
+            "description": "Gets the IANA time zone identifier.\r\nReturns: The IANA time zone identifier.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Timezone DTO"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "State": {
+        "type": "object",
+        "properties": {
+          "stateIsoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryIsoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeZoneInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasIanaId": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "standardName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "daylightName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "baseUtcOffset": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "supportsDaylightSavingTime": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TzdbZoneLocation": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "countryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "zoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UnitSystem": {
+        "enum": [
+          "Metric",
+          "Imperial"
+        ],
+        "type": "string"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

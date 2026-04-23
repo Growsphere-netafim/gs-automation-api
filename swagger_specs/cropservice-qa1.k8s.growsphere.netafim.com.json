@@ -1,0 +1,4697 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NetBeat VX API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/CropFamilies": {
+      "get": {
+        "tags": [
+          "CropFamilies"
+        ],
+        "summary": "Queries the crop families list",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "Whether the retrieved list should include in-active entries. Required role: SuperAdmin and NetafimAgronomist, otherwise ignored",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CropFamily"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CropFamily"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CropFamily"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CropFamilies"
+        ],
+        "summary": "Creates a new crop family",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CropFamilies/{cropfamilyId}": {
+      "get": {
+        "tags": [
+          "CropFamilies"
+        ],
+        "summary": "Gets a specific crop family by ID",
+        "parameters": [
+          {
+            "name": "cropfamilyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropFamily"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CropFamilies"
+        ],
+        "summary": "Updates a crop family by ID",
+        "parameters": [
+          {
+            "name": "cropfamilyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropFamilyUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Crops": {
+      "get": {
+        "tags": [
+          "Crops"
+        ],
+        "summary": "Queries the crops list",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "Whether the retrieved list should include in-active entries. Required role: SuperAdmin or NetafimAgronomist, otherwise ignored",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Crop"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Crop"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Crop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Crops"
+        ],
+        "summary": "Creates a new crop",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Crops/{cropId}": {
+      "get": {
+        "tags": [
+          "Crops"
+        ],
+        "summary": "Gets a specific crop by ID",
+        "parameters": [
+          {
+            "name": "cropId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Crop"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Crops"
+        ],
+        "summary": "Updates a crop by ID",
+        "parameters": [
+          {
+            "name": "cropId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/IrrigationStrategies": {
+      "get": {
+        "tags": [
+          "IrrigationStrategies"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationStrategyTypeDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationStrategyTypeDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationStrategyTypeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Nutrients": {
+      "get": {
+        "tags": [
+          "Nutrients"
+        ],
+        "summary": "Get Nutrients",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NutrientDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NutrientDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NutrientDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Nutrients/{nutrientId}": {
+      "get": {
+        "tags": [
+          "Nutrients"
+        ],
+        "summary": "Gets a specific Nutrient by ID",
+        "parameters": [
+          {
+            "name": "nutrientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/ParameterAspects": {
+      "get": {
+        "tags": [
+          "ParameterAspects"
+        ],
+        "summary": "Fetch all active ParameterAspects",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterAspect"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterAspect"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterAspect"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterAspects"
+        ],
+        "summary": "Creates a new parameter aspect",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterAspectRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterAspectRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterAspectRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterAspectRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterAspects/{parameterAspectId}": {
+      "get": {
+        "tags": [
+          "ParameterAspects"
+        ],
+        "summary": "Fetch parameter aspect for given parameter id",
+        "parameters": [
+          {
+            "name": "parameterAspectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterAspect"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "ParameterAspects"
+        ],
+        "summary": "Updates ParameterAspect details based on parameterAspectId field",
+        "parameters": [
+          {
+            "name": "parameterAspectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/ParameterPerCropFamily": {
+      "get": {
+        "tags": [
+          "ParameterPerCropFamily"
+        ],
+        "summary": "Fetch all Parameters per crop family",
+        "parameters": [
+          {
+            "name": "cropFamilyId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCropFamily"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCropFamily"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCropFamily"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterPerCropFamily"
+        ],
+        "summary": "Create new parameter per Crop Family",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropFamilyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropFamilyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropFamilyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropFamilyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCropFamily"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCropFamily"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCropFamily"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerCropFamily/{parameterPerCropFamilyId}": {
+      "patch": {
+        "tags": [
+          "ParameterPerCropFamily"
+        ],
+        "summary": "Updates table ParameterPerCropFamily details based on ParameterPerCropFamilyId field",
+        "parameters": [
+          {
+            "name": "parameterPerCropFamilyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/ParameterPerProtocolStrategy": {
+      "get": {
+        "tags": [
+          "ParameterPerProtocolStrategy"
+        ],
+        "summary": "Fetch all Parameters with names per protocol",
+        "parameters": [
+          {
+            "name": "protocolId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterPerProtocolStrategy"
+        ],
+        "summary": "Create new parameter per protocol",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerProtocolStrategy"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerProtocolStrategy/{parameterPerProtocolStrategyId}": {
+      "patch": {
+        "tags": [
+          "ParameterPerProtocolStrategy"
+        ],
+        "summary": "Updates table parameterPerProtocolStrategy details based on parameterPerProtocolStrategyId field",
+        "parameters": [
+          {
+            "name": "parameterPerProtocolStrategyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ParameterPerProtocolStrategy"
+        ],
+        "summary": "Update Parameter Per Protocol",
+        "parameters": [
+          {
+            "name": "parameterPerProtocolStrategyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerProtocolStrategyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/ParameterPerStage": {
+      "get": {
+        "tags": [
+          "ParameterPerStage"
+        ],
+        "summary": "Get all parameters per stages, filter by phenologic stage id",
+        "parameters": [
+          {
+            "name": "phenologicStageId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStage"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStage"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterPerStage"
+        ],
+        "summary": "Create new parameter per stage",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerStage"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerStage"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerStage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerStage/lite": {
+      "get": {
+        "tags": [
+          "ParameterPerStage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerStage/{parameterPerStageId}": {
+      "patch": {
+        "tags": [
+          "ParameterPerStage"
+        ],
+        "summary": "Update parameter per stage by id",
+        "parameters": [
+          {
+            "name": "parameterPerStageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ParameterPerStage"
+        ],
+        "summary": "Update parameter per stage",
+        "parameters": [
+          {
+            "name": "parameterPerStageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerStageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/ParameterPerVarieties": {
+      "get": {
+        "tags": [
+          "ParameterPerVarieties"
+        ],
+        "summary": "Get all parameters per varieties, filter by variety id",
+        "parameters": [
+          {
+            "name": "varietyId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerVariety"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerVariety"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerVariety"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterPerVarieties"
+        ],
+        "summary": "Create new parameter per variety",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerVariety"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerVariety"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerVariety"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerVarieties/lite": {
+      "get": {
+        "tags": [
+          "ParameterPerVarieties"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerStageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterPerVarieties/{parameterPerVarietyId}": {
+      "patch": {
+        "tags": [
+          "ParameterPerVarieties"
+        ],
+        "summary": "Update parameter per variety by id",
+        "parameters": [
+          {
+            "name": "parameterPerVarietyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ParameterPerVarieties"
+        ],
+        "summary": "Updates a parameter per variety by ID",
+        "parameters": [
+          {
+            "name": "parameterPerVarietyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerVarietyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/ParametersPerCrops": {
+      "get": {
+        "tags": [
+          "ParametersPerCrops"
+        ],
+        "summary": "Get all parameters per crops",
+        "parameters": [
+          {
+            "name": "cropId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCrop"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCrop"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterPerCrop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParametersPerCrops"
+        ],
+        "summary": "Creates a new parameter per crop",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCrop"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCrop"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterPerCrop"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParametersPerCrops/{parameterPerCropId}": {
+      "patch": {
+        "tags": [
+          "ParametersPerCrops"
+        ],
+        "summary": "Updates a field within parameter per crop",
+        "parameters": [
+          {
+            "name": "parameterPerCropId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ParametersPerCrops"
+        ],
+        "summary": "Update request for parameter per crop",
+        "parameters": [
+          {
+            "name": "parameterPerCropId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterPerCropRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/ParameterTypes": {
+      "get": {
+        "tags": [
+          "ParameterTypes"
+        ],
+        "summary": "Fetch all active ParameterTypes",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterType"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterType"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ParameterTypes"
+        ],
+        "summary": "Creates a new parameter type",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ParameterTypes/{parameterTypeId}": {
+      "put": {
+        "tags": [
+          "ParameterTypes"
+        ],
+        "summary": "Updates a parameter type by ID",
+        "parameters": [
+          {
+            "name": "parameterTypeId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ParameterTypes"
+        ],
+        "summary": "Fetch parameter type for given parameter id",
+        "parameters": [
+          {
+            "name": "parameterTypeId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParameterType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PhenologicStages/{phenologicStageId}": {
+      "get": {
+        "tags": [
+          "PhenologicStages"
+        ],
+        "summary": "Get phenologic stage by phenologic stage id",
+        "parameters": [
+          {
+            "name": "phenologicStageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "PhenologicStages"
+        ],
+        "summary": "Updates phenologic stage details based on phenologic stage id",
+        "parameters": [
+          {
+            "name": "phenologicStageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PhenologicStages"
+        ],
+        "summary": "Updates a phenologic stage by ID",
+        "parameters": [
+          {
+            "name": "phenologicStageId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/PhenologicStages": {
+      "get": {
+        "tags": [
+          "PhenologicStages"
+        ],
+        "summary": "Get all phenological stages, include crop and variety names",
+        "parameters": [
+          {
+            "name": "cropId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "varietyId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PhenologicStageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PhenologicStageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PhenologicStageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "PhenologicStages"
+        ],
+        "summary": "Creates a new phenologic stage",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhenologicStageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PhenologicStageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProtocolStrategies": {
+      "get": {
+        "tags": [
+          "ProtocolStrategies"
+        ],
+        "summary": "Get list of all Protocol Strategy",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolStrategy"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolStrategy"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolStrategy"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ProtocolStrategies"
+        ],
+        "summary": "Creates a new Protocol Strategy",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ProtocolStrategies/{protocolStrategyId}": {
+      "get": {
+        "tags": [
+          "ProtocolStrategies"
+        ],
+        "summary": "Fetch Protocol Strategy for given Protocol Strategy id",
+        "parameters": [
+          {
+            "name": "protocolStrategyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolStrategy"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ProtocolStrategies"
+        ],
+        "summary": "Updates a Protocol Strategy by ID",
+        "parameters": [
+          {
+            "name": "protocolStrategyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProtocolStrategyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Seasons": {
+      "get": {
+        "tags": [
+          "Seasons"
+        ],
+        "summary": "Get all seasons for user farms, filter by irrigation block guid",
+        "parameters": [
+          {
+            "name": "irrigationBlockId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Seasons"
+        ],
+        "summary": "Creates a new season",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeasonRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Season"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Season"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Season"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Seasons/{seasonId}": {
+      "patch": {
+        "tags": [
+          "Seasons"
+        ],
+        "summary": "Updates a field within a season",
+        "parameters": [
+          {
+            "name": "seasonId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JsonPatchDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/SoilTypes": {
+      "get": {
+        "tags": [
+          "SoilTypes"
+        ],
+        "summary": "Queries the soil types list",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "Whether the retrieved list should include in-active entries. Required role: SuperAdmin, otherwise ignored",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SoilType"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SoilType"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SoilType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SoilTypes"
+        ],
+        "summary": "Creates a new soil type",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SoilTypes/{soilTypeId}": {
+      "get": {
+        "tags": [
+          "SoilTypes"
+        ],
+        "summary": "Gets a specific soil type by ID",
+        "parameters": [
+          {
+            "name": "soilTypeId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoilType"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SoilTypes"
+        ],
+        "summary": "Updates a soil type by ID",
+        "parameters": [
+          {
+            "name": "soilTypeId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoilTypeUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/SystemCropProtocols": {
+      "get": {
+        "tags": [
+          "SystemCropProtocols"
+        ],
+        "parameters": [
+          {
+            "name": "cropId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "varietyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendedSystemCropProtocolByCropIdAndVarietyIdDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendedSystemCropProtocolByCropIdAndVarietyIdDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendedSystemCropProtocolByCropIdAndVarietyIdDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Varieties": {
+      "get": {
+        "tags": [
+          "Varieties"
+        ],
+        "summary": "Queries the varieties list",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "cropId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 2147483647
+            }
+          },
+          {
+            "name": "includeInactive",
+            "in": "query",
+            "description": "Whether the retrieved list should include in-active entries. Required role: SuperAdmin and NetafimAgronomist, otherwise ignored",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Variety"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Variety"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Variety"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Varieties"
+        ],
+        "summary": "Creates a new variety",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Varieties/{varietyId}": {
+      "get": {
+        "tags": [
+          "Varieties"
+        ],
+        "summary": "Gets a specific variety by ID",
+        "parameters": [
+          {
+            "name": "varietyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Variety"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Varieties"
+        ],
+        "summary": "Updates a variety by ID",
+        "parameters": [
+          {
+            "name": "varietyId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyUpdateRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VarietyUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Crop": {
+        "required": [
+          "cropFamilyId",
+          "cropName"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropName": {
+            "maxLength": 250,
+            "type": "string"
+          },
+          "cropKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropFamily": {
+            "$ref": "#/components/schemas/CropFamily"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropFamily": {
+        "required": [
+          "cropFamilyName"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropFamilyName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "cropFamilyKey": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropFamilyRequest": {
+        "required": [
+          "cropFamilyName"
+        ],
+        "type": "object",
+        "properties": {
+          "cropFamilyName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Name of the crop family"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Family of crops"
+      },
+      "CropFamilyResponse": {
+        "type": "object",
+        "properties": {
+          "cropFamilyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropFamilyName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropFamilyUpdateRequest": {
+        "required": [
+          "cropFamilyName"
+        ],
+        "type": "object",
+        "properties": {
+          "cropFamilyName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Name of the crop family"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Family of crops"
+      },
+      "CropRequest": {
+        "required": [
+          "cropName"
+        ],
+        "type": "object",
+        "properties": {
+          "cropName": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Name of the crop type"
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "description": "Crop family of the crop type",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Type of crop"
+      },
+      "CropResponse": {
+        "type": "object",
+        "properties": {
+          "cropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropFamily": {
+            "$ref": "#/components/schemas/CropFamilyResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropUpdateRequest": {
+        "required": [
+          "cropName"
+        ],
+        "type": "object",
+        "properties": {
+          "cropName": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Name of the crop type"
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "description": "Crop family of the crop type",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Type of crop"
+      },
+      "IrrigationStrategyTypeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "strategyName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JsonPatchDocument": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Operation"
+        },
+        "description": "Array of operations to perform"
+      },
+      "NutrientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "symbolOxide": {
+            "type": "string",
+            "nullable": true
+          },
+          "symbolElemental": {
+            "type": "string",
+            "nullable": true
+          },
+          "symbolMmol": {
+            "type": "string",
+            "nullable": true
+          },
+          "group": {
+            "$ref": "#/components/schemas/NutrientGroupType"
+          },
+          "groupStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "ion": {
+            "$ref": "#/components/schemas/NutrientIonType"
+          },
+          "ionStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "equivalent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "elementToOxide": {
+            "type": "number",
+            "format": "double"
+          },
+          "elementToMmol": {
+            "type": "number",
+            "format": "double"
+          },
+          "irrigationEfficiency": {
+            "type": "number",
+            "format": "double"
+          },
+          "fertigationEfficiency": {
+            "type": "number",
+            "format": "double"
+          },
+          "soilEfficiency": {
+            "type": "number",
+            "format": "double"
+          },
+          "phInfluenceVeryAcidic": {
+            "type": "number",
+            "format": "double"
+          },
+          "phInfluenceAcidic": {
+            "type": "number",
+            "format": "double"
+          },
+          "phInfluenceNeutral": {
+            "type": "number",
+            "format": "double"
+          },
+          "phInfluenceAlkaline": {
+            "type": "number",
+            "format": "double"
+          },
+          "phInfluenceVeryAlkaline": {
+            "type": "number",
+            "format": "double"
+          },
+          "starterApplicationPercent": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NutrientGroupType": {
+        "enum": [
+          "Macro",
+          "Secondary",
+          "Micro"
+        ],
+        "type": "string"
+      },
+      "NutrientIonType": {
+        "enum": [
+          "Cation",
+          "Anion",
+          "Neutral"
+        ],
+        "type": "string"
+      },
+      "Operation": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ParameterAspect": {
+        "required": [
+          "aspectDesc",
+          "aspectId"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "aspectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "aspectDesc": {
+            "maxLength": 250,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterAspectRequest": {
+        "required": [
+          "aspectDesc"
+        ],
+        "type": "object",
+        "properties": {
+          "aspectDesc": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Parameter aspect description"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ParameterAspectRequest"
+      },
+      "ParameterPerCrop": {
+        "required": [
+          "cropId",
+          "parameterPerCropId",
+          "parameterTypeId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterPerCropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterType": {
+            "$ref": "#/components/schemas/ParameterType"
+          },
+          "value": {
+            "maxLength": 150,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerCropFamily": {
+        "required": [
+          "cropFamilyId",
+          "defaultProtocolId",
+          "parameterPerCropFamilyId",
+          "parameterTypeId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterPerCropFamilyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterType": {
+            "$ref": "#/components/schemas/ParameterType"
+          },
+          "defaultProtocolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerCropFamilyRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "Value",
+            "format": "double"
+          },
+          "cropFamilyId": {
+            "type": "integer",
+            "description": "CropFamilyId",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "description": "ParameterTypeId",
+            "format": "int32"
+          },
+          "defaultProtocolId": {
+            "type": "integer",
+            "description": "DefaultProtocolId",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerCropRequest": {
+        "required": [
+          "cropId",
+          "parameterTypeId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "cropId": {
+            "type": "integer",
+            "description": "Crop id, from lookup",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "description": "Parameter type id, from Parameter type",
+            "format": "int32"
+          },
+          "value": {
+            "maxLength": 150,
+            "type": "string",
+            "description": "Value of parameter per crop"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "IsActive"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Parameter per crop request model"
+      },
+      "ParameterPerProtocolStrategy": {
+        "required": [
+          "parameterPerProtocolStrategyId",
+          "parameterTypeId",
+          "protocolId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterPerProtocolStrategyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "protocolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterType": {
+            "$ref": "#/components/schemas/ParameterType"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerProtocolStrategyRequest": {
+        "type": "object",
+        "properties": {
+          "parameterTypeId": {
+            "type": "integer",
+            "description": "ParameterTypeId",
+            "format": "int32"
+          },
+          "protocolId": {
+            "type": "integer",
+            "description": "ProtocolId",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "description": "Value",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "IsActive"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ParameterPerProtocolStrategyRequest"
+      },
+      "ParameterPerStage": {
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterPerStageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "phenologicStageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "parameterType": {
+            "$ref": "#/components/schemas/ParameterType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerStageDto": {
+        "type": "object",
+        "properties": {
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "phenologicStageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerStageRequest": {
+        "type": "object",
+        "properties": {
+          "parameterTypeId": {
+            "type": "integer",
+            "description": "ParameterTypeId",
+            "format": "int32"
+          },
+          "phenologicStageId": {
+            "type": "integer",
+            "description": "PhenologicStageId",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "description": "Value",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "IsActive"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ParameterPerStageRequest"
+      },
+      "ParameterPerVariety": {
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterPerVarietyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "varietyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "parameterType": {
+            "$ref": "#/components/schemas/ParameterType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterPerVarietyRequest": {
+        "type": "object",
+        "properties": {
+          "parameterTypeId": {
+            "type": "integer",
+            "description": "ParameterTypeId",
+            "format": "int32"
+          },
+          "varietyId": {
+            "type": "integer",
+            "description": "VarietyId",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "description": "Value",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "IsActive"
+          }
+        },
+        "additionalProperties": false,
+        "description": "ParameterPerVarietyRequest"
+      },
+      "ParameterType": {
+        "required": [
+          "parameterName"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "parameterTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "upperLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lowerLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "aspect": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "uomId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParameterTypeRequest": {
+        "required": [
+          "parameterName"
+        ],
+        "type": "object",
+        "properties": {
+          "parameterName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Name of the field that have the parameter type name"
+          },
+          "upperLimit": {
+            "type": "number",
+            "description": "Upper limit value of parameter type",
+            "format": "float"
+          },
+          "lowerLimit": {
+            "type": "number",
+            "description": "Lower limit value of parameter type",
+            "format": "float"
+          },
+          "aspect": {
+            "type": "integer",
+            "description": "Aspect of parameter",
+            "format": "int32",
+            "nullable": true
+          },
+          "uomId": {
+            "type": "integer",
+            "description": "UomId of parameter",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "The field that indicates if the parameter type is active or not"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Parameter Type"
+      },
+      "PhenologicStage": {
+        "required": [
+          "stageDescription",
+          "stageNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "phenologicStageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "varietyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "variety": {
+            "$ref": "#/components/schemas/Variety"
+          },
+          "stageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "durationInDays": {
+            "maximum": 365,
+            "minimum": 7,
+            "type": "integer",
+            "format": "int32"
+          },
+          "durationInGdd": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageUrl": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "stageDescription": {
+            "maxLength": 500,
+            "type": "string"
+          },
+          "depletionOfTaw": {
+            "type": "number",
+            "format": "double"
+          },
+          "kcStart": {
+            "type": "number",
+            "format": "double"
+          },
+          "kcEnd": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhenologicStageRequest": {
+        "required": [
+          "stageDescription",
+          "stageNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "cropId": {
+            "type": "integer",
+            "description": "CropId from Crop entity",
+            "format": "int32"
+          },
+          "varietyId": {
+            "type": "integer",
+            "description": "VarietyId from variety entity",
+            "format": "int32"
+          },
+          "stageNumber": {
+            "type": "integer",
+            "description": "The number of stage for the specific crop and variety",
+            "format": "int32"
+          },
+          "durationInDays": {
+            "maximum": 365,
+            "minimum": 7,
+            "type": "integer",
+            "description": "The amount days in the stage",
+            "format": "int32"
+          },
+          "durationInGdd": {
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer",
+            "description": "The amount days in the stage, when the variety is according to GDD protocol",
+            "format": "int32"
+          },
+          "imageUrl": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "The URL link to the location of an image",
+            "nullable": true
+          },
+          "stageDescription": {
+            "maxLength": 500,
+            "type": "string",
+            "description": "The actual name of the stage"
+          },
+          "depletionOfTaw": {
+            "type": "number",
+            "description": "percentage of TAW  that triggers irrigation demand - indication how much the soil is dry",
+            "format": "double"
+          },
+          "kcStart": {
+            "type": "number",
+            "description": "Kc (crop factor) of the start of the stage",
+            "format": "double"
+          },
+          "kcEnd": {
+            "type": "number",
+            "description": "Kc (crop factor) of the end of the stage",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Method of PhenologicStage"
+      },
+      "PhenologicStageResponse": {
+        "type": "object",
+        "properties": {
+          "phenologicStageId": {
+            "type": "integer",
+            "description": "Identifier of phenologic stage",
+            "format": "int32"
+          },
+          "variety": {
+            "$ref": "#/components/schemas/VerityResponse"
+          },
+          "stageNumber": {
+            "type": "integer",
+            "description": "The number of stage for the specific crop and variety",
+            "format": "int32"
+          },
+          "durationInDays": {
+            "type": "integer",
+            "description": "The amount days in the stage",
+            "format": "int32"
+          },
+          "durationInGdd": {
+            "type": "integer",
+            "description": "The amount days in the stage, when the variety is according to GDD protocol",
+            "format": "int32"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "The URL link to the location of an image",
+            "nullable": true
+          },
+          "stageDescription": {
+            "type": "string",
+            "description": "The actual name of the stage",
+            "nullable": true
+          },
+          "depletionOfTaw": {
+            "type": "number",
+            "description": "percentage of TAW  that triggers irrigation demand - indication how much the soil is dry",
+            "format": "double"
+          },
+          "kcStart": {
+            "type": "number",
+            "description": "Kc (crop factor) of the start of the stage",
+            "format": "double"
+          },
+          "kcEnd": {
+            "type": "number",
+            "description": "Kc (crop factor) of the end of the stage",
+            "format": "double"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Phenologic stage status"
+          }
+        },
+        "additionalProperties": false,
+        "description": "PhenologicStageUpdateResponse"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "ProtocolStrategy": {
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "protocolStrategyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "protocolStrategyName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProtocolStrategyRequest": {
+        "type": "object",
+        "properties": {
+          "protocolStrategyName": {
+            "type": "string",
+            "description": "Name of the Crop Protocol",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Crop Protocol"
+      },
+      "RecommendedSystemCropProtocolByCropIdAndVarietyIdDto": {
+        "type": "object",
+        "properties": {
+          "cropName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "varietyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "varietyKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Stage"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Season": {
+        "required": [
+          "defaultProtocolId",
+          "farmId",
+          "irrigationBlockId",
+          "seasonStartDate"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "farmId": {
+            "maxLength": 32,
+            "type": "string"
+          },
+          "seasonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationBlockId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "defaultProtocolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seasonStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "seasonEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estimatedHarvestDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SeasonRequest": {
+        "required": [
+          "defaultProtocolId",
+          "farmId",
+          "irrigationBlockId",
+          "seasonStartDate"
+        ],
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Farm ID, this data belongs to"
+          },
+          "irrigationBlockId": {
+            "type": "string",
+            "description": "Identifier of irrigation block of the season",
+            "format": "uuid"
+          },
+          "defaultProtocolId": {
+            "type": "integer",
+            "description": "Identifier of default protocol, from protocols",
+            "format": "int32"
+          },
+          "seasonStartDate": {
+            "type": "string",
+            "description": "Season start date",
+            "format": "date-time"
+          },
+          "seasonEndDate": {
+            "type": "string",
+            "description": "Season end date",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estimatedHarvestDate": {
+            "type": "string",
+            "description": "Season estimated harvest date",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Season request"
+      },
+      "SoilType": {
+        "required": [
+          "soilTypeName"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "soilTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soilTypeName": {
+            "maxLength": 100,
+            "type": "string"
+          },
+          "tawInMm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fcPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wpPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bulkDensity": {
+            "type": "number",
+            "format": "double"
+          },
+          "cec": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nitrogenBaseDressingPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "phosphorusBaseDressingPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "potassiumBaseDressingPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calciumBaseDressingPercent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "magnesiumBaseDressingPercent": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SoilTypeRequest": {
+        "required": [
+          "soilTypeName"
+        ],
+        "type": "object",
+        "properties": {
+          "soilTypeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Name of the soil type"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Type of soil"
+      },
+      "SoilTypeUpdateRequest": {
+        "required": [
+          "soilTypeName"
+        ],
+        "type": "object",
+        "properties": {
+          "soilTypeName": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Name of the soil type"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Type of soil"
+      },
+      "Stage": {
+        "type": "object",
+        "properties": {
+          "stageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stageDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "durationInDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "depletionOfTaw": {
+            "type": "number",
+            "format": "double"
+          },
+          "kcStart": {
+            "type": "number",
+            "format": "double"
+          },
+          "kcEnd": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Variety": {
+        "required": [
+          "cropId",
+          "isGdd",
+          "varietyName"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "varietyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "varietyName": {
+            "maxLength": 250,
+            "type": "string"
+          },
+          "varietyKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isGdd": {
+            "type": "boolean"
+          },
+          "harvestStageId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "crop": {
+            "$ref": "#/components/schemas/Crop"
+          },
+          "phenologicStages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhenologicStage"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VarietyRequest": {
+        "required": [
+          "varietyName"
+        ],
+        "type": "object",
+        "properties": {
+          "varietyName": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Name of the crop variety"
+          },
+          "cropId": {
+            "type": "integer",
+            "description": "ID of the crop type which has this variety",
+            "format": "int32"
+          },
+          "isGdd": {
+            "type": "boolean",
+            "description": "Whether this variety is has Growing Degree Days"
+          },
+          "harvestStageId": {
+            "type": "integer",
+            "description": "Harvest stage id",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Variety of a crop type"
+      },
+      "VarietyUpdateRequest": {
+        "required": [
+          "varietyName"
+        ],
+        "type": "object",
+        "properties": {
+          "varietyName": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Name of the crop variety"
+          },
+          "cropId": {
+            "type": "integer",
+            "description": "ID of the crop type which has this variety",
+            "format": "int32"
+          },
+          "isGdd": {
+            "type": "boolean",
+            "description": "Whether this variety is has Growing Degree Days"
+          },
+          "harvestStageId": {
+            "type": "integer",
+            "description": "harvest stage id",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Determines whether this option is active for lookup"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Variety of a crop type"
+      },
+      "VerityResponse": {
+        "type": "object",
+        "properties": {
+          "varietyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "varietyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isGdd": {
+            "type": "boolean"
+          },
+          "harvestStageId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "crop": {
+            "$ref": "#/components/schemas/CropResponse"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

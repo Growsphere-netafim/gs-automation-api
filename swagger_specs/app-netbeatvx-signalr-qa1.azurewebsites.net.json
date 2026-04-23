@@ -1,0 +1,1733 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "GS.SignalR.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Test/DeviceCommandUpdated": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MobileCommandStatusUpdateMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MobileCommandStatusUpdateMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MobileCommandStatusUpdateMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/LatestMeasurement": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastMeasurementMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastMeasurementMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LastMeasurementMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/DeviceStatus": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/DeviceProvisionStatusUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceProvisionStatusMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceProvisionStatusMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceProvisionStatusMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/Alerts": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/ReportUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportUpdateMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportUpdateMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportUpdateMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/IrrigationCommandReferenceUpdated": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationCommandReferenceUpdatedMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationCommandReferenceUpdatedMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationCommandReferenceUpdatedMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/IrrgiationStatusUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationProgramStatusMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationProgramStatusMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationProgramStatusMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/IoModeUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/RecommendationStatusUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelCreatedMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelCreatedMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelCreatedMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/CropRecommendation": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelUpdatedMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelUpdatedMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelUpdatedMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/RecommendationFailed": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelErrorMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelErrorMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CropModelErrorMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/IrrigationNotification": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationNotificationMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationNotificationMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationNotificationMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/RecipeCommandReferenceUpdated": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeCommandReferenceUpdatedMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeCommandReferenceUpdatedMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeCommandReferenceUpdatedMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/DismissAlarms": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DismissAlarmsMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DismissAlarmsMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DismissAlarmsMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/RecipeNotification": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeNotificationMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeNotificationMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeNotificationMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/DeviceConfiguration": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceConfigurationMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceConfigurationMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceConfigurationMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Test/SoftwareUpdate": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoftwareUpdateMessage"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoftwareUpdateMessage"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SoftwareUpdateMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlarmMessage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "farmName": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "startTimestamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endTimestamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "severity": {
+            "type": "string",
+            "nullable": true
+          },
+          "alarmType": {
+            "$ref": "#/components/schemas/AlarmType"
+          },
+          "alertedDeviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "programId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "programName": {
+            "type": "string",
+            "nullable": true
+          },
+          "shiftId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AlarmType": {
+        "enum": [
+          "Maximal_flow",
+          "Minimal_flow",
+          "No_flow",
+          "UncontrolFlow",
+          "Maximal_Pressure",
+          "Minimal_pressure",
+          "High_Flow",
+          "Low_Flow",
+          "Booster_Pump_Overload",
+          "EC1_Sensor_Malfunction",
+          "EC2_Sensor_Malfunction",
+          "pH1_Sensor_Malfunction",
+          "pH2_Sensor_Malfunction",
+          "Delta_EC_Alarm",
+          "Delta_pH_Alarm",
+          "Low_EC_values",
+          "High_EC_values",
+          "Emergency_EC",
+          "Low_pH_values",
+          "High_pH_values",
+          "Emergency_pH",
+          "Low_Pressure",
+          "PD_Sensor_Malfunction",
+          "PD_Flushing_Reiteration",
+          "PD_over_threshold",
+          "Dosing_ch_high_flow",
+          "Dosing_ch_low_flow",
+          "Dosing_ch_no_flow",
+          "Dos_Uncontrol_flow",
+          "Dosing_Pmp_Overload",
+          "Fertilizer_Low_Level",
+          "Pump_Overload",
+          "PLC_on_pause",
+          "PLC_power_recovery",
+          "VAC24_Fault",
+          "VAC24_Recover",
+          "M_line_1",
+          "M_line_2",
+          "M_line_3",
+          "M_line_4",
+          "M_line_5",
+          "M_line_6",
+          "M_line_7",
+          "M_line_8",
+          "M_line_9",
+          "DosingStop",
+          "GWConnProblem",
+          "MLPaused",
+          "MLStopped",
+          "DPReiteration",
+          "FilterUnitFailstoFlush",
+          "Remote_Valve_Fault",
+          "Modbus_Error",
+          "RN_Unit_Disconnected",
+          "RN_Unit_Volt_Batt_Low",
+          "RN_Unit_Volt_Batt_Fail",
+          "RN_Unit_Capacitor_Fail",
+          "RN_Unit_Errors_in_Cards",
+          "RN_Unit_Batt_Warn",
+          "RN_Unit_Batt_Low",
+          "RN_Unit_Batt_Fail",
+          "RN_IO_Short_Circuit",
+          "RN_IO_Open_Circuit",
+          "RN_IO_Unavailable",
+          "RN_IO_Unknown_State",
+          "RN_IO_Undetermined",
+          "SN_Unit_Disconnected",
+          "SN_Host_Over_Current",
+          "SN_Host_Voltage_Low",
+          "SN_Host_Voltage_Failure",
+          "SN_Host_Bad_IO_Address",
+          "SN_Host_Faulty_IO",
+          "SN_Host_RTU_Unavailable",
+          "SN_Host_Reserved",
+          "SN_Host_General_Error",
+          "PDSwitchMalfunction",
+          "SensorINMalfunction",
+          "SensorOUTMalfunction",
+          "FiltersUnitsMalfunction",
+          "OverMaxCycle",
+          "Unit_Disconnected",
+          "RN_Host_Disconnected",
+          "SN_Host_Disconnected",
+          "WSConnProblem",
+          "GW_Unit_Disconnected",
+          "MLExtPaused",
+          "PSPumpOverload",
+          "PSInputSwitch",
+          "FertTank_Low_Level",
+          "FertTank_Low_Level_Switch",
+          "Tank_A_Low_Level",
+          "Tank_A_Level_Below_Threshold",
+          "Tank_B_Low_Level",
+          "Tank_B_Level_Below_Threshold",
+          "SD_Card_Error",
+          "SD_Card_Almost_Full",
+          "SD_Card_Full",
+          "PLC_Int_Mem_Almost_Full",
+          "PLC_Int_Mem_Full",
+          "Dosing_No_Pressure",
+          "Very_Low_Battery",
+          "No_Pressure",
+          "Low_Battery",
+          "Communication_Error",
+          "General_Alarm",
+          "Renew_Certificate_Fail",
+          "Check_Renew_Certificate_Fail",
+          "Successfully_Renew_Certificate",
+          "Undefined_Error",
+          "External_Alarm_input",
+          "SubDS_Comm_Error",
+          "SubDS_Autotune_Req",
+          "SubDS_VAC24_Fault",
+          "SubDS_VAC24_Recover",
+          "Reservoir_Emergency_Low_Level",
+          "Reservoir_Emergency_High_Level",
+          "Reservoir_Low_Level",
+          "Reservoir_High_Level",
+          "Well_Pump_Protection",
+          "Well_Low_Level_Sw",
+          "WellLow_Level_Sensor",
+          "Well_No_Flow",
+          "Well_High_Pressure",
+          "ExBox_Comm_Error",
+          "DMS_High_EC",
+          "DMS_Low_EC",
+          "DMS_High_PH",
+          "DMS_Low_PH",
+          "DMS_High_Percentage",
+          "DMS_Low_Percentage",
+          "DMS_No_Drain",
+          "CPS_Low_Pressuer",
+          "CPS_High_Pressure",
+          "CPS_Non_Critical_Alarm",
+          "CPS_Critical_Alarm",
+          "CPS_Pump_Pressure_Switch",
+          "CPS_Pump_Overload",
+          "CPS_Common_Pressure_Switch",
+          "Yungo_Main_Unit_Disconn",
+          "Yungo_Unit_Disconn",
+          "Yungo_Unit_Low_Batt"
+        ],
+        "type": "string"
+      },
+      "CauseOfTxType": {
+        "enum": [
+          "ReedSwitch",
+          "Application",
+          "Time",
+          "Event",
+          "Daily",
+          "Irrigation",
+          "ReplyToRequest",
+          "IrrigationDaily"
+        ],
+        "type": "string"
+      },
+      "CommandExecutionStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandHistory": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandStatus": {
+        "enum": [
+          "Pending",
+          "Processing",
+          "Canceled",
+          "CanceledManually",
+          "Completed",
+          "Timeout",
+          "Retry",
+          "Failed",
+          "Expired",
+          "ProcessingInParallel",
+          "SentToCommandExecutor"
+        ],
+        "type": "string"
+      },
+      "CommandType": {
+        "enum": [
+          "SetIrrigationProgramState",
+          "StopIrrigation",
+          "SetIrrigationProgram",
+          "UpdateIoMode",
+          "SetDeviceTime",
+          "GetTopology",
+          "GetIrrigationProgramScheme",
+          "RequestData",
+          "UpdateSoftware",
+          "SetProgramScheme",
+          "SetIoConfiguration",
+          "SetGeneralSettings",
+          "SetAlertSettings",
+          "SetIoMode",
+          "SetIotIrrigationState",
+          "SetDailyProgramScheme",
+          "SetAwakingTime",
+          "SetRecipeDetails",
+          "SetMainlineDetails",
+          "GetDailyProgram",
+          "DeleteProgramScheme",
+          "GetDeviceMeasurement",
+          "DismissAlarms",
+          "RequestCommand",
+          "Action",
+          "UpdateIrrigationConfig",
+          "UpdateModemConfig",
+          "IoModeTest",
+          "SetDelaySettings"
+        ],
+        "type": "string"
+      },
+      "CropModelCreatedMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropModelErrorMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "irrigationBlockId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GSError"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropModelUpdatedMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kc": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceConfigurationMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timestampUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "$ref": "#/components/schemas/DeviceConfigurationResourceType"
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceConfigurationResourceType": {
+        "enum": [
+          "AlertSettings",
+          "GeneralSettings",
+          "DelaySettings"
+        ],
+        "type": "string"
+      },
+      "DeviceProvisionFlowType": {
+        "enum": [
+          "Provision",
+          "Update",
+          "Replace",
+          "Remove"
+        ],
+        "type": "string"
+      },
+      "DeviceProvisionStatusMessage": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "provisionType": {
+            "$ref": "#/components/schemas/DeviceProvisionFlowType"
+          },
+          "step": {
+            "type": "string",
+            "nullable": true
+          },
+          "stepStatus": {
+            "$ref": "#/components/schemas/DeviceProvisionStepStatus"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceProvisionStepStatus": {
+        "enum": [
+          "NotStarted",
+          "Started",
+          "Failed",
+          "Finished",
+          "PendingUserApproval"
+        ],
+        "type": "string"
+      },
+      "DeviceStatusMessage": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "rssi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lastUpdateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isConnected": {
+            "type": "boolean"
+          },
+          "becomeConnectedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "battery": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "batteryVoltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "simNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "modemIP": {
+            "type": "string",
+            "nullable": true
+          },
+          "swVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldIoDeviceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "txIntervalMinutes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "modemConnectSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "causeOfTx": {
+            "$ref": "#/components/schemas/CauseOfTxType"
+          },
+          "controllerIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "stayConnect": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrProgramIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrigationIsRunning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isPhysicallyConnected": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DismissAlarmsMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceReferenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CommandExecutionStatus"
+          },
+          "statusTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "receiveCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finishExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandHistory"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GSError": {
+        "type": "object",
+        "properties": {
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoModeUpdateMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channelUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "chId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updatedDateUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationCommandReferenceUpdatedMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "commandStatus": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "commandReferenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationProgramId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationNotificationMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestampUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceType": {
+            "$ref": "#/components/schemas/ResourceType"
+          },
+          "cosmosSessionId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationProgramStatusMessage": {
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceProgramId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "programUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "nextIrriDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentShiftId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentShiftUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "irriDelvrQtyInLiters": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInLiters": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrInMm": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrInInch": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemInMm": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemInInch": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "irriRemTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numOfRuns": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentFlow": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentPressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "actualStartTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "plannedStartTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "startReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentIntervalDay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irriDelvrQtyInM3": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInM3": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LastMeasurementMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "channelUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MobileCommandStatusUpdateMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceReferenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CommandExecutionStatus"
+          },
+          "statusTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "receiveCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finishExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandHistory"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlcReportType": {
+        "enum": [
+          "IrrigationAlarm",
+          "AccumulationEventsReport",
+          "MeterAccumulationReport",
+          "UncompletedIrrigationReport",
+          "IrrigationLog",
+          "FiltersLog",
+          "EventsLog"
+        ],
+        "type": "string"
+      },
+      "RecipeCommandReferenceUpdatedMessage": {
+        "type": "object",
+        "properties": {
+          "recipeUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "commandReferenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "commandStatus": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeNotificationMessage": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recipeUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasChanges": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isNotActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReportUpdateMessage": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasNewReport": {
+            "type": "boolean"
+          },
+          "reportType": {
+            "$ref": "#/components/schemas/PlcReportType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResourceType": {
+        "enum": [
+          "ProgramScheme",
+          "CropUnit"
+        ],
+        "type": "string"
+      },
+      "SoftwareUpdateMessage": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timeStampUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fromVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "toVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemType": {
+        "enum": [
+          "None",
+          "NetIotbsu",
+          "NetIotrtu",
+          "NetIotrpu",
+          "NetIoteco",
+          "NetCrtplc",
+          "rSenserLink",
+          "rSensertu",
+          "rSenserpu",
+          "rSensemeteo",
+          "rSenseDFM",
+          "NetCrtdstation",
+          "NetCrtpstation",
+          "NetiotstalnRtu",
+          "DavisWlink",
+          "RadioNetbsu",
+          "RadioNetrtu",
+          "RadioNetrpu",
+          "SingleNetbsu",
+          "SingleNetrtu",
+          "SingleNetrpu",
+          "EcoAct",
+          "Flex",
+          "EcoGW",
+          "DPM",
+          "AdaptiveDrip"
+        ],
+        "type": "string"
+      }
+    }
+  }
+}

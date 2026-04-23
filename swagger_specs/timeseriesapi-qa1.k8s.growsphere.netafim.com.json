@@ -1,0 +1,670 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "GS timeseries API",
+    "version": "v2"
+  },
+  "paths": {
+    "/api/Farms/{farmId}/IrrigationEventsData": {
+      "post": {
+        "tags": [
+          "IrrigationData"
+        ],
+        "summary": "Get irrigation events from ADX",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationDataResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationDataResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationDataResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/DailyIrrigationFullData": {
+      "post": {
+        "tags": [
+          "IrrigationData"
+        ],
+        "summary": "Get full data for daily irrigation from ADX",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationFullDataRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationFullDataRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationFullDataRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyIrrigationFullDataDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyIrrigationFullDataDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyIrrigationFullDataDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/TimeSeriesData": {
+      "post": {
+        "tags": [
+          "MaterializedView"
+        ],
+        "summary": "Get calculated and raw data from ADX",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTimeSeriesRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTimeSeriesRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTimeSeriesRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/TimeSeriesDataByIoAndTypeId": {
+      "post": {
+        "tags": [
+          "MaterializedView"
+        ],
+        "summary": "Get calculated and raw data from ADX based on ioid and io device type id",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTypeIdTimeSeriesRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTypeIdTimeSeriesRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoTypeIdTimeSeriesRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/LastRead": {
+      "post": {
+        "tags": [
+          "MaterializedView"
+        ],
+        "summary": "Get last read by io id",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "unitSystem",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "$ref": "#/components/schemas/UnitSystem"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoTimeSeriesResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DailyIrrigationDto": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyIrrigationFullDataDto": {
+        "type": "object",
+        "properties": {
+          "eventStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "amountInM3": {
+            "type": "number",
+            "format": "double"
+          },
+          "amountInGallon": {
+            "type": "number",
+            "format": "double"
+          },
+          "amountInMm": {
+            "type": "number",
+            "format": "double"
+          },
+          "amountInInch": {
+            "type": "number",
+            "format": "double"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalDurationInSeconds": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyIrrigationFullDataRequestDto": {
+        "type": "object",
+        "properties": {
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoAndTypePairRequestDto": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoDataResponseDto": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoTimeSeriesRequestDto": {
+        "type": "object",
+        "properties": {
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoTimeSeriesResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoDataResponseDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoTypeIdTimeSeriesRequestDto": {
+        "type": "object",
+        "properties": {
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "ioAndTypePairs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoAndTypePairRequestDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationDataResponseDto": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dailyIrrigation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyIrrigationDto"
+            },
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationEventDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventDto": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationInSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "waterAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventsRequestDto": {
+        "type": "object",
+        "properties": {
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Sort": {
+        "enum": [
+          "Asc",
+          "Desc"
+        ],
+        "type": "string"
+      },
+      "UnitSystem": {
+        "enum": [
+          "SI",
+          "BI"
+        ],
+        "type": "string"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

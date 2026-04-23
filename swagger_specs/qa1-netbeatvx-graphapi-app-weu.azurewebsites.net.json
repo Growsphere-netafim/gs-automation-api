@@ -1,0 +1,5011 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NetBeat VX API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Configuration/{userId}": {
+      "get": {
+        "tags": [
+          "Configuration"
+        ],
+        "summary": "Getting the Pre defined and User defined graphs configurations by User",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the graph configuration list",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GraphPrefResponseModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GraphPrefResponseModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GraphPrefResponseModel"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If user is not authorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Configuration": {
+      "post": {
+        "tags": [
+          "Configuration"
+        ],
+        "summary": "Create or Update the graph configuration",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPreferencesRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPreferencesRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPreferencesRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPreferencesRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Saved configuration report"
+          },
+          "400": {
+            "description": "Failed to save configuration report"
+          }
+        }
+      }
+    },
+    "/api/Configuration/{userGraphId}": {
+      "delete": {
+        "tags": [
+          "Configuration"
+        ],
+        "parameters": [
+          {
+            "name": "userGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/{ioId}/{fromDate}/{toDate}": {
+      "get": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Get All Io Data By IoId",
+        "parameters": [
+          {
+            "name": "ioId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              },
+              "text/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Data/lastread": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "For getting the last read value of each IOID",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestIoData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestIoData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestIoData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Data": {
+      "post": {
+        "tags": [
+          "Data"
+        ],
+        "summary": "Fetch all IO data in the given range",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoFetchDataModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoFetchDataModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IoFetchDataModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/Data/{ioId}/{fromDate}/{toDate}": {
+      "get": {
+        "tags": [
+          "DataV2"
+        ],
+        "parameters": [
+          {
+            "name": "ioId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IoFetchGetDataModelV2"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IoFetchGetDataModelV2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IoFetchGetDataModelV2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/Data/lastread": {
+      "post": {
+        "tags": [
+          "DataV2"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataLatestRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestGroupedIoData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestGroupedIoData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestGroupedIoData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/Data": {
+      "post": {
+        "tags": [
+          "DataV2"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoDataRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedIoFetchDataModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedIoFetchDataModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedIoFetchDataModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Graphs/{fromDate}/{toDate}/{sensorsIds}": {
+      "get": {
+        "tags": [
+          "Graphs"
+        ],
+        "summary": "Fetch Graph data based on request parameters",
+        "parameters": [
+          {
+            "name": "sensorsIds",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the requested graph details",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If there is no access to a specific farm",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the item is null"
+          }
+        }
+      }
+    },
+    "/api/Graphs/export": {
+      "post": {
+        "tags": [
+          "Graphs"
+        ],
+        "summary": "Export sensor",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportGraphRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportGraphRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportGraphRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportGraphRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Graphs/graph-data": {
+      "post": {
+        "tags": [
+          "Graphs"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Graphs/data-selection/farm/{farmId}/croup-unit/{cropUnitId}": {
+      "get": {
+        "tags": [
+          "Graphs"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cropUnitId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cacheReset",
+            "in": "header",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v2/Graphs/{fromDate}/{toDate}/{sensorsIds}": {
+      "get": {
+        "tags": [
+          "GraphsV2"
+        ],
+        "summary": "Fetch Grouped Graph data based on request parameters",
+        "parameters": [
+          {
+            "name": "sensorsIds",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the requested graph details",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If there is no access to a specific farm",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the item is null"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/v2/Graphs/SensorsByIoAndTypeId": {
+      "post": {
+        "tags": [
+          "GraphsV2"
+        ],
+        "summary": "Fetch Grouped Graph data based on request parameters",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphRequestByIoAndTypeIdModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphRequestByIoAndTypeIdModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphRequestByIoAndTypeIdModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphRequestByIoAndTypeIdModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the requested graph details",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedGraphData"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If there is no access to a specific farm",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If the item is null"
+          }
+        }
+      }
+    },
+    "/api/v2/Graphs/graph-data": {
+      "post": {
+        "tags": [
+          "GraphsV2"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphDataResultRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v2/Graphs/data-selection/farm/{farmId}/croup-unit/{cropUnitId}": {
+      "get": {
+        "tags": [
+          "GraphsV2"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cropUnitId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cacheReset",
+            "in": "header",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/calculatedData": {
+      "post": {
+        "tags": [
+          "Irrigation"
+        ],
+        "summary": "Get Calculated Data Method",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculatedDataResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculatedDataResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculatedDataResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/IrrigationEvents": {
+      "post": {
+        "tags": [
+          "Irrigation"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationEventsRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "get": {
+        "tags": [
+          "Irrigation"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ioId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "datefrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Farms/{farmId}/MultiIrrigationEvents": {
+      "get": {
+        "tags": [
+          "Irrigation"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ioIds",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datefrom",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dateTo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IrrigationEventsResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/calculatedData": {
+      "post": {
+        "tags": [
+          "IrrigationV2"
+        ],
+        "summary": "Get Grouped Calculated Data Method",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyIrrigationEventCalculatedDataRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusCode"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedCalculationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedCalculationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedCalculationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/devices/{deviceId}/user-device-graphs": {
+      "get": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/farms/{farmId}/devices/{deviceId}/users/{userId}/user-device-graphs": {
+      "get": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphAdditionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeviceGraphAdditionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/devices/{deviceId}/user-device-graphs/{userDeviceGraphId}": {
+      "delete": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "userDeviceGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "userDeviceGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Operation"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "userDeviceGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphOverrideRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphOverrideRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphOverrideRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDeviceGraphOverrideRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "UserDeviceGraph"
+        ],
+        "parameters": [
+          {
+            "name": "userDeviceGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDeviceGraph"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Client Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkSpace": {
+      "post": {
+        "tags": [
+          "WorkSpace"
+        ],
+        "summary": "Fetch separated sensors data",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WorkSpace/export": {
+      "post": {
+        "tags": [
+          "WorkSpace"
+        ],
+        "summary": "Export separated sensors data",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceGraphRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorComGraphResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/users/{userId}/workspace-user-graphs": {
+      "get": {
+        "tags": [
+          "WorkspaceUserGraphs"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceUserGraphsGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceUserGraphsGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceUserGraphsGetDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "WorkspaceUserGraphs"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workspace-user-graphs/{userGraphId}": {
+      "put": {
+        "tags": [
+          "WorkspaceUserGraphs"
+        ],
+        "parameters": [
+          {
+            "name": "userGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserGraphPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WorkspaceUserGraphs"
+        ],
+        "parameters": [
+          {
+            "name": "userGraphId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          },
+          {
+            "name": "farmId",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[env identifier]-nb[farm identifier]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApplicationStatusCode": {
+        "enum": [
+          200,
+          400,
+          620
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CalculatedData": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ioType": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueMetric": {
+            "type": "number",
+            "format": "double"
+          },
+          "valueImperial": {
+            "type": "number",
+            "format": "double"
+          },
+          "uomMetric": {
+            "type": "string",
+            "nullable": true
+          },
+          "uomImperial": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CalculatedDataResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalculatedData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Configuration": {
+        "type": "object",
+        "properties": {
+          "configurations": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/GraphConfiguration"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyIrrigationEventCalculatedDataRequestModel": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ioId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyIrrigationEventDto": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailySensorData": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailySensorResponseModel": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailySensorData"
+            },
+            "nullable": true
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "graphType": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "iotype": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "depth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "thresholds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThresholdDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "userMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "internalMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExportGraphRequestModel": {
+        "required": [
+          "blockIds",
+          "farmId",
+          "fromDateTime",
+          "graphName",
+          "toDateTime",
+          "userGraphId"
+        ],
+        "type": "object",
+        "properties": {
+          "fromDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userGraphId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "graphName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "farmId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "blockIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sensorTypeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GraphConfiguration": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "sensors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SensorConfiguration"
+            },
+            "nullable": true
+          },
+          "numDigit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioLegend": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "thresholds": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GraphDataResultRequest": {
+        "type": "object",
+        "properties": {
+          "dateFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sensorsRequests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SensorRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GraphPrefResponseModel": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "userGraphId": {
+            "type": "string",
+            "nullable": true
+          },
+          "graphName": {
+            "type": "string",
+            "nullable": true
+          },
+          "customGraphName": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "endDateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "configuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "isCustomGraph": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GraphRequestByIoAndTypeIdModel": {
+        "type": "object",
+        "properties": {
+          "ioAndTypePairs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoAndTypePairRequestDto"
+            },
+            "nullable": true
+          },
+          "fromDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedCalculatedData": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalculatedData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedCalculationResponse": {
+        "type": "object",
+        "properties": {
+          "groupedCalculatedData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupedCalculatedData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedGraphData": {
+        "type": "object",
+        "properties": {
+          "groupedSensorsGraph": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupedSensorsGraph"
+            },
+            "nullable": true
+          },
+          "groupedIrrigationEventsGraph": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupedIrrigationEventsGraphDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedIoFetchDataModel": {
+        "type": "object",
+        "properties": {
+          "groupedSensorsData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoFetchDataModelGroupedSensorsData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedIrrigationEventsGraphDto": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationEventsGraphDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupedSensorsGraph": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sensors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailySensorResponseModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoAndTypePairRequestDto": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoDataLatestRequestModel": {
+        "type": "object",
+        "properties": {
+          "sensorTypeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoDataModel": {
+        "type": "object",
+        "properties": {
+          "metricValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "imperialValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "metricUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "imperialUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoDataRequestModel": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fromDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoFetchDataModel": {
+        "type": "object",
+        "properties": {
+          "ioData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoDataModel"
+            },
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoFetchDataModelGroupedSensorsData": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoFetchDataModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoFetchGetDataModelV2": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoGetDataModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoGetDataModel": {
+        "type": "object",
+        "properties": {
+          "metricValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "imperialValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "metricUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "imperialUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "calcMetric": {
+            "type": "number",
+            "format": "double"
+          },
+          "calcImperial": {
+            "type": "number",
+            "format": "double"
+          },
+          "graphType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventDto": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationInSeconds": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "waterAmount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventsGraphDto": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dailyEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyIrrigationEventDto"
+            },
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationEventDto"
+            },
+            "nullable": true
+          },
+          "ioName": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventsRequestModel": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationEventsResponseDto": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dailyEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyIrrigationEventDto"
+            },
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationEventDto"
+            },
+            "nullable": true
+          },
+          "ioName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LatestGroupedIoData": {
+        "type": "object",
+        "properties": {
+          "groupedSensorsData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LatestIoDataResponseGroupedSensorsData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LatestIoData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LatestIoDataResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LatestIoDataResponse": {
+        "type": "object",
+        "properties": {
+          "metricValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "imperialValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "metricUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "imperialUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LatestIoDataResponseGroupedSensorsData": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LatestIoDataResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Operation": {
+        "type": "object",
+        "properties": {
+          "operationType": {
+            "$ref": "#/components/schemas/OperationType"
+          },
+          "path": {
+            "type": "string",
+            "nullable": true
+          },
+          "op": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperationType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SensorComGraphResponse": {
+        "type": "object",
+        "properties": {
+          "Sensor": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DailySensorResponseModel"
+              },
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SensorConfiguration": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "presented": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SensorRequest": {
+        "type": "object",
+        "properties": {
+          "sensorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "depth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SensorType": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThresholdDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "thresholdType": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isSystemAlert": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDeviceGraph": {
+        "type": "object",
+        "properties": {
+          "userDeviceGraphId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customGraphName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "graphsConfigurations": {
+            "$ref": "#/components/schemas/Configuration"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDeviceGraphAdditionRequest": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customGraphName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "graphsConfigurations": {
+            "$ref": "#/components/schemas/Configuration"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDeviceGraphAdditionResponse": {
+        "type": "object",
+        "properties": {
+          "userDeviceGraphId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDeviceGraphOverrideRequest": {
+        "type": "object",
+        "properties": {
+          "userDeviceGraphId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "customGraphName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "graphsConfigurations": {
+            "$ref": "#/components/schemas/Configuration"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserGraphPostDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupedGraphs": {
+            "type": "boolean"
+          },
+          "isThresholdVisible": {
+            "type": "boolean"
+          },
+          "cropUnits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUserGraphCropUnit"
+            },
+            "nullable": true
+          },
+          "sensors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUserGraphSensor"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserGraphPreferencesRequestModel": {
+        "required": [
+          "configuration",
+          "customGraphName",
+          "endDateTime",
+          "farmId",
+          "isDeleted",
+          "startDateTime",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "customGraphName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "farmId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "configuration": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceGraphRequest": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "sensorTypeIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SensorType"
+            },
+            "nullable": true
+          },
+          "fromDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "toDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numDigits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitKind": {
+            "type": "string",
+            "nullable": true
+          },
+          "sort": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceUserGraphCropUnit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceUserGraphGetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "groupedGraphs": {
+            "type": "boolean"
+          },
+          "isThresholdVisible": {
+            "type": "boolean"
+          },
+          "cropUnits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUserGraphCropUnit"
+            },
+            "nullable": true
+          },
+          "sensors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUserGraphSensor"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceUserGraphSensor": {
+        "type": "object",
+        "properties": {
+          "ioIds": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioDeviceTypeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDailyIrrigation": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WorkspaceUserGraphsGetDto": {
+        "type": "object",
+        "properties": {
+          "userGraphs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceUserGraphGetDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \r\n                      Enter 'Bearer' [space] and then your token in the text input below.\r\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

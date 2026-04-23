@@ -1,0 +1,1257 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Device State Manager API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/DeviceStates/ById/{deviceId}": {
+      "get": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Get device state information",
+        "description": "api for querying status of the command",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "description": "Device identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ByUUId/{deviceUuId}": {
+      "get": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Get device state information by UUID",
+        "description": "api for querying status of the command",
+        "parameters": [
+          {
+            "name": "deviceUuId",
+            "in": "path",
+            "description": "Device UUID identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceStateDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ByIds": {
+      "post": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Get devices states information by requested list of identifiers",
+        "description": "api for querying status of the command",
+        "requestBody": {
+          "description": "Device identifier list",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeviceStateByIdListQuery"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeviceStateByIdListQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDeviceStateByIdListQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ByFarmId/{farmId}": {
+      "get": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Get devices states information by farm identifier",
+        "description": "api for querying status of the command",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "Farm identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceStateDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ByFarmId/{farmId}/connection-status": {
+      "get": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Get devices connection status by farm identifier (optimized for performance)",
+        "description": "Fast API endpoint for querying connection status of devices by farm ID.\r\nReturns minimal data: deviceId, isConnected, and isPhysicallyConnected.",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "Farm identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceConnectionStatusDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceConnectionStatusDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceConnectionStatusDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ById/{deviceId}/UpdateDeviceState": {
+      "post": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Update Device State",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/devices/{deviceId}/deviceState": {
+      "put": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertDeviceStateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertDeviceStateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertDeviceStateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/ById/{deviceId}/reset-software-update": {
+      "post": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "summary": "Reset Software Update",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/DeviceStates/devices": {
+      "put": {
+        "tags": [
+          "DeviceStates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceListStatusUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceListStatusUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceListStatusUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Heartbeats": {
+      "get": {
+        "tags": [
+          "Heartbeats"
+        ],
+        "summary": "Get heartbeat messages by datetime range\r\nBased on SavedDateTime\r\nFormat: DateTime",
+        "parameters": [
+          {
+            "name": "fromDateTimeUtc",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDateTimeUtc",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "systemType",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueryHeartbeats": {
+      "get": {
+        "tags": [
+          "Heartbeats"
+        ],
+        "summary": "Query heartbeats by datetime range and device ids\r\nBased on SavedDateTime\r\nFormat: DateTime",
+        "parameters": [
+          {
+            "name": "fromDateTimeUtc",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDateTimeUtc",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "systemType",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "deviceIds",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeartbeatMessagePagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CauseOfTxType": {
+        "enum": [
+          "ReedSwitch",
+          "Application",
+          "Time",
+          "Event",
+          "Daily",
+          "Irrigation",
+          "ReplyToRequest",
+          "IrrigationDaily"
+        ],
+        "type": "string"
+      },
+      "ConnectionStateType": {
+        "enum": [
+          "deviceConnected",
+          "deviceDisconnected",
+          "moduleConnected",
+          "moduleDisconnected"
+        ],
+        "type": "string"
+      },
+      "DeviceConnectionStatusDto": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConnected": {
+            "type": "boolean"
+          },
+          "isPhysicallyConnected": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceListStatusUpdateDto": {
+        "type": "object",
+        "properties": {
+          "deviceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceStateDto": {
+        "type": "object",
+        "properties": {
+          "simNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "modemIP": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "batteryVoltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rssi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lastUpdateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isConnected": {
+            "type": "boolean"
+          },
+          "isPhysicallyConnected": {
+            "type": "boolean"
+          },
+          "becomeConnectedTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdateTimeConnectionState": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "connectionState": {
+            "$ref": "#/components/schemas/ConnectionStateType"
+          },
+          "connectionStateStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "battery": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fieldIoDeviceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "softwareUpdate": {
+            "$ref": "#/components/schemas/SoftwareUpdateDto"
+          },
+          "txIntervalMinutes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "modemConnectSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "stayConnect": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "causeOfTx": {
+            "$ref": "#/components/schemas/CauseOfTxType"
+          },
+          "controllerIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrProgramIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrigationIsRunning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "swVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "downTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "upTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdUsage": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientNum": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cpuLoad": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargingCurrentMa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetDeviceStateByIdListQuery": {
+        "type": "object",
+        "properties": {
+          "deviceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeartbeatMessage": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "battery": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rssi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "powerOK": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "powerCounter": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "lastRestartTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "swVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "hwVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "string",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "elevation": {
+            "type": "string",
+            "nullable": true
+          },
+          "batteryVoltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperature": {
+            "type": "string",
+            "nullable": true
+          },
+          "inputVoltage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "chargingOK": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "resetCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "connectCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "connectFailCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "txCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "modemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "simNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "cellularProvider": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "modemSystemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "modemIP": {
+            "type": "string",
+            "nullable": true
+          },
+          "txIntervalMinutes": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "modemConnectSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "causeOfTx": {
+            "$ref": "#/components/schemas/CauseOfTxType"
+          },
+          "stayConnect": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "controllerIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrProgramIsPaused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "irrigationIsRunning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "savedDateTimeUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "upTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "downTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdUsage": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientNum": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cpuLoad": {
+            "type": "string",
+            "nullable": true
+          },
+          "chargingCurrentMa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "isFota": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "connected": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HeartbeatUnitMessage"
+            },
+            "nullable": true
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeartbeatMessagePagedResult": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pageCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HeartbeatMessage"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeartbeatUnitMessage": {
+        "type": "object",
+        "properties": {
+          "unitId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "connected": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "rssi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "battery": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NetIotSoftwareUpdateStatus": {
+        "enum": [
+          "Started",
+          "Failed",
+          "Uploaded",
+          "Updated"
+        ],
+        "type": "string"
+      },
+      "SoftwareUpdateDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/NetIotSoftwareUpdateStatus"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "downloadProgressInPercent": {
+            "type": "number",
+            "format": "float"
+          },
+          "errorCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastUpdateTimeUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemType": {
+        "enum": [
+          "None",
+          "NetIotbsu",
+          "NetIotrtu",
+          "NetIotrpu",
+          "NetIoteco",
+          "NetCrtplc",
+          "rSenserLink",
+          "rSensertu",
+          "rSenserpu",
+          "rSensemeteo",
+          "rSenseDFM",
+          "NetCrtdstation",
+          "NetCrtpstation",
+          "NetiotstalnRtu",
+          "DavisWlink",
+          "RadioNetbsu",
+          "RadioNetrtu",
+          "RadioNetrpu",
+          "SingleNetbsu",
+          "SingleNetrtu",
+          "SingleNetrpu",
+          "EcoAct",
+          "Flex",
+          "EcoGW",
+          "DPM",
+          "AdaptiveDrip",
+          "Radiolite_base",
+          "Radiolite_2x2",
+          "Radiolite_4xD",
+          "ExpansionBox"
+        ],
+        "type": "string"
+      },
+      "UpsertDeviceStateDto": {
+        "type": "object",
+        "properties": {
+          "isConnected": {
+            "type": "boolean"
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
