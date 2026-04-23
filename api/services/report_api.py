@@ -16,12 +16,12 @@ class ReportAPIService:
         try:
             resp = self._client.get(ReportAPIEndpoints.configuration(self._data.user_id))
         except requests.exceptions.RetryError:
-            pytest.skip(
-                f"Report configuration returned repeated 500s for user {self._data.user_id} (backend bug)"
+            pytest.xfail(
+                f"Backend bug: Report configuration returns 500 for user {self._data.user_id}"
             )
         if resp.status_code == 500:
-            pytest.skip(
-                f"Report configuration returned 500 for user {self._data.user_id} (backend bug)"
+            pytest.xfail(
+                f"Backend bug: Report configuration returns 500 for user {self._data.user_id}"
             )
         return resp
 

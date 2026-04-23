@@ -31,13 +31,14 @@ def parse_junit(path: str) -> dict:
     """
     Parse a JUnit XML file and return raw counters.
     Handles both <testsuites> (multiple suites) and bare <testsuite> root.
+    Splits the <skipped> bucket into real skips vs pytest.xfail.
     """
     try:
         tree = ET.parse(path)
         root = tree.getroot()
     except Exception as exc:
         print(f"[WARN] Cannot parse JUnit XML at {path!r}: {exc}", file=sys.stderr)
-        return {"total": 0, "failures": 0, "errors": 0, "skipped": 0}
+        return {"total": 0, "failures": 0, "errors": 0, "skipped": 0, "xfailed": 0}
 
     def _int(el, attr) -> int:
         try:
@@ -50,12 +51,29 @@ def parse_junit(path: str) -> dict:
     else:
         suites = [root]
 
-    total    = sum(_int(s, "tests")    for s in suites)
-    failures = sum(_int(s, "failures") for s in suites)
-    errors   = sum(_int(s, "errors")   for s in suites)
-    skipped  = sum(_int(s, "skipped")  for s in suites)
+    total        = sum(_int(s, "tests")    for s in suites)
+    failures     = sum(_int(s, "failures") for s in suites)
+    errors       = sum(_int(s, "errors")   for s in suites)
+    skipped_all  = sum(_int(s, "skipped")  for s in suites)
 
-    return {"total": total, "failures": failures, "errors": errors, "skipped": skipped}
+    # Walk individual <skipped> children to separate xfail from real skip.
+    # pytest emits <skipped type="pytest.xfail" .../> for pytest.xfail() calls
+    # and <skipped type="pytest.skip" .../> for pytest.skip() calls.
+    xfailed = 0
+    for suite in suites:
+        for case in suite.findall("testcase"):
+            for sk in case.findall("skipped"):
+                if sk.get("type") == "pytest.xfail":
+                    xfailed += 1
+
+    real_skipped = max(0, skipped_all - xfailed)
+    return {
+        "total":     total,
+        "failures":  failures,
+        "errors":    errors,
+        "skipped":   real_skipped,
+        "xfailed":   xfailed,
+    }
 
 
 def compute_stats(env_name: str, raw: dict) -> dict:
@@ -63,8 +81,9 @@ def compute_stats(env_name: str, raw: dict) -> dict:
     failures = raw["failures"]
     errors   = raw["errors"]
     skipped  = raw["skipped"]
+    xfailed  = raw.get("xfailed", 0)
     failed   = failures + errors
-    passed   = max(0, total - failed - skipped)
+    passed   = max(0, total - failed - skipped - xfailed)
 
     pass_pct = round(passed / total * 100, 1) if total > 0 else 0.0
 
@@ -74,6 +93,7 @@ def compute_stats(env_name: str, raw: dict) -> dict:
         "passed":       passed,
         "failed":       failed,
         "skipped":      skipped,
+        "xfailed":      xfailed,
         "pass_pct":     pass_pct,
         "had_failures": failed > 0,
     }
@@ -91,7 +111,8 @@ def main() -> None:
     print(
         f"[OK] {args.env_name}: "
         f"{stats['passed']} passed / {stats['failed']} failed / "
-        f"{stats['skipped']} skipped  ({stats['pass_pct']}%){flag}"
+        f"{stats['skipped']} skipped / {stats['xfailed']} xfailed "
+        f"({stats['pass_pct']}%){flag}"
     )
 
 

@@ -192,7 +192,7 @@ class MobileService:
             headers={"x-nbvx-usr-pref-unit-system": "SI"},
         )
         if resp.status_code == 400:
-            pytest.skip("Backend DataAPI failure on deviceDetails call")
+            pytest.xfail("Backend bug: DataAPI failure on deviceDetails call (HTTP 400)")
         return resp
 
     def get_device_recipes(self) -> ApiResponse:
@@ -267,13 +267,13 @@ class MobileService:
     def get_notes(self) -> ApiResponse:
         resp = self._client.get(MobileEndpoints.notes())
         if resp.status_code == 400:
-            pytest.skip("Backend DataAPI failure on notes call")
+            pytest.xfail("Backend bug: DataAPI failure on notes call (HTTP 400)")
         return resp
 
     def get_system_types(self) -> ApiResponse:
         resp = self._client.get(MobileEndpoints.system_types())
         if resp.status_code == 400:
-            pytest.skip("Gateway dynamic call returned 400")
+            pytest.xfail("Backend bug: Gateway dynamic call returned 400")
         return resp
 
     # Irrigation
@@ -346,7 +346,7 @@ class MobileService:
             headers={"x-nbvx-usr-pref-unit-system": "SI"},
         )
         if resp.status_code == 400:
-            pytest.skip("Backend DataAPI failure on irrigationBlocks call")
+            pytest.xfail("Backend bug: DataAPI failure on irrigationBlocks call (HTTP 400)")
         return resp
 
     def get_irrigation_blocks(self) -> ApiResponse:
@@ -355,7 +355,7 @@ class MobileService:
             headers={"x-nbvx-usr-pref-unit-system": "SI"},
         )
         if resp.status_code == 400:
-            pytest.skip("Backend DataAPI failure on irrigationBlocks call")
+            pytest.xfail("Backend bug: DataAPI failure on irrigationBlocks call (HTTP 400)")
         return resp
 
     def get_max_program_overview(self) -> ApiResponse:
@@ -397,7 +397,7 @@ class MobileService:
         uuid = flow_uuid or self._data.flow_uuid or self._resolve_flow_uuid()
         resp = self._client.get(MobileEndpoints.provisioning_status(uuid))
         if resp.status_code == 400:
-            pytest.skip("Provisioning status returned 400")
+            pytest.xfail("Backend bug: Provisioning status endpoint returns 400")
         return resp
 
     # Reports
@@ -452,7 +452,7 @@ class MobileService:
             headers={"x-nbvx-usr-pref-unit-system": "SI"},
         )
         if resp.status_code == 400:
-            pytest.skip("Backend DataAPI failure on userDetails call")
+            pytest.xfail("Backend bug: DataAPI failure on userDetails call (HTTP 400)")
         return resp
 
     def get_user_graphs(self) -> ApiResponse:
