@@ -852,3 +852,45 @@ stages:
               SMTP_PASSWORD: $(sendGridSmtppassword)
               NOREPLY_EMAIL: $(noreply)
             condition: always()
+
+          # ── OpenAPI Schema Drift: detect + send (small audience) ─────
+          # Runs AFTER the main email so the consolidated report isn't
+          # blocked if the drift step has issues. Detects endpoints
+          # added / removed / changed vs the committed swagger_specs/
+          # baseline, then mails a dedicated report only to the
+          # automation owner + their manager.
+          - script: |
+              python3 scripts/detect_schema_drift.py \
+                --specs-dir  swagger_specs \
+                --output     reports/schema-drift.json
+            displayName: Detect OpenAPI Schema Drift
+            condition: always()
+            continueOnError: true
+
+          - script: |
+              if [ ! -f reports/schema-drift.json ]; then
+                echo "[WARN] Drift JSON missing — skipping drift email."
+                exit 0
+              fi
+              python3 scripts/send_schema_drift_email.py \
+                --drift-json   reports/schema-drift.json \
+                --build-id     "$(Build.BuildId)" \
+                --build-number "$(Build.BuildNumber)" \
+                --recipients   "yakir.moshe@netafim.com, ron.ovadia@netafim.com"
+            displayName: Send Schema Drift Email (restricted)
+            env:
+              SMTP_SERVER:   $(sendGridSmtpServer)
+              SMTP_PORT:     $(sendGridSmtpPort)
+              SMTP_USER:     $(sendGridSmtpPortUser)
+              SMTP_PASSWORD: $(sendGridSmtppassword)
+              NOREPLY_EMAIL: $(noreply)
+            condition: always()
+            continueOnError: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Schema Drift JSON
+            inputs:
+              targetPath: reports/schema-drift.json
+              artifact: schema-drift
+            condition: always()
+            continueOnError: true
