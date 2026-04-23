@@ -101,6 +101,7 @@ def build_html(drift: dict, build_id: str, build_number: str) -> str:
     summary = drift.get("summary", {}) or {}
     services = drift.get("services", []) or []
     offline = drift.get("offline", []) or []
+    migrations = drift.get("migration_suggestions", []) or []
     generated_at = drift.get("generated_at") or ""
 
     added_total   = int(summary.get("added", 0))
@@ -109,8 +110,19 @@ def build_html(drift: dict, build_id: str, build_number: str) -> str:
     drift_services_count = int(summary.get("services_with_drift", 0))
 
     any_drift = added_total + removed_total + changed_total > 0
-    status_color = "#e67e22" if any_drift else "#1e8449"
-    status_label = "SCHEMA DRIFT DETECTED" if any_drift else "NO DRIFT"
+    any_migration = len(migrations) > 0
+    # Migration (=infrastructure move) is more interesting than plain drift
+    # because it means the baseline is about to go stale across multiple
+    # endpoints at once — promote it to the headline colour if present.
+    if any_migration:
+        status_color = "#8e44ad"
+        status_label = "SERVICE MIGRATION DETECTED"
+    elif any_drift:
+        status_color = "#e67e22"
+        status_label = "SCHEMA DRIFT DETECTED"
+    else:
+        status_color = "#1e8449"
+        status_label = "NO DRIFT"
 
     services_html = "\n".join(_service_block(s) for s in services) if services else (
         '<div style="color:#85929e;padding:16px;background:#1e2b37;border-radius:8px;font-size:13px;">'
@@ -127,6 +139,46 @@ def build_html(drift: dict, build_id: str, build_number: str) -> str:
             <strong>Services unreachable:</strong> {offline_list}<br/>
             <span style="color:#85929e;">Their baselines could not be compared this run. Check connectivity / URL.</span>
           </p>
+        </div>"""
+
+    migration_html = ""
+    if migrations:
+        rows = []
+        for m in migrations:
+            old = m.get("old_host", "")
+            reason = m.get("old_reason", "")
+            new = m.get("new_candidate", "")
+            rows.append(f"""
+            <tr>
+              <td style="padding:6px 10px;color:#85929e;font-size:11px;width:45px;">OLD</td>
+              <td style="padding:6px 10px;color:#ec7063;font-family:'SFMono-Regular',Consolas,monospace;font-size:12px;">{old}
+                <span style="color:#7f8fa4;font-size:10px;">&nbsp;(&thinsp;{reason}&thinsp;)</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px;color:#85929e;font-size:11px;">NEW</td>
+              <td style="padding:6px 10px;color:#58d68d;font-family:'SFMono-Regular',Consolas,monospace;font-size:12px;">{new}</td>
+            </tr>
+            <tr><td colspan="2" style="border-bottom:1px dashed #3d5166;padding:4px 0;"></td></tr>""")
+
+        migration_html = f"""
+        <div style="padding:14px 16px;background:#2a1a3a;border-radius:8px;border-left:4px solid #8e44ad;margin-top:14px;margin-bottom:14px;">
+          <div style="color:#bb8fce;font-size:13px;font-weight:600;letter-spacing:1px;margin-bottom:8px;">
+            POSSIBLY MIGRATED SERVICES ({len(migrations)})
+          </div>
+          <div style="color:#85929e;font-size:12px;margin-bottom:10px;">
+            The following hosts stopped responding, but a Kubernetes equivalent is online.
+            Suggests a recent infra move (Azure Web App &rarr; k8s).
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            {"".join(rows)}
+          </table>
+          <div style="color:#85929e;font-size:11px;margin-top:10px;">
+            <strong style="color:#bb8fce;">Action:</strong>
+            update the affected URLs in <code>fetch_swagger_specs.py</code>, run
+            <code>python fetch_swagger_specs.py</code>, and commit the refreshed
+            <code>swagger_specs/</code>.
+          </div>
         </div>"""
 
     return f"""<div style="font-family:'Segoe UI',Arial,sans-serif;background-color:#0f1923;padding:28px;">
@@ -163,6 +215,8 @@ def build_html(drift: dict, build_id: str, build_number: str) -> str:
           </td>
         </tr>
       </table>
+
+      {migration_html}
 
       {services_html}
 
@@ -245,12 +299,26 @@ def main() -> None:
     added   = int(summary.get("added", 0))
     removed = int(summary.get("removed", 0))
     changed = int(summary.get("changed", 0))
-    status_word = "DRIFT" if (added + removed + changed) > 0 else "CLEAN"
+    migrations = int(summary.get("migration_suggestions", 0))
 
-    subject = (
-        f"[{status_word}] OpenAPI Schema Drift Report - "
-        f"+{added} / -{removed} / ~{changed} (Build {args.build_id})"
-    )
+    if migrations > 0:
+        status_word = "MIGRATION"
+    elif (added + removed + changed) > 0:
+        status_word = "DRIFT"
+    else:
+        status_word = "CLEAN"
+
+    suffix = f" (Build {args.build_id})"
+    if migrations > 0:
+        subject = (
+            f"[{status_word}] OpenAPI Schema Drift Report - "
+            f"{migrations} migrated / +{added} / -{removed} / ~{changed}{suffix}"
+        )
+    else:
+        subject = (
+            f"[{status_word}] OpenAPI Schema Drift Report - "
+            f"+{added} / -{removed} / ~{changed}{suffix}"
+        )
 
     html = build_html(drift, args.build_id, args.build_number)
 
