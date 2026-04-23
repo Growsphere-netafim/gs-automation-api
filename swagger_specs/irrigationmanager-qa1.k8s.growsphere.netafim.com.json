@@ -1,0 +1,2832 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "IM.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/{farmId}/device/{deviceUuId}/ioMode": {
+      "post": {
+        "tags": [
+          "Farm"
+        ],
+        "summary": "Update device IO mode",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "Farm identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuId",
+            "in": "path",
+            "description": "device UUID Id from field IO",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "params of Ios",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateIoParams"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateIoParams"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateIoParams"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/{farmId}/ioMode/{ioId}": {
+      "post": {
+        "tags": [
+          "Farm"
+        ],
+        "summary": "Update device IO mode",
+        "description": "All request properties are mandatory for filling!",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "Farm identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ioId",
+            "in": "path",
+            "description": "Channel identifier",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IoModeUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/irrigation-programs/{irrigationProgramId}/actions": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "irrigationProgramId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendActionCommandDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendActionCommandDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendActionCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/dpm-irrigation-programs/{irrigationProgramId}/actions": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "irrigationProgramId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDpmActionCommandDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDpmActionCommandDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendDpmActionCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/farms/{farmId}/active-commands": {
+      "get": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommandFlowDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommandFlowDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommandFlowDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/farms/{farmId}/devices/{deviceUuid}/resource/{resourceUuid}/actions/{actionType}/{id1}": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "resourceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "actionType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id2",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/farms/{farmId}/command-flow/{referenceId}": {
+      "get": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": "Get the command flow according to command referenceId",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "referenceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlowDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlowDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlowDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/set-program": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": "Update parameters of irrigation program for PLC device\r\nStartTime needs to be in HH:mm:ss format",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramUpdateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramUpdateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/maxIrrigationProgram": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaxProgramUpdateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaxProgramUpdateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaxProgramUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/flex-irrigation-program": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlexIrrigationProgramDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlexIrrigationProgramDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlexIrrigationProgramDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/set-dpm-program": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DpmProgramUpdateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DpmProgramUpdateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DpmProgramUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandProcessingResponseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/set-recipe": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": "Set program recipe",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeUpdateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeUpdateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/farms/{farmId}/recipe/{recipeUuid}": {
+      "delete": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": "Delete recipe",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "recipeUuid",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/composed-validation-input": {
+      "post": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": "Dev/debugging purposes: Get the inputcomposer, only for (SuperAdmin)",
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationValidationRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationValidationRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IrrigationValidationRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/v2/farms/{farmId}/irrigation-programs/{programUuid}": {
+      "delete": {
+        "tags": [
+          "IrrigationProgram"
+        ],
+        "summary": " (Auth)",
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "programUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SI",
+                "BI"
+              ],
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandFlow"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionCommands": {
+        "enum": [
+          "ManuallyStart",
+          "Skip",
+          "Continue",
+          "Pause",
+          "SkipShift"
+        ],
+        "type": "string"
+      },
+      "BeforeAndAfterApply": {
+        "enum": [
+          "PerProgram",
+          "PerShift"
+        ],
+        "type": "string"
+      },
+      "CommandExecutionStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandFlow": {
+        "type": "object",
+        "properties": {
+          "controllerResourceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resourceUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "cacheTimeout": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "executionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "retryCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentStep": {
+            "$ref": "#/components/schemas/CommandSteps"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandFlowStep"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandFlowDto": {
+        "type": "object",
+        "properties": {
+          "controllerResourceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resourceUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "retryCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandFlowStepDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandFlowStep": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "$ref": "#/components/schemas/CommandSteps"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StepStatus"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandFlowStepDto": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandHistory": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "timeToLive": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandProcessingResponseResult": {
+        "type": "object",
+        "properties": {
+          "isSuccessful": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandResponse": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceReferenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CommandExecutionStatus"
+          },
+          "statusTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "receiveCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finishExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandHistory"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandStatus": {
+        "enum": [
+          "Pending",
+          "Processing",
+          "Canceled",
+          "CanceledManually",
+          "Completed",
+          "Timeout",
+          "Retry",
+          "Failed",
+          "Expired",
+          "ProcessingInParallel",
+          "SentToCommandExecutor"
+        ],
+        "type": "string"
+      },
+      "CommandSteps": {
+        "enum": [
+          "SendingToController",
+          "UpdateResult",
+          "CloudSync"
+        ],
+        "type": "string"
+      },
+      "CommandType": {
+        "enum": [
+          "SetIrrigationProgramState",
+          "StopIrrigation",
+          "SetIrrigationProgram",
+          "UpdateIoMode",
+          "SetDeviceTime",
+          "GetTopology",
+          "GetIrrigationProgramScheme",
+          "RequestData",
+          "UpdateSoftware",
+          "SetProgramScheme",
+          "SetIoConfiguration",
+          "SetGeneralSettings",
+          "SetAlertSettings",
+          "SetIoMode",
+          "SetIotIrrigationState",
+          "SetDailyProgramScheme",
+          "SetAwakingTime",
+          "SetRecipeDetails",
+          "SetMainlineDetails",
+          "GetDailyProgram",
+          "DeleteProgramScheme",
+          "GetDeviceMeasurement",
+          "DismissAlarms",
+          "RequestCommand",
+          "Action",
+          "UpdateIrrigationConfig",
+          "UpdateModemConfig",
+          "IoModeTest",
+          "SetDelaySettings"
+        ],
+        "type": "string"
+      },
+      "CondType": {
+        "enum": [
+          "OnlyIfOn",
+          "OneShot",
+          "Multishot"
+        ],
+        "type": "string"
+      },
+      "ConditionTrigger": {
+        "type": "object",
+        "properties": {
+          "condStartTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "condEndTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "condType": {
+            "$ref": "#/components/schemas/CondType"
+          },
+          "condTrigOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOff": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOffValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "condTrigOffDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "triggerType": {
+            "$ref": "#/components/schemas/ConditionTriggerType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConditionTriggerType": {
+        "enum": [
+          "DI",
+          "AI"
+        ],
+        "type": "string"
+      },
+      "DosingChannelMethod": {
+        "enum": [
+          "Bulk",
+          "Spread",
+          "OneThousandth",
+          "ByPulse"
+        ],
+        "type": "string"
+      },
+      "DosingChannelType": {
+        "enum": [
+          "Quantity",
+          "Time"
+        ],
+        "type": "string"
+      },
+      "DpmActionCommand": {
+        "enum": [
+          "PauseProgram",
+          "ResumeProgram",
+          "PauseMainline",
+          "ResumeMainline"
+        ],
+        "type": "string"
+      },
+      "DpmProgramUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "remoteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "startTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/TimeSpan"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FlexIrrigationProgramDto": {
+        "type": "object",
+        "properties": {
+          "systemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "measurementMethod": {
+            "$ref": "#/components/schemas/MeasurementSystem"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "programTopology": {
+            "$ref": "#/components/schemas/FlexProgramTopology"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FlexProgramShift": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "qty": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "valveIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FlexProgramTopology": {
+        "type": "object",
+        "properties": {
+          "prgId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/ProgramMeasurementUnit"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ProgramType"
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "emergencyChannelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isByWeekDays": {
+            "type": "boolean"
+          },
+          "intervalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationScheduleType": {
+            "type": "string",
+            "nullable": true
+          },
+          "weekCycle": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irriWeekDays": {
+            "$ref": "#/components/schemas/IrrigationWeekDays"
+          },
+          "dosingWeekDays": {
+            "$ref": "#/components/schemas/IrrigationWeekDays"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FlexProgramShift"
+            },
+            "nullable": true
+          },
+          "startTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StartTime"
+            },
+            "nullable": true
+          },
+          "conditionTriggers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionTrigger"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HexMessageType": {
+        "enum": [
+          "WholeProgram",
+          "GeneralSettings",
+          "Dosing",
+          "ShiftsParameters",
+          "ShiftValves",
+          "StartTimes",
+          "ProgramState",
+          "Scheduling",
+          "DeleteShift",
+          "RearrangeShift",
+          "SkipNext",
+          "ShiftsWatering",
+          "ShiftsActive",
+          "ShiftsFactor",
+          "ShiftsRecipe",
+          "ShiftsQuantity",
+          "ShiftsDepth",
+          "ShiftsTime"
+        ],
+        "type": "string"
+      },
+      "IoMode": {
+        "enum": [
+          "Auto",
+          "ManuallyOpen",
+          "ManuallyClosed"
+        ],
+        "type": "string"
+      },
+      "IoModeUpdateDto": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioMode": {
+            "$ref": "#/components/schemas/IoMode"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationValidationRequestDto": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationWeekDays": {
+        "type": "object",
+        "properties": {
+          "w1": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "w2": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MaxProgramUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "program": {
+            "$ref": "#/components/schemas/PlcIrrigationProgramSchemesDto"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "messageType": {
+            "$ref": "#/components/schemas/HexMessageType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeasurementSystem": {
+        "enum": [
+          "None",
+          "Metric",
+          "Imperial"
+        ],
+        "type": "string"
+      },
+      "PlcIrrigationProgramSchemesDto": {
+        "type": "object",
+        "properties": {
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestampOffset": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "measurementMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "prgTopology": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlcProgramSchemeDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlcProgramSchemeDto": {
+        "type": "object",
+        "properties": {
+          "beforeAndAfterApply": {
+            "$ref": "#/components/schemas/BeforeAndAfterApply"
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "emptyProg": {
+            "type": "boolean"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/Priority"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SchemeType"
+          },
+          "prgId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "startTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StartTimeTrigger"
+            },
+            "nullable": true
+          },
+          "conditionTriggers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionTrigger"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nextIrr": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalQty": {
+            "type": "number",
+            "format": "double"
+          },
+          "weekCycle": {
+            "$ref": "#/components/schemas/WeekCycle"
+          },
+          "intervalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentIntervalDay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irriWeekDays": {
+            "$ref": "#/components/schemas/WeeklyWeekdays"
+          },
+          "dosingWeekDays": {
+            "$ref": "#/components/schemas/WeeklyWeekdays"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlcShiftDto"
+            },
+            "nullable": true
+          },
+          "changedShiftId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "firstOdd": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "emergencyChannelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "unit": {
+            "$ref": "#/components/schemas/ProgramUnit"
+          },
+          "skipNext": {
+            "type": "boolean"
+          },
+          "swVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlcShiftDto": {
+        "type": "object",
+        "properties": {
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "factor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "qty": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "depth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "valveIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Priority": {
+        "enum": [
+          "None",
+          "High",
+          "Normal"
+        ],
+        "type": "string"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "ProgramMeasurementUnit": {
+        "enum": [
+          "Time",
+          "Quantity",
+          "Depth"
+        ],
+        "type": "string"
+      },
+      "ProgramPriority": {
+        "enum": [
+          "Normal",
+          "High"
+        ],
+        "type": "string"
+      },
+      "ProgramShiftUpdateDto": {
+        "type": "object",
+        "properties": {
+          "shiftId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "factor": {
+            "type": "number",
+            "format": "double"
+          },
+          "time": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "valveIrrigationBlockIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProgramStartTimeDto": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "format": "time",
+            "example": "14:30:00"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "triggerType": {
+            "$ref": "#/components/schemas/TimeTriggerType"
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "max": {
+            "type": "string",
+            "nullable": true
+          },
+          "min": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProgramType": {
+        "enum": [
+          "Routine",
+          "Rolling",
+          "OneTime",
+          "Manual",
+          "Emergency"
+        ],
+        "type": "string"
+      },
+      "ProgramUnit": {
+        "enum": [
+          "Depth",
+          "TimeInHours",
+          "Quantity",
+          "TimeInMinutes"
+        ],
+        "type": "string"
+      },
+      "ProgramUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "beforeAndAfterApply": {
+            "$ref": "#/components/schemas/BeforeAndAfterApply"
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "irrigationInterval": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentIntervalDay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programUnit": {
+            "$ref": "#/components/schemas/ProgramUnit"
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "skipNext": {
+            "type": "boolean"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/ProgramPriority"
+          },
+          "programType": {
+            "$ref": "#/components/schemas/ProgramType"
+          },
+          "startTimes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProgramStartTimeDto"
+            },
+            "nullable": true
+          },
+          "irrigationWeekDays": {
+            "$ref": "#/components/schemas/IrrigationWeekDays"
+          },
+          "dosingWeekDays": {
+            "$ref": "#/components/schemas/IrrigationWeekDays"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProgramShiftUpdateDto"
+            },
+            "nullable": true
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StartTimeCondition"
+            },
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "emergencyChannelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "messageType": {
+            "$ref": "#/components/schemas/HexMessageType"
+          },
+          "changedShiftId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "weekCycle": {
+            "$ref": "#/components/schemas/WeekCycle"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeChannelUpdateDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "method": {
+            "$ref": "#/components/schemas/DosingChannelMethod"
+          },
+          "type": {
+            "$ref": "#/components/schemas/DosingChannelType"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasDmControl": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeUpdateRequestDto": {
+        "type": "object",
+        "properties": {
+          "deviceRecipeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recipeUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeChannelUpdateDto"
+            },
+            "nullable": true
+          },
+          "ecTarget": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "phTarget": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "preEcTarget": {
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SchemeType": {
+        "enum": [
+          "Routine",
+          "Rolling",
+          "OneTime",
+          "Manual",
+          "Emergency"
+        ],
+        "type": "string"
+      },
+      "SendActionCommandDto": {
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actionCommand": {
+            "$ref": "#/components/schemas/ActionCommands"
+          },
+          "additionalData": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SendDpmActionCommandDto": {
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "remoteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionCommand": {
+            "$ref": "#/components/schemas/DpmActionCommand"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StartTime": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "format": "time",
+            "example": "14:30:00"
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StartTimeCondition": {
+        "type": "object",
+        "properties": {
+          "condStartTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "condEndTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true,
+            "example": "14:30:00"
+          },
+          "condType": {
+            "$ref": "#/components/schemas/CondType"
+          },
+          "condTrigOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOff": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOffValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "condTrigOffDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "triggerType": {
+            "$ref": "#/components/schemas/ConditionTriggerType"
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StartTimeTrigger": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "triggerType": {
+            "$ref": "#/components/schemas/TimeTriggerType"
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "max": {
+            "type": "string",
+            "nullable": true
+          },
+          "min": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StepStatus": {
+        "enum": [
+          "NotStarted",
+          "Started",
+          "Failed",
+          "Completed",
+          "Skipped"
+        ],
+        "type": "string"
+      },
+      "SystemType": {
+        "enum": [
+          "None",
+          "NetIotbsu",
+          "NetIotrtu",
+          "NetIotrpu",
+          "NetIoteco",
+          "NetCrtplc",
+          "rSenserLink",
+          "rSensertu",
+          "rSenserpu",
+          "rSensemeteo",
+          "rSenseDFM",
+          "NetCrtdstation",
+          "NetCrtpstation",
+          "NetiotstalnRtu",
+          "DavisWlink",
+          "RadioNetbsu",
+          "RadioNetrtu",
+          "RadioNetrpu",
+          "SingleNetbsu",
+          "SingleNetrtu",
+          "SingleNetrpu",
+          "EcoAct",
+          "Flex",
+          "EcoGW",
+          "DPM",
+          "AdaptiveDrip",
+          "Radiolite_base",
+          "Radiolite_2x2",
+          "Radiolite_4xD",
+          "ExpansionBox"
+        ],
+        "type": "string"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "example": "75:30:15"
+      },
+      "TimeTriggerType": {
+        "enum": [
+          "Time",
+          "Cycle",
+          "RadSumPlus",
+          "RadSum",
+          "None"
+        ],
+        "type": "string"
+      },
+      "UpdateIoParams": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mode": {
+            "type": "integer",
+            "description": "New mode for Io",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeekCycle": {
+        "enum": [
+          "None",
+          "SingleWeek",
+          "TwoWeeks"
+        ],
+        "type": "string"
+      },
+      "WeeklyWeekdays": {
+        "type": "object",
+        "properties": {
+          "w1": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "w2": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

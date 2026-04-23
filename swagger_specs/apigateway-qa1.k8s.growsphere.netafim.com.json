@@ -1,0 +1,3791 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NetBeat VX API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Dashboard/data/farm/{farmId}": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DPM/Dashboard/data/farm/{farmId}/{deviceId}": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DpmDashboardResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DpmDashboardResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DpmDashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/graph/farm/{farmId}/croup-unit/{cropUnitId}": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cropUnitId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropUnitGraphResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropUnitGraphResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropUnitGraphResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Dashboard/devices/status": {
+      "post": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/dashboard/hydraulic": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/dashboard/hydraulic/devices/{deviceUuid}/mainlines/{mainlineId}": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "mainlineId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardMainlineResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardMainlineResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HydraulicDashboardMainlineResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DashboardV2/data/farm/{farmId}": {
+      "get": {
+        "tags": [
+          "DashboardV2"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/V2DashboardResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V2DashboardResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V2DashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/devices/{deviceId}/farm": {
+      "delete": {
+        "tags": [
+          "DeviceManagement"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/devices/{deviceId}/fota": {
+      "post": {
+        "tags": [
+          "DeviceManagement"
+        ],
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceFirmwareDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceFirmwareDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDeviceFirmwareDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Graph/data-selection/farm/{farmId}/croup-unit/{cropUnitId}": {
+      "get": {
+        "tags": [
+          "Graph"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cropUnitId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "cacheReset",
+            "in": "header",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDataSelectionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDataSelectionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDataSelectionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reports/{farmId}/GetAccumulationReport/{fromDate}/{toDate}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reports/{farmId}/GetAggregatedAccumulationReport/{fromDate}/{toDate}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccumulationReportResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reports/{farmId}/GetAccumulationReport/IrrigationProgram/{fromDate}/{toDate}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          },
+          {
+            "name": "x-gs-farm-timezone",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Israel Standard Time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationProgramReportRootResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationProgramReportRootResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IrrigationProgramReportRootResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccumulationReportResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "valveName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true
+          },
+          "depthInMm": {
+            "type": "number",
+            "format": "double"
+          },
+          "depthInInch": {
+            "type": "number",
+            "format": "double"
+          },
+          "quantityInM3": {
+            "type": "number",
+            "format": "double"
+          },
+          "quantityInGallon": {
+            "type": "number",
+            "format": "double"
+          },
+          "firstDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "secondDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "thirdDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fourthDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fifthDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sixthDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "seventhDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "eighthDosingChannelQuantityInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "firstDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "secondDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "thirdDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fourthDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fifthDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sixthDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "seventhDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "eighthDosingChannelQuantityInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "partitionKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "reportType": {
+            "type": "string",
+            "nullable": true
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainLineId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "deviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "controllerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceType": {
+            "$ref": "#/components/schemas/IoDeviceType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AlarmType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          90,
+          95,
+          101,
+          110,
+          111,
+          120,
+          121,
+          150,
+          151,
+          152,
+          153,
+          180,
+          181,
+          182,
+          183,
+          184,
+          246,
+          247,
+          248,
+          249,
+          250,
+          251,
+          252,
+          253,
+          254,
+          255,
+          300,
+          310,
+          311,
+          312,
+          313,
+          320,
+          321,
+          322,
+          323,
+          324,
+          325,
+          326,
+          327,
+          328,
+          350,
+          360,
+          361,
+          362,
+          363,
+          364,
+          365,
+          366,
+          380,
+          381,
+          382,
+          383,
+          384,
+          385,
+          386,
+          397,
+          398,
+          399
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "BlockResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeviceResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConditionResponse": {
+        "type": "object",
+        "properties": {
+          "condStartTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true
+          },
+          "condEndTime": {
+            "type": "string",
+            "format": "time",
+            "nullable": true
+          },
+          "condType": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOff": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOffValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "condTrigOnDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "condTrigOffDirection": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "triggerType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoordsResponse": {
+        "type": "object",
+        "properties": {
+          "lng": {
+            "type": "number",
+            "format": "double"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropUnitGraphResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CropUnitResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cropUnitName": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "season": {
+            "$ref": "#/components/schemas/SeasonResponse"
+          },
+          "leadingSensor": {
+            "$ref": "#/components/schemas/LeadingSensorResponse"
+          },
+          "colorHexCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "syncWithController": {
+            "type": "boolean"
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "calculatedWaterBalance": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "minWaterBalanceInPercent": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "calcWaterBalanceUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropProtocolId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cropProtocolStrategyId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irrigationProgramId": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationProgram": {
+            "$ref": "#/components/schemas/IrrigationProgramResponse"
+          },
+          "irrigationBlocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationBlockResponse"
+            },
+            "nullable": true
+          },
+          "recipeName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CropUnitResponse"
+            },
+            "nullable": true
+          },
+          "unconnectedIrrigationBlocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationBlockResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoGroupResponse"
+            },
+            "nullable": true
+          },
+          "ios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceStatusRequest": {
+        "type": "object",
+        "properties": {
+          "fromDateOnly": {
+            "type": "string",
+            "format": "date"
+          },
+          "toDateOnly": {
+            "type": "string",
+            "format": "date"
+          },
+          "systemTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DosingChannelStatusResponse": {
+        "type": "object",
+        "properties": {
+          "chId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dosDelvrTime": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dosRemTime": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "dosDelvrQtyInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dosDelvrQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dosRemQtyInLiter": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dosRemQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "dosCurrentFlow": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DosingWeekResponse": {
+        "type": "object",
+        "properties": {
+          "week1": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "week2": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DpmCropUnitResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cropUnitName": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "colorHexCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irrigationProgramId": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationProgram": {
+            "$ref": "#/components/schemas/DpmIrrigationProgramResponse"
+          },
+          "irrigationBlocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DpmIrrigationBlockResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DpmDashboardResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DpmCropUnitResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DpmIrrigationBlockResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationBlockName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "cropUnitsIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "valve": {
+            "$ref": "#/components/schemas/IrrigationBlockValveResponse"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationBlockArea": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "manualIrrigationBlockArea": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "soilTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "flowRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "irrigationRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "manualIrrigationRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "varietyId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irrigationMethodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "$ref": "#/components/schemas/IrrigationBlockDataResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DpmIrrigationProgramResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationProgramId": {
+            "type": "string",
+            "nullable": true
+          },
+          "plannedTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveredTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remainingTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalShifts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentShiftNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastIrrigation": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "nextIrrigation": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isDeviceOnline": {
+            "type": "boolean"
+          },
+          "latestCommandStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShiftResponse"
+            },
+            "nullable": true
+          },
+          "startTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DpmStartTimeResponse"
+            },
+            "nullable": true
+          },
+          "programStatus": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DpmStartTimeResponse": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "max": {
+            "type": "string",
+            "nullable": true
+          },
+          "min": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GeolocationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "geolocationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "vertices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CoordsResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GraphDataSelectionResponse": {
+        "type": "object",
+        "properties": {
+          "graphSelectionData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BlockResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicAlarmResponse": {
+        "type": "object",
+        "properties": {
+          "alarmUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "alarmType": {
+            "$ref": "#/components/schemas/AlarmType"
+          },
+          "alarmTypeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "severity": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicDashboardMainlineResponse": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "unitSystemStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mainlineName": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "programId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "programName": {
+            "type": "string",
+            "nullable": true
+          },
+          "programStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programStatusStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "programIsActive": {
+            "type": "boolean"
+          },
+          "programType": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programTypeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentShiftId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentShiftName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalShifts": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentShiftTotalValves": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recipeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipeUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "programState": {
+            "$ref": "#/components/schemas/HydraulicProgramStateResponse"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicShiftResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicDashboardResponse": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitSystem": {
+            "$ref": "#/components/schemas/UnitSystem"
+          },
+          "unitSystemStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicDeviceResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          },
+          "systemTypeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "isConnected": {
+            "type": "boolean"
+          },
+          "mainlines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicMainlineResponse"
+            },
+            "nullable": true
+          },
+          "deviceAlarms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicAlarmResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicMainlineResponse": {
+        "type": "object",
+        "properties": {
+          "mainlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mainlineName": {
+            "type": "string",
+            "nullable": true
+          },
+          "mainlineUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "programId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "programName": {
+            "type": "string",
+            "nullable": true
+          },
+          "programStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programStatusStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "programIsActive": {
+            "type": "boolean"
+          },
+          "programType": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "programTypeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentShiftId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentShiftName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalShifts": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "currentShiftTotalValves": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recipeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipeUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "programState": {
+            "$ref": "#/components/schemas/HydraulicProgramStateResponse"
+          },
+          "mainlineAlarms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicAlarmResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicProgramStateResponse": {
+        "type": "object",
+        "properties": {
+          "irriDelvrQtyInLiters": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInLiters": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrQtyInM3": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInM3": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemQtyInGallon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrInMm": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemInMm": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrInInch": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriRemInInch": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irriDelvrTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "irriRemTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentFlow": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "nominalFlow": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "currentPressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ec": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ph": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "calculatedDelvr": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "calculatedTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "calculatedRem": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "dosChnls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DosingChannelStatusResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicShiftResponse": {
+        "type": "object",
+        "properties": {
+          "shiftNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "shiftName": {
+            "type": "string",
+            "nullable": true
+          },
+          "recipeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/IrrigationProgramStatusType"
+          },
+          "statusStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "factor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "programState": {
+            "$ref": "#/components/schemas/HydraulicProgramStateResponse"
+          },
+          "valves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HydraulicShiftValveResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HydraulicShiftValveResponse": {
+        "type": "object",
+        "properties": {
+          "valveName": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusStr": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoDeviceType": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          10000,
+          10001,
+          10002,
+          10003,
+          10004,
+          10005
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "IoGroupResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IoResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "depth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "depthUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "portNumber": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationBlockDataResponse": {
+        "type": "object",
+        "properties": {
+          "geolocation": {
+            "$ref": "#/components/schemas/GeolocationResponse"
+          },
+          "itemGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemGroupResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationBlockResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationBlockName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "cropUnitsIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "valve": {
+            "$ref": "#/components/schemas/IrrigationBlockValveResponse"
+          },
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationBlockArea": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "manualIrrigationBlockArea": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "soilTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "flowRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "irrigationRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "manualIrrigationRate": {
+            "$ref": "#/components/schemas/MeasureValueResponse"
+          },
+          "cropId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "varietyId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irrigationMethodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "$ref": "#/components/schemas/IrrigationBlockDataResponse"
+          },
+          "waterBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "waterBalanceInPercent": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationBlockValveResponse": {
+        "type": "object",
+        "properties": {
+          "channelUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "valveMode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationProgramReportResponse": {
+        "type": "object",
+        "properties": {
+          "prgId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prgName": {
+            "type": "string",
+            "nullable": true
+          },
+          "programUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "valves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValveIrrigationProgramReportResponse"
+            },
+            "nullable": true
+          },
+          "startTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleIrrigationProgramReportResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationProgramReportRootResponse": {
+        "type": "object",
+        "properties": {
+          "programReports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IrrigationProgramReportResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationProgramResponse": {
+        "type": "object",
+        "properties": {
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "irrigationProgramId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceProgramId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "irrigationQuantity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "irrigationQuantityUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveredQty": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "weekCycle": {
+            "$ref": "#/components/schemas/WeekCycle"
+          },
+          "plannedTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveredTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remainingTime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "uomDepth": {
+            "type": "string",
+            "nullable": true
+          },
+          "plannedDepth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deliveredDepth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "remainDepth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalShifts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentShiftNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentShiftUuid": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastIrrigation": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "nextIrrigation": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "programInstanceId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "isDeviceOnline": {
+            "type": "boolean"
+          },
+          "latestCommandStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "programType": {
+            "type": "string",
+            "nullable": true
+          },
+          "intervalDays": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "irrigationWeekDays": {
+            "$ref": "#/components/schemas/IrrigationWeekResponse"
+          },
+          "dosingWeekDays": {
+            "$ref": "#/components/schemas/DosingWeekResponse"
+          },
+          "shifts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShiftResponse"
+            },
+            "nullable": true
+          },
+          "startTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StartTimeResponse"
+            },
+            "nullable": true
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConditionResponse"
+            },
+            "nullable": true
+          },
+          "emergencyChannelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "programStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "programStausStr": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "priority": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "beforeAndAfterApply": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "emptyProg": {
+            "type": "boolean"
+          },
+          "firstOdd": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "skipNext": {
+            "type": "boolean"
+          },
+          "currentIntervalDay": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "IrrigationProgramStatusType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "IrrigationWeekResponse": {
+        "type": "object",
+        "properties": {
+          "week1": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "week2": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemGroupResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "itemGroupId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channelUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "thingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LeadingSensorResponse": {
+        "type": "object",
+        "properties": {
+          "sensorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sensorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastMeasurement": {
+            "type": "number",
+            "format": "double"
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "blockId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "blockName": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseUuid": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "remoteUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "baseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "remoteId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MeasureValueResponse": {
+        "type": "object",
+        "properties": {
+          "uom": {
+            "$ref": "#/components/schemas/Uom"
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "ScheduleIrrigationProgramReportResponse": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "end": {
+            "type": "string",
+            "nullable": true
+          },
+          "dosing": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SeasonResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "seasonsStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ShiftResponse": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "factor": {
+            "type": "number",
+            "format": "double"
+          },
+          "isAlerted": {
+            "type": "boolean"
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recipeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "depth": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "valves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValveResponse"
+            },
+            "nullable": true
+          },
+          "quantityUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "depthUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBefore": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterAfter": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StartTimeResponse": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "triggerType": {
+            "type": "string",
+            "nullable": true
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "max": {
+            "type": "string",
+            "nullable": true
+          },
+          "min": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UnitSystem": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Uom": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UpdateDeviceFirmwareDto": {
+        "type": "object",
+        "properties": {
+          "fromVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "toVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2CropUnit": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cropUnitName": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigationBlocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2IrrigationBlock"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2DashboardResponse": {
+        "type": "object",
+        "properties": {
+          "weatherStations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2WeatherStation"
+            },
+            "nullable": true
+          },
+          "cropUnits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2CropUnit"
+            },
+            "nullable": true
+          },
+          "unassignedDevices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2Device"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2Device": {
+        "type": "object",
+        "properties": {
+          "itemGroupId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "irrigation": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2IoIdAndName"
+            },
+            "nullable": true
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2SensorGroup"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2Io": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ioTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "depth": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "depthUom": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "thresholds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2Threshold"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2IoIdAndName": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ioDeviceTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2IrrigationBlock": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2Device"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2ProbeGroup": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2Io"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2SensorGroup": {
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "groupName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2Io"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2Threshold": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "thresholdType": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ioId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isSystemAlert": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "V2WeatherStation": {
+        "type": "object",
+        "properties": {
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "calculated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2IoIdAndName"
+            },
+            "nullable": true
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/V2ProbeGroup"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValveIrrigationProgramReportResponse": {
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValveResponse": {
+        "type": "object",
+        "properties": {
+          "ioId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "itemId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "valveId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valveName": {
+            "type": "string",
+            "nullable": true
+          },
+          "isIrrigating": {
+            "type": "boolean"
+          },
+          "waterBalanceInMm": {
+            "type": "number",
+            "format": "double"
+          },
+          "irrigationBlockId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "irrigationBlockName": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterBalanceInPercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "channelId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeekCycle": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

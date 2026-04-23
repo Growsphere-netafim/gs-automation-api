@@ -1,0 +1,1532 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Weather Forecast API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/command": {
+      "post": {
+        "tags": [
+          "CommandManager"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyProgramSchemeUpdateJob"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyProgramSchemeUpdateJob"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyProgramSchemeUpdateJob"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/historical-weather": {
+      "post": {
+        "tags": [
+          "CommandManager"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FarmDataModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FarmDataModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FarmDataModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/CurrentWeather": {
+      "get": {
+        "tags": [
+          "CurrentWeather"
+        ],
+        "parameters": [
+          {
+            "name": "Latitude",
+            "in": "query",
+            "description": "Latitude part of geolocation",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "Longitude",
+            "in": "query",
+            "description": "Longitude part of geolocation",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/CurrentWeather/{farmId}": {
+      "get": {
+        "tags": [
+          "CurrentWeather"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentWeather"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/dailyData": {
+      "get": {
+        "tags": [
+          "DailyData"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyDataResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyDataResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyDataResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/annualAvgData": {
+      "get": {
+        "tags": [
+          "DailyData"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/annualAverages": {
+      "get": {
+        "tags": [
+          "DailyData"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnnualAvgDataResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/forecastData": {
+      "get": {
+        "tags": [
+          "DailyData"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "description": "YYYY-MM-DD",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecastDataResponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecastDataResponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecastDataResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farms/{farmId}/mergedDailyData": {
+      "get": {
+        "tags": [
+          "DailyData"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "AvarageYears",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedDailyDataDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedDailyDataDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MergedDailyDataDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DailyForecast": {
+      "post": {
+        "tags": [
+          "DailyForecast"
+        ],
+        "parameters": [
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestDto"
+              },
+              "example": {
+                "latitude": 32.391074920418426,
+                "longitude": 34.93136406558892,
+                "startDate": "2026-04-22T00:00:00+00:00",
+                "endDate": "2026-04-25T00:00:00+00:00",
+                "timezoneFormat": "Iana",
+                "timezone": "Asia/Jerusalem"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestDto"
+              },
+              "example": {
+                "latitude": 32.391074920418426,
+                "longitude": 34.93136406558892,
+                "startDate": "2026-04-22T00:00:00+00:00",
+                "endDate": "2026-04-25T00:00:00+00:00",
+                "timezoneFormat": "Iana",
+                "timezone": "Asia/Jerusalem"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestDto"
+              },
+              "example": {
+                "latitude": 32.391074920418426,
+                "longitude": 34.93136406558892,
+                "startDate": "2026-04-22T00:00:00+00:00",
+                "endDate": "2026-04-25T00:00:00+00:00",
+                "timezoneFormat": "Iana",
+                "timezone": "Asia/Jerusalem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/DailyForecast/{farmId}": {
+      "post": {
+        "tags": [
+          "DailyForecast"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-nbvx-usr-pref-unit-system",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SI"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestByFarmIdDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestByFarmIdDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DailyForecastRequestByFarmIdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnnualAvgDataResponseDto": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "potentialEvaporationSumAvg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "humidityMinAvg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalPrecipitationAccumulationMaxAvg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "rainAccumulation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperatureMaxAvg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperatureMinAvg": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "et0Sum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandExecutionStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandResponse": {
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CommandExecutionStatus"
+          },
+          "statusTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "receiveCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finishExecutionCommandTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "resultData": {
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "programId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cropUnitId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "systemType": {
+            "$ref": "#/components/schemas/SystemType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommandStatus": {
+        "enum": [
+          "Pending",
+          "Processing",
+          "Canceled",
+          "Completed",
+          "Timeout",
+          "Retry",
+          "Failed",
+          "Expired"
+        ],
+        "type": "string"
+      },
+      "CommandType": {
+        "enum": [
+          "SetIrrigationProgramState",
+          "StopIrrigation",
+          "SetIrrigationProgram",
+          "UpdateIoMode",
+          "SetDeviceTime",
+          "GetTopology",
+          "GetIrrigationProgramScheme",
+          "RequestData",
+          "UpdateSoftware",
+          "SetProgramScheme",
+          "SetIoConfiguration",
+          "SetGeneralSettings",
+          "SetAlertSettings",
+          "SetIoMode",
+          "SetIotIrrigationState",
+          "SetDailyProgramScheme",
+          "SetAwakeingTime",
+          "SetRecipeDetails",
+          "SetMainlineDetails",
+          "GetDailyProgram"
+        ],
+        "type": "string"
+      },
+      "CurrentWeather": {
+        "type": "object",
+        "properties": {
+          "humidity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureUnitSymbol": {
+            "type": "string",
+            "nullable": true
+          },
+          "temperature": {
+            "type": "number",
+            "format": "double"
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "evapotranspiration": {
+            "type": "number",
+            "format": "double"
+          },
+          "evapotranspirationUnitSymbol": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyDataResponseDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evapotranspirationSum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "et0Sum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "humidityMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalPrecipitationAccumulationMax": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "temperatureMax": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperatureMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rainAccumulation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "minTemp": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxTemp": {
+            "type": "number",
+            "format": "double"
+          },
+          "temperatureUnitSymbol": {
+            "type": "string",
+            "nullable": true
+          },
+          "accumulatedRain": {
+            "type": "number",
+            "format": "double"
+          },
+          "accumulatedRainUnitSymbol": {
+            "type": "string",
+            "nullable": true
+          },
+          "evapotranspiration": {
+            "type": "number",
+            "format": "double"
+          },
+          "evapotranspirationUnitSymbol": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyForecastDataResponseDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evapotranspirationSum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "et0Sum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "humidityMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalPrecipitationAccumulationMax": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "deprecated": true
+          },
+          "temperatureMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "temperatureMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "rainAccumulation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyForecastRequestByFarmIdDto": {
+        "required": [
+          "endDate",
+          "startDate",
+          "timezone"
+        ],
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "timezoneFormat": {
+            "$ref": "#/components/schemas/TimezoneFormat"
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyForecastRequestDto": {
+        "required": [
+          "endDate",
+          "latitude",
+          "longitude",
+          "startDate",
+          "timezone"
+        ],
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "description": "Latitude part of geolocation",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "description": "Longitude part of geolocation",
+            "format": "double"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Date of day which starts the queried period",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Date of day which ends the queried period",
+            "format": "date"
+          },
+          "timezoneFormat": {
+            "$ref": "#/components/schemas/TimezoneFormat"
+          },
+          "timezone": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Timezone of the time values, according to the timezone format."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Query for daily weather forecast"
+      },
+      "DailyProgramSchemeUpdateJob": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "windowsTimeZoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeZoneInfo": {
+            "$ref": "#/components/schemas/TimeZoneInfo"
+          },
+          "deviceUUid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "deviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "systemTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FarmDataModel": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "windowsTimeZone": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MergedDailyDataDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "et0Sum": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "humidityMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperatureMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "temperatureMax": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rainAccumulation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemType": {
+        "enum": [
+          "NetIotbsu",
+          "NetIotrtu",
+          "NetIotrpu",
+          "NetIoteco",
+          "NetCrtplc",
+          "rSenserLink",
+          "rSensertu",
+          "rSenserpu",
+          "rSensemeteo",
+          "rSenseDFM",
+          "NetCrtdstation",
+          "NetCrtpstation",
+          "NetiotstalnRtu",
+          "DavisWlink",
+          "RadioNetbsu",
+          "RadioNetrtu",
+          "RadioNetrpu",
+          "SingleNetbsu",
+          "SingleNetrtu",
+          "SingleNetrpu",
+          "EcoAct",
+          "Flex",
+          "EcoGW"
+        ],
+        "type": "string"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeZoneInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "hasIanaId": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "standardName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "daylightName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "baseUtcOffset": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "supportsDaylightSavingTime": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimezoneFormat": {
+        "enum": [
+          "Windows",
+          "Iana"
+        ],
+        "type": "string"
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}

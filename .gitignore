@@ -69,7 +69,10 @@ log/
 
 # Runtime generated files
 environment.properties
-swagger_specs/*.json
+# swagger_specs/*.json intentionally TRACKED — it is the baseline against
+# which nightly schema-drift detection compares live OpenAPI specs.
+# A diff against HEAD == the exact set of endpoints added / removed /
+# changed since the baseline was last refreshed.
 
 scripts/harvest_qa1_data.py
 scripts/inspect_mobile.py

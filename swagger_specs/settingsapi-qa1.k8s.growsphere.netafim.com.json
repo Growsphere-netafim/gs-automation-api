@@ -1,0 +1,778 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "GS Settings API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/farms/{farmId}/AlertSettings/{deviceUuid}": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertSettingsByDeviceUuidResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertSettingsByDeviceUuidResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertSettingsByDeviceUuidResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/GeneralSettings/{deviceUuid}": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralSettingsByDeviceUuidResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralSettingsByDeviceUuidResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralSettingsByDeviceUuidResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/farms/{farmId}/DelaySettings/{deviceUuid}": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "parameters": [
+          {
+            "name": "farmId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deviceUuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DelaySettingsByDeviceUuidResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DelaySettingsByDeviceUuidResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DelaySettingsByDeviceUuidResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionType": {
+        "enum": [
+          "AlertOnly",
+          "PauseMainLine",
+          "SkipProgram",
+          "SkipShift",
+          "StopDosing"
+        ],
+        "type": "string"
+      },
+      "AlarmType": {
+        "enum": [
+          "Maximal_flow",
+          "Minimal_flow",
+          "No_flow",
+          "UncontrolFlow",
+          "Maximal_Pressure",
+          "Minimal_pressure",
+          "High_Flow",
+          "Low_Flow",
+          "Booster_Pump_Overload",
+          "EC1_Sensor_Malfunction",
+          "EC2_Sensor_Malfunction",
+          "pH1_Sensor_Malfunction",
+          "pH2_Sensor_Malfunction",
+          "Delta_EC_Alarm",
+          "Delta_pH_Alarm",
+          "Low_EC_values",
+          "High_EC_values",
+          "Emergency_EC",
+          "Low_pH_values",
+          "High_pH_values",
+          "Emergency_pH",
+          "Low_Pressure",
+          "PD_Sensor_Malfunction",
+          "PD_Flushing_Reiteration",
+          "PD_over_threshold",
+          "Dosing_ch_high_flow",
+          "Dosing_ch_low_flow",
+          "Dosing_ch_no_flow",
+          "Dos_Uncontrol_flow",
+          "Dosing_Pmp_Overload",
+          "Fertilizer_Low_Level",
+          "Pump_Overload",
+          "PLC_on_pause",
+          "PLC_power_recovery",
+          "VAC24_Fault",
+          "VAC24_Recover",
+          "M_line_1",
+          "M_line_2",
+          "M_line_3",
+          "M_line_4",
+          "M_line_5",
+          "M_line_6",
+          "M_line_7",
+          "M_line_8",
+          "M_line_9",
+          "DosingStop",
+          "GWConnProblem",
+          "MLPaused",
+          "MLStopped",
+          "DPReiteration",
+          "FilterUnitFailstoFlush",
+          "Remote_Valve_Fault",
+          "Modbus_Error",
+          "RN_Unit_Disconnected",
+          "RN_Unit_Volt_Batt_Low",
+          "RN_Unit_Volt_Batt_Fail",
+          "RN_Unit_Capacitor_Fail",
+          "RN_Unit_Errors_in_Cards",
+          "RN_Unit_Batt_Warn",
+          "RN_Unit_Batt_Low",
+          "RN_Unit_Batt_Fail",
+          "RN_IO_Short_Circuit",
+          "RN_IO_Open_Circuit",
+          "RN_IO_Unavailable",
+          "RN_IO_Unknown_State",
+          "RN_IO_Undetermined",
+          "SN_Unit_Disconnected",
+          "SN_Host_Over_Current",
+          "SN_Host_Voltage_Low",
+          "SN_Host_Voltage_Failure",
+          "SN_Host_Bad_IO_Address",
+          "SN_Host_Faulty_IO",
+          "SN_Host_RTU_Unavailable",
+          "SN_Host_Reserved",
+          "SN_Host_General_Error",
+          "PDSwitchMalfunction",
+          "SensorINMalfunction",
+          "SensorOUTMalfunction",
+          "FiltersUnitsMalfunction",
+          "OverMaxCycle",
+          "Unit_Disconnected",
+          "RN_Host_Disconnected",
+          "SN_Host_Disconnected",
+          "WSConnProblem",
+          "GW_Unit_Disconnected",
+          "MLExtPaused",
+          "PSPumpOverload",
+          "PSInputSwitch",
+          "FertTank_Low_Level",
+          "FertTank_Low_Level_Switch",
+          "Tank_A_Low_Level",
+          "Tank_A_Level_Below_Threshold",
+          "Tank_B_Low_Level",
+          "Tank_B_Level_Below_Threshold",
+          "SD_Card_Error",
+          "SD_Card_Almost_Full",
+          "SD_Card_Full",
+          "PLC_Int_Mem_Almost_Full",
+          "PLC_Int_Mem_Full",
+          "Dosing_No_Pressure",
+          "Very_Low_Battery",
+          "No_Pressure",
+          "Low_Battery",
+          "Communication_Error",
+          "General_Alarm",
+          "Renew_Certificate_Fail",
+          "Check_Renew_Certificate_Fail",
+          "Successfully_Renew_Certificate",
+          "Undefined_Error",
+          "External_Alarm_input",
+          "SubDS_Comm_Error",
+          "SubDS_Autotune_Req",
+          "SubDS_VAC24_Fault",
+          "SubDS_VAC24_Recover",
+          "Reservoir_Emergency_Low_Level",
+          "Reservoir_Emergency_High_Level",
+          "Reservoir_Low_Level",
+          "Reservoir_High_Level",
+          "Well_Pump_Protection",
+          "Well_Low_Level_Sw",
+          "WellLow_Level_Sensor",
+          "Well_No_Flow",
+          "Well_High_Pressure",
+          "ExBox_Comm_Error",
+          "DMS_High_EC",
+          "DMS_Low_EC",
+          "DMS_High_PH",
+          "DMS_Low_PH",
+          "DMS_High_Percentage",
+          "DMS_Low_Percentage",
+          "DMS_No_Drain",
+          "CPS_Low_Pressuer",
+          "CPS_High_Pressure",
+          "CPS_Non_Critical_Alarm",
+          "CPS_Critical_Alarm",
+          "CPS_Pump_Pressure_Switch",
+          "CPS_Pump_Overload",
+          "CPS_Common_Pressure_Switch",
+          "Yungo_Main_Unit_Disconn",
+          "Yungo_Unit_Disconn",
+          "Yungo_Unit_Low_Batt"
+        ],
+        "type": "string"
+      },
+      "AlertSettingsByDeviceUuidResponseDto": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "alertSettings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertSettingsDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AlertSettingsDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/AlarmType"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "delaySeconds": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "valueInMetric": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "uomInMetric": {
+            "$ref": "#/components/schemas/ValueUomType"
+          },
+          "valueInImperial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "uomInImperial": {
+            "$ref": "#/components/schemas/ValueUomType"
+          },
+          "latch": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DaySettingsResponse": {
+        "type": "object",
+        "properties": {
+          "enable": {
+            "type": "boolean"
+          },
+          "time": {
+            "type": "string",
+            "format": "time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DelaySettingResponse": {
+        "type": "object",
+        "properties": {
+          "onDelay": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "offDelay": {
+            "$ref": "#/components/schemas/TimeSpan"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DelaySettingsByDeviceUuidResponseDto": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "delaySettings": {
+            "$ref": "#/components/schemas/DelaySettingsResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DelaySettingsResponse": {
+        "type": "object",
+        "properties": {
+          "lineFill": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "staggerDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "pumpDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "mainValveDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "irriValveDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "boosterPumpDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "dosingValveMinDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          },
+          "autoResetAlarmDelay": {
+            "$ref": "#/components/schemas/DelaySettingResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GeneralSettingsByDeviceUuidResponseDto": {
+        "type": "object",
+        "properties": {
+          "farmId": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "generalSettings": {
+            "$ref": "#/components/schemas/GeneralSettingsResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GeneralSettingsResponse": {
+        "type": "object",
+        "properties": {
+          "startDay": {
+            "$ref": "#/components/schemas/DaySettingsResponse"
+          },
+          "endDay": {
+            "$ref": "#/components/schemas/DaySettingsResponse"
+          },
+          "energySave": {
+            "$ref": "#/components/schemas/TimeRangeResponse"
+          },
+          "txOffHoursInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "txDuringEventInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "txDuringWorkHoursInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modemOpenWindowsInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modemOpenWindowsAfterRswInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sampleIntervalInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sampleIntervalDuringIrrigationInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "autoResetAlert": {
+            "type": "boolean"
+          },
+          "stayConnectModem": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeRangeResponse": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "format": "time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "microseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "nanoseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMicroseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalNanoseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValueUomType": {
+        "enum": [
+          "CubicMetersPerHour",
+          "LitersPerHour",
+          "CubicMeters",
+          "Liters",
+          "Percent",
+          "Bar",
+          "Volt",
+          "Psi",
+          "GallonsPerMinute",
+          "GallonsPerHour",
+          "Gallons"
+        ],
+        "type": "string"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \n                      Enter 'Bearer' [space] and then your token in the text input below.\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
