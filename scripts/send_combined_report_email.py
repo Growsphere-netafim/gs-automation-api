@@ -149,11 +149,12 @@ def _env_rows(envs: list[dict]) -> str:
         color     = _ENV_COLOR.get(env_key, "#7f8fa4")
         badge     = _status_badge(e)
         pass_pct  = e["pass_pct"]
-        total     = e["total"]
         passed    = e["passed"]
         failed    = e["failed"]
         skipped   = e["skipped"]
         xfailed   = e.get("xfailed", 0)
+        # "Total" column = executed tests so Passed/Total read as 100% when green.
+        total     = passed + failed
 
         rows.append(f"""
           <tr>
@@ -179,11 +180,13 @@ def build_html(
     build_number: str,
     report_url: str,
 ) -> str:
-    total      = agg["total"]
     passed     = agg["passed"]
     failed     = agg["failed"]
     skipped    = agg["skipped"]
     xfailed    = agg.get("xfailed", 0)
+    # Headline "Total" = executed tests (passed + failed). Skipped / Known
+    # Bugs are displayed in their own cards and never dilute the headline.
+    total      = passed + failed
     pass_pct   = agg["pass_pct"]
     pass_width = agg["pass_width"]
     fail_width = agg["fail_width"]
