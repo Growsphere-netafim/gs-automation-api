@@ -78,11 +78,17 @@ def aggregate(envs: list[dict]) -> dict:
     failed  = sum(e["failed"]  for e in envs)
     skipped = sum(e["skipped"] for e in envs)
     xfailed = sum(e.get("xfailed", 0) for e in envs)
-    pass_pct = round(passed / total * 100, 1) if total > 0 else 0.0
 
-    pass_width = int(round(passed / total * 100)) if total > 0 else 0
-    fail_width = int(round(failed / total * 100)) if total > 0 else 0
-    # guarantee at least 1px width when non-zero
+    # Pass % — executed-only basis (skipped / xfailed excluded from the
+    # denominator). When failed == 0 this reads as 100%, which is what
+    # operators expect: no real failure means full success.
+    executed = passed + failed
+    pass_pct = round(passed / executed * 100, 1) if executed > 0 else 100.0
+
+    # Progress bar widths follow the same executed-only basis.
+    pass_width = int(round(passed / executed * 100)) if executed > 0 else 100
+    fail_width = int(round(failed / executed * 100)) if executed > 0 else 0
+    # Guarantee at least 1px width when non-zero
     if passed > 0 and pass_width == 0:
         pass_width = 1
     if failed > 0 and fail_width == 0:
@@ -270,7 +276,9 @@ def build_html(
           Environments ran <strong style="color:#ecf0f1;">sequentially</strong>: qa1 &rarr; stag &rarr; prod &rarr; china prod &rarr; china stag.
           Each environment continued regardless of the previous one's result.
           A failure in any environment marks the pipeline as <span style="color:#e74c3c;font-weight:600;">FAILED</span>.
-          <br/><strong style="color:#f39c12;">Known Bugs</strong> are tests guarded by <code>pytest.xfail</code> against known backend bugs —
+          <br/><strong>Pass %</strong> is the executed-test success rate (Passed &divide; (Passed + Failed)) &mdash;
+          <strong>Skipped</strong> and <strong>Known Bugs</strong> are excluded so they don't dilute the score.
+          <br/><strong style="color:#f39c12;">Known Bugs</strong> are tests guarded by <code>pytest.xfail</code> against known backend bugs &mdash;
           if one suddenly passes, Allure will mark it <strong>XPASS</strong> so you know the bug is fixed and the guard can be removed.
         </p>
       </div>

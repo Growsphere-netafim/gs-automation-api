@@ -85,7 +85,11 @@ def compute_stats(env_name: str, raw: dict) -> dict:
     failed   = failures + errors
     passed   = max(0, total - failed - skipped - xfailed)
 
-    pass_pct = round(passed / total * 100, 1) if total > 0 else 0.0
+    # Pass % counts only executed tests that produced pass/fail — skipped and
+    # xfailed tests (not configured / known backend bugs) are excluded from
+    # both numerator and denominator so they don't dilute the score.
+    executed = passed + failed
+    pass_pct = round(passed / executed * 100, 1) if executed > 0 else 100.0
 
     return {
         "env":          env_name,
