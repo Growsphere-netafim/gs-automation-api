@@ -11,6 +11,7 @@ Usage:
                       reports/stag-stats.json \
                       reports/prod-stats.json \
                       reports/china_prod-stats.json \
+                      reports/china_stag-stats.json \
         --build-id    "$(Build.BuildId)" \
         --build-number "$(Build.BuildNumber)" \
         --report-url  "https://..." \
@@ -95,13 +96,14 @@ def aggregate(envs: list[dict]) -> dict:
 # HTML generation
 # ─────────────────────────────────────────────────────────────────────────────
 
-_ENV_ORDER = ["qa1", "stag", "prod", "china_prod"]
+_ENV_ORDER = ["qa1", "stag", "prod", "china_prod", "china_stag"]
 
 _ENV_LABEL = {
     "qa1":        "QA1",
     "stag":       "STAG",
     "prod":       "PROD",
     "china_prod": "CHINA PROD",
+    "china_stag": "CHINA STAG",
 }
 
 _ENV_COLOR = {
@@ -109,6 +111,7 @@ _ENV_COLOR = {
     "stag":       "#af7ac5",   # violet
     "prod":       "#2ecc71",   # emerald
     "china_prod": "#e67e22",   # amber
+    "china_stag": "#d35400",   # dark orange
 }
 
 

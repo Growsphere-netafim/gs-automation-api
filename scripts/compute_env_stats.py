@@ -22,7 +22,7 @@ import xml.etree.ElementTree as ET
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="JUnit XML -> stats JSON")
     p.add_argument("--junit-xml", required=True, help="Path to JUnit XML produced by pytest")
-    p.add_argument("--env-name",  required=True, help="Environment label (qa1, stag, prod, china_prod)")
+    p.add_argument("--env-name",  required=True, help="Environment label (qa1, stag, prod, china_prod, china_stag)")
     p.add_argument("--output",    required=True, help="Output JSON path")
     return p.parse_args()
 
